@@ -1,9 +1,9 @@
 
 <h1 align="center">
   <br>
-  <img src="https://raw.githubusercontent.com/Dozom/webProjects/master/reactnativeMaps/mapsDNager/assets/logo.png" alt="Sant Vicens App" width="200">
+  <img src="https://raw.githubusercontent.com/khadijaelhady213/barbaqueue/master/assets/BARBACUEUE.png" alt="Sant Vicens App" width="200">
   <br>
-  Sant Viçens APP
+    Barbaqueue
   <br>
 </h1>
 
@@ -16,11 +16,11 @@
   <a href="#license">License</a>
 </p>
 
-![screenshot](https://raw.githubusercontent.com/Dozom/webProjects/master/reactnativeMaps/mapsDNager/santvicensdnager.gif)
+![screenshot](https://raw.githubusercontent.com/khadijaelhady213/barbaqueue/master/assets/BARBACUEUE.png)
 
 ## Key Features
 
-* This is a pac of sant vicens, just to learn a bit about react native and expo apps.
+* This is an application for the people who wants to order a barbacue near to his town or city, our intention in this project made in INS Castellet is to develop an application to let the people make barbacues near his town/city and foment the people to have more social live due to the new lives where we work in front of the computers during 5 days or more a week sitting on a chair.
 
 
 ## How To Use
@@ -46,11 +46,13 @@ $ npm start
 
 ## Credits
 
-Daniel Nager Carpio
+Daniel Nager Carpio and Khadija el Hady.
 
 ## License
 
-MIT
+![screenshot](https://licensebuttons.net/l/by-nc/3.0/88x31.png)
+
+
 
 ---
 
