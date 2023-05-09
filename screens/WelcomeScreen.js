@@ -1,5 +1,7 @@
 import { ImageBackground, StyleSheet, Text, View,Button, Image,onPress ,TextInput,TouchableOpacity } from 'react-native'
 import React from 'react'
+//VIDEO 7 ICONS
+import {MaterialCommunityIcons} from '@expo/vector-icons'
 
 function WelcomeScreen() {
   const [email, onChangeEmail] = React.useState('Email');

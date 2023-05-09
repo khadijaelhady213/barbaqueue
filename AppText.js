@@ -3,7 +3,7 @@ import React, { Children, Component } from 'react'
 
 function AppText({children}) {
 
-    return<Text>{Children}</Text>
+    return<Text >{Children}</Text>
 }
 const styles = StyleSheet.create({
     text:{
