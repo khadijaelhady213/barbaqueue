@@ -1,11 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, } from 'react-native';
-import WelcomeScreen from './screens/WelcomeScreen';
 
 import Card from './screens/Card';
 import ListingDetailsScreen from './screens/ListingDetailsScreen';
+
+import RegisterScreen from './screens/RegisterScreen';
+import WelcomeScreen from './screens/WelcomeScreen';
+
+
 export default function App() {
-   return <ListingDetailsScreen/>;
+   return <RegisterScreen/>;
   // return (
   //   <View 
   //   style={{ padding:10, top:100}}>
