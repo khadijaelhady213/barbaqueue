@@ -18,9 +18,10 @@ const styles = StyleSheet.create({
     card:{
         borderRadius:15,
         borderWidth:2,
-        borderColor:"F63809",
+        borderColor:"#F63809",
         marginBottom:'5%',
-        paddingBottom:"6%"
+        paddingBottom:"6%",
+        overflow:'hidden',
   
     },
     detailsConatiner:{
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     },
     image:{
        width:'100%',
-       borderRadius:15
+      
     }
     
 });
