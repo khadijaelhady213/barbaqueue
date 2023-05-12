@@ -1,16 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { Text, View, } from 'react-native';
-import axios from 'axios';
+import RegisterScreen from './screens/RegisterScreen'; 1
 
-
-import Card from './screens/Card';
-import { useEffect, useState } from 'react';
-// import ListingDetailsScreen from './screens/ListingDetailsScreen';
-// import MessagesScreen from './screens/MessagesScreen';
-import WelcomeScreen from './screens/WelcomeScreen';
 export default function App() {
-  
-   return <WelcomeScreen/>;
+   return <RegisterScreen/>;
+
   // return (
   //   <View 
   //   style={{ padding:10, top:100}}>

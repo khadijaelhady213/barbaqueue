@@ -6,7 +6,9 @@ import {MaterialCommunityIcons} from '@expo/vector-icons'
 function WelcomeScreen() {
   const [email, onChangeEmail] = React.useState('Email');
   const [pwd, onChangePwd] = React.useState('Password');
+  const handlePage = () => {
 
+  }
   return (
     <ImageBackground 
     resizeMode='contain'
@@ -20,18 +22,19 @@ function WelcomeScreen() {
 
         <View style={styles.inputsButtonsContainer}>
             
-            <TextInput style={styles.input} onChangeText={onChangeEmail}value={email}/>
-            <TextInput style={styles.input} onChangeText={onChangePwd} value={pwd} />
+            <TextInput placeholder="Email" style={styles.input} onChangeText={onChangeEmail}/>
+            <TextInput placeholder="Password" style={styles.input} onChangeText={onChangePwd}/>
             <TouchableOpacity style={styles.txt} > 
                 <Text >Password forgotten?</Text>
             </TouchableOpacity>
             
             <View style={[styles.Button, { backgroundColor:'white'}]}>
-            <Button onPress={console.log("kara")}  title="Login" color= 'black' accessibilityLabel="Learn more about this purple button"/>
+                <Button onPress={console.log("Testing Button Login")}  title="Login"  color= 'black' accessibilityLabel="Learn more about this purple button"/>
             </View>
             <View style={[styles.Button, { backgroundColor:'#F63809', borderColor:'white',borderWidth:2,}]}>
-            <Button onPress={console.log("kara")}  title="Register" color= 'white' accessibilityLabel="Learn more about this purple button"/>
+             <Button  onPress={console.log("Testing Button Register")}  title="Register"  color='white' accessibilityLabel="Learn more about this purple button"/>
             </View>
+           
         </View>
     </ImageBackground>
   );
