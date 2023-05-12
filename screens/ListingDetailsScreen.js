@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 
 import ListItem from './ListItem';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 export default function ListingDetailsScreen(props) {
  
     return (

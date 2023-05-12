@@ -27,10 +27,10 @@ function WelcomeScreen() {
             </TouchableOpacity>
             
             <View style={[styles.Button, { backgroundColor:'white'}]}>
-            <Button onPress={console.log("kara")}  title="Login"  color= 'black' accessibilityLabel="Learn more about this purple button"/>
+            <Button onPress={console.log("kara")}  title="Login" color= 'black' accessibilityLabel="Learn more about this purple button"/>
             </View>
             <View style={[styles.Button, { backgroundColor:'#F63809', borderColor:'white',borderWidth:2,}]}>
-            <Button onPress={console.log("kara")}  title="Register"  color= 'white' accessibilityLabel="Learn more about this purple button"/>
+            <Button onPress={console.log("kara")}  title="Register" color= 'white' accessibilityLabel="Learn more about this purple button"/>
             </View>
         </View>
     </ImageBackground>
