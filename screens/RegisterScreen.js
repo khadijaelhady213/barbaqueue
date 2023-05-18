@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
     },
     err:{
         color:"red",
-        width:'70%',
+        width:'70%',                                                                                
         alignSelf:'flex-strat',
       
 

@@ -6,19 +6,7 @@ import ImagePicker from 'react-native-image-picker';
 import imgPlaceHolder from "../assets/Fuego.png";
 
 function UserScreen() {
-  //----------------FOTO PERFIL-----------------------------
-  const [profile, setProfile] = useState(null)
 
-  const imagePick = () => {
-      ImagePicker.openPicker({
-          width: 400,
-          height: 400,
-          cropping: true
-      }).then(image => {
-          console.log(image);
-          setProfile(image.path)
-      });
-  }
 
   //--------------------------MAPA-----------------------------------
   const [location, setLocation] = useState(null);
@@ -43,25 +31,6 @@ function UserScreen() {
   }
 
   return (
-    <View style={styles.Usercontainer}>
-      <View style={styles.logoContainer}>
-        <Image style={styles.logoImage} source={require("../assets/Fuego.png")} />
-        <Text style={styles.logoTxt}>Barbaqueue</Text>
-      </View>
-
-      <View style={styles.profileContainer}>
-        <View style={styles.imgContainer}>
-            <Image style={styles.image} source={profile ? { uri: profile } : imgPlaceHolder} />
-            <TouchableOpacity onPress={imagePick}
-                style={{ alignItems: 'flex-end', top: -10 }}>
-                <Entypo name="pencil" size={20} color="green" />
-            </TouchableOpacity>
-        </View>
-        <View style={styles.textContainer}>
-            <Title>Vishal Pawar</Title>
-            <Caption>github/vishalpwr</Caption>
-        </View>
-      </View>
 
       <View style={styles.containerMap}>
         {location && (
@@ -84,61 +53,12 @@ function UserScreen() {
           </MapView>
         )}
       </View>
-    </View>
+   
   );
 }
 
 const styles = StyleSheet.create({
-    container:{
-      flex:1,
-      justifyContent:'center',
-      alignItems:'center',
-      backgroundColor:'red'
 
-    },
-
-    //USER SCREEN------------------------------
-    Usercontainer:{
-        // backgroundColor:'#FFFCE4',
-        flex:1,
-        height:"100%",
-        top:"5%"
-    },
-    logoContainer:{
-      height:"7%",
-      display: "flex",
-      flexDirection: "row",
-      alignItems:"center",
-      backgroundColor:"red"
-    },
-    logoImage:{
-      height:"90%",
-      width:"10%"
-    },
-    logoTxt:{
-      marginStart:"2%",
-      fontSize:25,
-      fontWeight:600
-    },
-    profileContainer: {
-      flex: 0.8,
-      justifyContent: 'center',
-      alignItems: 'center'
-  },
-  imgContainer: {},
-  textContainer: {
-      alignItems: 'center',
-  },
-  image: {
-      width: 110,
-      height: 110,
-      borderRadius: 55,
-      borderColor: "black",
-      borderWidth: 3,
-  },
-  userInfo: {
-      flex: 1,
-  },
     containerMap: {
       flex: 1,
       justifyContent: 'center',
