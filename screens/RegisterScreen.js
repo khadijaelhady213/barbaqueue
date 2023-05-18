@@ -208,10 +208,9 @@ const styles = StyleSheet.create({
     },
     err:{
         color:"red",
-        with:'70%',
-        
-        alignSelf:'strat',
-        backgroundColor:'yellow'
+        width:'70%',
+        alignSelf:'flex-strat',
+      
 
     }
 });
