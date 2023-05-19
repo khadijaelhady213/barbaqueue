@@ -6,6 +6,28 @@ import { useTranslation } from 'react-i18next';
 import * as Localization from 'expo-localization';
 import { withNavigation } from '@react-navigation/compat';
 
+//const 
+// const HomeScreen = () => {
+//   const [datosUsuario, setdatosUsuario] = useState("");
+  
+
+//   fetch('http://192.168.1.53:3000/users')
+//   .then(response => response.json())
+//   .then(data => {
+//     // Process the received data
+//     setdatosUsuario(JSON.stringify(data))
+//   })
+//   .catch(error => {
+//     // Handle any errors
+//     console.error("***",error);
+//   });
+  
+//   return(
+//     <View style={styles.container}>
+//   <Text style={styles.text}>{JSON.parse(datosUsuario)[1].name}</Text>
+// </View>
+//   );
+// }
 
 const validationSchema= Yup.object().shape({
     email: Yup.string().required().email().label("Emaill"),

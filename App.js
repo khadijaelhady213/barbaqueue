@@ -20,17 +20,18 @@ i18n.use(initReactI18next).init();
 const Stack = createStackNavigator();
 
 export default function App() {
-  return <Profile/>
+  // return <Profile/>
   
-  // return (
-  //   <NavigationContainer style={styles.container}>
-  //     <Stack.Navigator style={styles.container} initialRouteName="RegisterScreen">
-  //     <Stack.Screen style={styles.container} name="testScreen" component={testScreen}  options={{ headerShown: false }}/>
-  //       <Stack.Screen style={styles.container} name="WelcomeScreen" component={WelcomeScreen}  options={{ headerShown: false }}/>
-  //       <Stack.Screen style={styles.container} name="RegisterScreen" component={RegisterScreen} options={{ headerShown: true }}/>
-  //     </Stack.Navigator>
-  //   </NavigationContainer>
-  //   );
+  return (
+    <NavigationContainer style={styles.container}>
+      <Stack.Navigator style={styles.container} initialRouteName="RegisterScreen">
+      <Stack.Screen style={styles.container} name="testScreen" component={testScreen}  options={{ headerShown: false }}/>
+        <Stack.Screen style={styles.container} name="WelcomeScreen" component={WelcomeScreen}  options={{ headerShown: false }}/>
+        <Stack.Screen style={styles.container} name="Profile" component={Profile}  options={{ headerShown: false }}/>
+        <Stack.Screen style={styles.container} name="RegisterScreen" component={RegisterScreen} options={{ headerShown: true }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+    );
 
   
 }

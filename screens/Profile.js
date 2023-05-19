@@ -3,7 +3,7 @@ import { Button, Image, View, Platform , TouchableOpacity, StyleSheet,Text} from
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faStar, faPencil,faEnvelope, faCalendarDays, faCircleInfo, faArrowRight} from '@fortawesome/free-solid-svg-icons';
-import imgPlaceHolder from "../assets/user-pic.jpg";
+import imgPlaceHolder from "../assets/user-pic1.jpg";
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useTranslation } from 'react-i18next';
@@ -92,7 +92,7 @@ export default function Profile() {
               <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000"/>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                 
-                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>Need help?</Text>
+                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>{t('help')}</Text>
                 <TouchableOpacity style={{ justifyContent: 'flex-end' }}>
                   <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
                 </TouchableOpacity>
@@ -105,7 +105,7 @@ export default function Profile() {
               <FontAwesomeIcon icon={faPencil} size={20} color="#000"/>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                 
-                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>Update user data</Text>
+                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>{t('updataData')}</Text>
                 <TouchableOpacity style={{ justifyContent: 'flex-end' }}>
                   <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
                 </TouchableOpacity>
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
   shadowContainer: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity:  0.4,
+    shadowOpacity:  0.2,
     shadowRadius: 3,
     elevation: 5,
     borderTopWidth: 0,

@@ -36,7 +36,7 @@ export default function RegisterScreen(props) {
 
             { /** FORM */}
             <Formik
-                initialValues={{ email: '', password: '', firstName: '', lastName: '', day: '', month: '', year: '' }}
+                initialValues={{ email: '', password: '', firstName:'', lastName: '', day: '', month: '', year: '' }}
                 onSubmit={(values)=> console.log("----> ",values)}
                 validationSchema={validationSchema}
                 validateOnChange={false} //esto y 
