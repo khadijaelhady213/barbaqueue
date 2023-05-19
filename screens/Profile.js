@@ -92,7 +92,7 @@ export default function Profile() {
               <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000"/>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                 
-                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>t{'help'}</Text>
+                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>Need help?</Text>
                 <TouchableOpacity style={{ justifyContent: 'flex-end' }}>
                   <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
                 </TouchableOpacity>
@@ -105,7 +105,7 @@ export default function Profile() {
               <FontAwesomeIcon icon={faPencil} size={20} color="#000"/>
               <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
                 
-                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>t{'updataData'}</Text>
+                <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>Update user data</Text>
                 <TouchableOpacity style={{ justifyContent: 'flex-end' }}>
                   <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
                 </TouchableOpacity>
