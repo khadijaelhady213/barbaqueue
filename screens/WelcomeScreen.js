@@ -31,13 +31,13 @@ function WelcomeScreen({ navigation }) {
   const loginFunction = (values) => {
     // todo -> Login
     console.log(values);
-    fetch("http://localhost:3000/userlogin", {
+    fetch("http://192.168.1.40:3000/userlogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: values.email,
+        email: values.email,
         password: values.password,
       }),
     })
@@ -46,7 +46,15 @@ function WelcomeScreen({ navigation }) {
         // Handle the response data
         if (data.message == "ok") {
           console.log("EXITO");
-          navigation.navigate("Profile");
+
+          const user = {
+            email: data.email,
+            name: data.name,
+            lastname: data.lastname,
+            id: data.id,
+          }
+
+          navigation.navigate("Profile", {user});
         }
         console.log(data);
       })
@@ -189,7 +197,7 @@ const styles = StyleSheet.create({
   err: {
     color: "red",
     with: "70%",
-    backgroundColor: "yellow",
+    backgroundColor: "white",
   },
 });
 export default WelcomeScreen;

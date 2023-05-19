@@ -8,15 +8,15 @@ import { useTranslation } from 'react-i18next';
 
 
 
-export default function RegisterScreen(props) {
+export default function RegisterScreen({ navigation }) {
     const { t } = useTranslation();
 
   
     const validationSchema = yup.object().shape({
     email: yup.string().required().email().label("Email"),
     password: yup.string().min(6, 'Password must have at least 6 characters').required('Password is required'),
-    firstName: yup.string().max(50, 'Name cant have more than 50 characters').required(t('firtName') + t('requiredMsg')),
-    lastName: yup.string().max(50, 'Lastname cant have more than 50 characters').required(t('lastName') + t('requiredMsg')),
+    name: yup.string().max(50, 'Name cant have more than 50 characters').required(t('firtName') + t('requiredMsg')),
+    lastname: yup.string().max(50, 'Lastname cant have more than 50 characters').required(t('lastName') + t('requiredMsg')),
     day: yup.number().min(1, 'Invalid day').max(31, 'Invalid day').required('Day is required'),
     month: yup.number().min(1, 'Invalid month').max(12, 'Invalid month').required('Month is required'),
     year: yup.number().min(1900, 'Invalid year').max(new Date().getFullYear() - 18, 'You must be at least 18 years old').required('Year is required'),
@@ -28,6 +28,48 @@ export default function RegisterScreen(props) {
             setToggleCheckBox(!toggleCheckBox)
     }
 
+    
+  const registerFunction = (values) => {
+    // todo -> Login
+    console.log(values);
+    fetch("http://192.168.1.40:3000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: values.name,
+        password: values.password,
+        last_name: values.lastname,
+        phone_number: "646 198 581",
+        birth_date: "2022-06-02 10:01:10",
+        email: values.email,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        if (data.id != null) {
+          console.log("EXITO register");
+
+          const user = {
+            name: values.name,
+            password: values.password,
+            lastname: values.lastname,
+            email: values.email,
+          } 
+
+          navigation.navigate("testScreen", {user});
+        }
+        console.log(data);
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
+  };
+
+
     return (
         <ScrollView style={styles.BigContainer}>
         <View style={styles.container}>
@@ -36,8 +78,12 @@ export default function RegisterScreen(props) {
 
             { /** FORM */}
             <Formik
-                initialValues={{ email: '', password: '', firstName:'', lastName: '', day: '', month: '', year: '' }}
-                onSubmit={(values)=> console.log("----> ",values)}
+                initialValues={{ email: '', password: '', name:'', lastname: '', day: '', month: '', year: '' }}
+                onSubmit={(values)=> {
+                    console.log("----> ",values)
+                    registerFunction(values)
+                }
+                }
                 validationSchema={validationSchema}
                 validateOnChange={false} //esto y 
                 validateOnBlur={false} //esto eviata que los errores de validacion aparezcan antes de pulsar el votón Join Us
@@ -51,11 +97,11 @@ export default function RegisterScreen(props) {
                     <TextInput secureTextEntry placeholder={t('Password')} style={styles.input} onChangeText={handleChange("password")} value={values.password} />
                     <Text style={{color:"red"}}>{errors.password}</Text>
 
-                    <TextInput placeholder={t('firtName')} style={styles.input} onChangeText={handleChange("firstName")} value={values.firstName} />
-                    <Text style={{color:"red"}}>{errors.firstName}</Text>
+                    <TextInput placeholder={t('firtName')} style={styles.input} onChangeText={handleChange("name")} value={values.name} />
+                    <Text style={{color:"red"}}>{errors.name}</Text>
 
-                    <TextInput placeholder={t('lastName')} style={styles.input} onChangeText={handleChange("lastName")} value={values.lastName} />
-                    <Text style={{color:"red"}}>{errors.lastName}</Text>
+                    <TextInput placeholder={t('lastName')} style={styles.input} onChangeText={handleChange("lastname")} value={values.lastname} />
+                    <Text style={{color:"red"}}>{errors.lastname}</Text>
 
                     { /** Birthdate fields */}
                     <Text style={styles.titles}>

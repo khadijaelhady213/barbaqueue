@@ -7,13 +7,17 @@ import imgPlaceHolder from "../assets/user-pic1.jpg";
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useTranslation } from 'react-i18next';
+import { useRoute } from '@react-navigation/native';
 
 export default function Profile() {
   const { t } = useTranslation(); //array con las traducciones
   const [image, setImage] = useState(null);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const route = useRoute();
+  const { user } = route.params
 
+  console.log("el user es: "+user)
   const pickImage = async () => {
 
     //lo que se encarga de cambiar foto perdil
@@ -70,7 +74,7 @@ export default function Profile() {
         </TouchableOpacity>
 
         <View>
-          <Text>~ khadija el hady ~</Text>
+          <Text>~ {user.name + " " + user.lastname } ~</Text>
 
         </View>
          {/* Espacio entre el perfil y el mapa */}
@@ -84,7 +88,7 @@ export default function Profile() {
         <View style={styles.infoContainer}>
             <View style={styles.info}>
               <FontAwesomeIcon icon={faEnvelope} size={20} color="#000"/>
-              <Text style={{marginStart:"5%", paddingTop:"0%", fontSize:15}}>khadijaelhady@gmail.com</Text>
+              <Text style={{marginStart:"5%", paddingTop:"0%", fontSize:15}}>{user.email}</Text>
             </View>
             
             <View style={[styles.info]}>
@@ -237,7 +241,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: '50%',
     zIndex: 1,
-    backgroundColor:"yellow"
+    backgroundColor:"white"
   },
   map: {
     flex: 1,

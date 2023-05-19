@@ -7,31 +7,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMessage, faHome, faSquarePlus, faUser} from '@fortawesome/free-solid-svg-icons';
 
-
-//const 
-// const HomeScreen = () => {
-//   const [datosUsuario, setdatosUsuario] = useState("");
-  
-
-//   fetch('http://192.168.1.53:3000/users')
-//   .then(response => response.json())
-//   .then(data => {
-//     // Process the received data
-//     setdatosUsuario(JSON.stringify(data))
-//   })
-//   .catch(error => {
-//     // Handle any errors
-//     console.error("***",error);
-//   });
-  
-//   return(
-//     <View style={styles.container}>
-//   <Text style={styles.text}>{JSON.parse(datosUsuario)[1].name}</Text>
-// </View>
-//   );
-// }
 import HomeScreenComponent from './HomeScreen';
-import UserScreenComponent from './UserScreen'
+import Profile from './Profile';
 
 const HomeScreen = () => {
   return <HomeScreenComponent />
@@ -52,7 +29,7 @@ const ChatScreen = () => {
   );
 }
 const UserScreen = () => {
-  return <UserScreenComponent/>
+  return <Profile/>
 }
 
 const Tab = createBottomTabNavigator();
