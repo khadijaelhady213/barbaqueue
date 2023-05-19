@@ -21,6 +21,9 @@ const resources = {
       JoinUsBt:'Join Us!',
       //Control de errores
       requiredMsg:'is a required field',
+      //userProfileScreen
+      help:'Need help?',
+      updataData:'Update user data',
     },
   },
   es: {
@@ -42,6 +45,10 @@ const resources = {
       //Control de errores
       requiredMsg:' es un campo obligatorio',
       ValidEmail:'correo no valido',
+
+      //userProfileScreen
+      help:'Necesitas ayuda?',
+      updataData:'Actualizar información del usuario',
 
     },
   },

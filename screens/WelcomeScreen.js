@@ -13,7 +13,7 @@ const validationSchema= Yup.object().shape({
 })
 
 function WelcomeScreen({navigation}) {
-    const { t } = useTranslation();
+    const { t } = useTranslation(); //array con las traducciones
     console.log(".......Z> ",Localization.locale)
  
   return (
