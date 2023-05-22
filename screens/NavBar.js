@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMessage, faHome, faSquarePlus, faUser} from '@fortawesome/free-solid-svg-icons';
 import HomeScreenComponent from './HomeScreen';
+import AddParcelScreenComponent from './AddParcelScreen'
 import Profile from './Profile';
 import { useRoute } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
@@ -13,12 +14,7 @@ const HomeScreen = () => {
   return <HomeScreenComponent />
 }
 const AddParcelScreen = () => {
-  return(
-      <View style={styles.container}>
-        
-          <Text style={styles.text}>AddParcelScreen</Text>
-      </View>
-  );
+  return <AddParcelScreenComponent/>
 }
 const ChatScreen = () => {
   return(
@@ -37,7 +33,7 @@ const Tab = createBottomTabNavigator();
 function App (){
 
   const route = useRoute();
-  const { user } = route.params
+  const { user } = route.params 
   console.log("el user es: "+user.name)
 
     return (

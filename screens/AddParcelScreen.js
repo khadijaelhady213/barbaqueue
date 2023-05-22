@@ -1,6 +1,6 @@
 import React, { Component ,useState} from 'react'
 import { StatusBar } from 'expo-status-bar';
-import { View, TextInput, Text, Button, Image, ScrollView, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, TextInput, Text, Button, Image, ScrollView, StyleSheet,TouchableHighlight,useWindowDimensions,FlatList,ActivityIndicator,ImageBackground} from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faCamera } from '@fortawesome/free-solid-svg-icons';
@@ -30,40 +30,30 @@ const HuertoForm = () => {
         }
     };
     
-    const seleccionarFoto = async () => {
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-          console.log('Permiso denegado para acceder a la galería de fotos');
-          return;
+    const [images, setImages] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const { width } = useWindowDimensions();
+  
+    const pickImages = async () => {
+      setIsLoading(true);
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsMultipleSelection: true,
+        selectionLimit: 3,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      setIsLoading(false);
+      console.log(result);
+      if (!result.cancelled) {
+        if (result.assets) {
+          setImages(result.assets.map((asset) => asset.uri));
+        } else if (result.uri) {
+          setImages([result.uri]);
         }
+      }
+    };
       
-        const result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          allowsMultipleSelection: true,
-          maxSelectedAssets: 3,
-        });
-      
-        if (result && !result.canceled && result.selectedAssets) {
-          setFotos(result.selectedAssets);
-        }
-      };
-      
-      const renderFotos = () => {
-        return (
-          <View style={styles.fotosContainer}>
-            {fotos.map((foto, index) => (
-              <View key={index} style={styles.fotoContainer}>
-                <Image source={{ uri: foto.uri }} style={styles.foto} />
-              </View>
-            ))}
-            {fotos.length < 3 && (
-              <TouchableOpacity style={styles.fotoContainer} onPress={seleccionarFoto}>
-                <FontAwesomeIcon icon={faCamera} size={48} color="#ccc" />
-              </TouchableOpacity>
-            )}
-          </View>
-        );
-      };
     
   
     const handleSubmit = () => {
@@ -76,7 +66,7 @@ const HuertoForm = () => {
     };
   
     return (
-        <ScrollView style={styles.container}>
+        <View style={styles.container}>
           <View style={styles.formContainer}>
             <Text style={styles.label}>Nombre del huerto:</Text>
             <TextInput
@@ -114,12 +104,49 @@ const HuertoForm = () => {
             <Button title="Validar localización" onPress={validarLocalizacion} />
     
             <Text style={styles.label}>Fotos:</Text>
-            <Button title="Seleccionar fotos" onPress={seleccionarFoto} />
-            {renderFotos()}
+            <FlatList
+              style={styles.imagesContainer}
+              data={images}
+              
+              renderItem={({ item }) => (
+                <Image
+                  source={{ uri: item }}
+                  style={{ width: width / 4, height: 160,  marginRight:11 ,paddingBottom: 0}}
+                />
+              )}
+              numColumns={3}
+              keyExtractor={(item) => item}
+              contentContainerStyle={{ marginVertical: 50, paddingBottom: 0, marginTop:0,marginBottom:0}}
+              ListHeaderComponent={
+                isLoading ? (
+                  <View>
+                    <Text
+                      style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}
+                    >
+                      Loading...
+                    </Text>
+                    <ActivityIndicator size={"large"} />
+                  </View>
+                ) : (
+                  <TouchableHighlight style={styles.imagesIcon} onPress={pickImages}>
+                     <Image
+                   
+                      style={styles.background}
+                      source={require("../assets/fotos2.jpg")} />
+                  </TouchableHighlight>
+                
+
+                )
+              }
+            />
+
+            <View style={ { backgroundColor: "#F63809" , borderRadius:10}}>
+              <Button style={styles.Button}title="Guardar"  color="white" onPress={handleSubmit} />
+            </View>
     
-            <Button title="Guardar" onPress={handleSubmit} />
+            
           </View>
-        </ScrollView>
+        </View>
       );
     };
     
@@ -130,7 +157,9 @@ const HuertoForm = () => {
         marginTop:"10%"
       },
       formContainer: {
-        marginBottom: 16,
+     
+        padding: 20,
+       
       },
       label: {
         fontSize: 16,
@@ -155,19 +184,29 @@ const HuertoForm = () => {
         flexWrap: 'wrap',
         marginTop: 8,
       },
-      fotoContainer: {
-        width: 100,
-        height: 100,
-        backgroundColor: '#f2f2f2',
-        justifyContent: 'center',
-        alignItems: 'center',
-        margin: 4,
+      imagesContainer: {
+       
+        backgroundColor: '#d6d5d2',
+        height:"25%",
+        display:'flex',
+        flexDirection:'row',
+        marginBottom:"5%"
+       
       },
       foto: {
         width: '100%',
         height: '100%',
         resizeMode: 'cover',
       },
+      button:{
+        width: "70%",
+        height: 40,
+        borderRadius: 10,
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: "8%",
+        backgroundColor:"blue"
+      }
     });
     
     export default HuertoForm;

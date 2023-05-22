@@ -61,7 +61,7 @@ export default function RegisterScreen({ navigation }) {
             email: values.email,
           } 
 
-          navigation.navigate("testScreen", {user});
+          navigation.navigate("NavBar", {user});
         }
         console.log(data);
       })
@@ -94,7 +94,7 @@ export default function RegisterScreen({ navigation }) {
                 {({ handleChange, handleSubmit, errors, values }) => (
                 <>
                     <TextInput keyboardType='email-address' placeholder={t('Email')} style={styles.input} onChangeText={handleChange("email")} value={values.email} />
-                    <Text style={styles.err}>{errors.email}</Text>
+                    <Text style={{color:"red"}}>{errors.email}</Text>
                    
                     
                     <TextInput secureTextEntry placeholder={t('Password')} style={styles.input} onChangeText={handleChange("password")} value={values.password} />
@@ -178,7 +178,8 @@ const styles = StyleSheet.create({
        
     },
     BigContainer:{
-        backgroundColor:"white"
+        backgroundColor:"white",
+        marginTop:"0%"
     },
     container:{
         marginTop: '0%',
@@ -255,11 +256,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight:500,        
     },
-    err:{
-        color:"red",
-        width:'70%',                                                                                
-        alignSelf:'flex-start',
-      
-
-    }
+   
 });

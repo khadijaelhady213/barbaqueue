@@ -33,7 +33,7 @@ function WelcomeScreen({ navigation }) {
   const loginFunction = (values) => {
     // todo -> Login
     console.log(values);
-    fetch("http://192.168.0.13:3000/userlogin", {
+    fetch("http://192.168.1.40:3000/userlogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ function WelcomeScreen({ navigation }) {
             id: data.id,
           }
 
-          navigation.navigate("testScreen", {user});
+          navigation.navigate("NavBar", {user});
         }
         console.log(data);
       })
@@ -100,7 +100,7 @@ function WelcomeScreen({ navigation }) {
                 style={styles.input}
                 onChangeText={handleChange("email")}
               />
-              <Text style={styles.err}>{errors.email}</Text>
+              <Text style={{color:"red"}}>{errors.email}</Text>
 
               {/** Password input */}
               <TextInput
@@ -121,7 +121,7 @@ function WelcomeScreen({ navigation }) {
                   title={t("Login")}
                   color="black"
                   onPress={handleSubmit}
-                  accessibilityLabel="Learn more about this purple button"
+                  // accessibilityLabel="Learn more about this purple button"
                 />
               </View>
               <View
@@ -197,10 +197,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: "8%",
   },
-  err: {
-    color: "red",
-    width: "70%",
-    backgroundColor: "white",
-  },
+ 
 });
 export default WelcomeScreen;
