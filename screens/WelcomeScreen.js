@@ -15,6 +15,8 @@ import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import * as Localization from "expo-localization";
 import { withNavigation } from "@react-navigation/compat";
+import { StatusBar } from 'expo-status-bar';
+
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Emaill"),
@@ -31,7 +33,7 @@ function WelcomeScreen({ navigation }) {
   const loginFunction = (values) => {
     // todo -> Login
     console.log(values);
-    fetch("http://192.168.1.40:3000/userlogin", {
+    fetch("http://192.168.0.13:3000/userlogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,7 +56,7 @@ function WelcomeScreen({ navigation }) {
             id: data.id,
           }
 
-          navigation.navigate("Profile", {user});
+          navigation.navigate("testScreen", {user});
         }
         console.log(data);
       })
@@ -72,6 +74,7 @@ function WelcomeScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/b7.png")}
     >
+      <StatusBar style="auto" /> 
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
@@ -196,7 +199,7 @@ const styles = StyleSheet.create({
   },
   err: {
     color: "red",
-    with: "70%",
+    width: "70%",
     backgroundColor: "white",
   },
 });

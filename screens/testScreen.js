@@ -1,14 +1,13 @@
 import { Text, View ,StyleSheet, Image} from 'react-native'
 import React, { Component , useEffect, useState } from 'react'
-
-
-import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; 
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faMessage, faHome, faSquarePlus, faUser} from '@fortawesome/free-solid-svg-icons';
-
 import HomeScreenComponent from './HomeScreen';
 import Profile from './Profile';
+import { useRoute } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+
 
 const HomeScreen = () => {
   return <HomeScreenComponent />
@@ -28,12 +27,19 @@ const ChatScreen = () => {
       </View>
   );
 }
-const UserScreen = () => {
-  return <Profile/>
-}
+
+const UserScreen = ({ user }) => {
+  
+  return <Profile user={user} />; //llamar a la pantalla del usuario enviandole el objeto con la info del usuario
+};
 
 const Tab = createBottomTabNavigator();
 function App (){
+
+  const route = useRoute();
+  const { user } = route.params
+  console.log("el user es: "+user.name)
+
     return (
       <Tab.Navigator>
       <Tab.Screen 
@@ -72,6 +78,7 @@ function App (){
       <Tab.Screen 
         name='h4' 
         component={UserScreen}
+        initialParams={{ user }} //eviar el objeto con la info del usuario a la constante que llama al persil del usuario actual
         options={{ 
           headerShown: false,
           tabBarShowLabel: false,

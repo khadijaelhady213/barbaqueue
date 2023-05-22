@@ -8,6 +8,8 @@ import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { useTranslation } from 'react-i18next';
 import { useRoute } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
+
 
 export default function Profile() {
   const { t } = useTranslation(); //array con las traducciones
@@ -56,6 +58,8 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
+       <StatusBar style="auto" /> 
+       
       <View style={[styles.logoContainer,styles.shadowContainer]}>
         <Image source={require("../assets/Fuego.png")} style={styles.logoImg}/>
         <Text style={styles.logoTxt}>Profile</Text>

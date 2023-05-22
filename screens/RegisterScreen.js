@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { StatusBar } from 'expo-status-bar';
+
 
 
 
@@ -73,6 +75,7 @@ export default function RegisterScreen({ navigation }) {
     return (
         <ScrollView style={styles.BigContainer}>
         <View style={styles.container}>
+            <StatusBar style="auto" /> 
             { /** LOGO */}
             <Image style={styles.image} source={require("../assets/BARBACUEUE.png")}  />
 
@@ -255,7 +258,7 @@ const styles = StyleSheet.create({
     err:{
         color:"red",
         width:'70%',                                                                                
-        alignSelf:'flex-strat',
+        alignSelf:'flex-start',
       
 
     }

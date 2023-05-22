@@ -13,6 +13,7 @@ import i18n from './lenguages/lenguage';
 import MapScreen from './screens/Profile';
 import UserScreen from './screens/UserScreen';
 import Profile from './screens/Profile';
+import AddParcelScreen from './screens/AddParcelScreen';
 
 // Initialize i18next instance with React bindings
 i18n.use(initReactI18next).init();
@@ -24,8 +25,8 @@ export default function App() {
   
   return (
     <NavigationContainer style={styles.container}>
-      <Stack.Navigator style={styles.container} initialRouteName="WelcomeScreen">
-      <Stack.Screen style={styles.container} name="testScreen" component={testScreen}  options={{ headerShown: false }}/>
+      <Stack.Navigator style={styles.container} initialRouteName="AddParcelScreen">
+        <Stack.Screen style={styles.container} name="AddParcelScreen" component={AddParcelScreen}  options={{ headerShown: false }}/>
         <Stack.Screen style={styles.container} name="WelcomeScreen" component={WelcomeScreen}  options={{ headerShown: false }}/>
         <Stack.Screen style={styles.container} name="Profile" component={Profile}  options={{ headerShown: false }}/>
         <Stack.Screen style={styles.container} name="RegisterScreen" component={RegisterScreen} options={{ headerShown: true }}/>
