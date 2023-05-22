@@ -1,0 +1,6 @@
+1. Subida de imagenes
+2. Chat
+3. Pantalla de visualizar todas las Parcelas
+4. pantalla de ver el estado de las Parcelas
+5. Crear Parcelas
+    
