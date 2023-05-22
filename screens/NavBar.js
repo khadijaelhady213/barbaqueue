@@ -8,14 +8,14 @@ import {
   faSquarePlus,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import HomeScreenComponent from "./HomeScreen";
+import ParcelsAvailableScreen from "./ParcelsAvailableScreen";
 import AddParcelScreenComponent from "./AddParcelScreen";
 import Profile from "./Profile";
 import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 
 const HomeScreen = () => {
-  return <HomeScreenComponent />;
+  return <ParcelsAvailableScreen />;
 };
 const AddParcelScreen = () => {
   return <AddParcelScreenComponent />;

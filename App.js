@@ -21,39 +21,40 @@ i18n.use(initReactI18next).init();
 const Stack = createStackNavigator();
 
 export default function App() {
-  return (
-    <NavigationContainer style={styles.container}>
-      <Stack.Navigator
-        style={styles.container}
-        initialRouteName="WelcomeScreen"
-      >
-        <Stack.Screen
-          style={styles.container}
-          name="NavBar"
-          component={NavBar}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          style={styles.container}
-          name="WelcomeScreen"
-          component={WelcomeScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          style={styles.container}
-          name="Profile"
-          component={Profile}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          style={styles.container}
-          name="RegisterScreen"
-          component={RegisterScreen}
-          options={{ headerShown: true }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  return <AddParcelScreen/>
+  // return (
+  //   <NavigationContainer style={styles.container}>
+  //     <Stack.Navigator
+  //       style={styles.container}
+  //       initialRouteName="WelcomeScreen"
+  //     >
+  //       <Stack.Screen
+  //         style={styles.container}
+  //         name="NavBar"
+  //         component={NavBar}
+  //         options={{ headerShown: false }}
+  //       />
+  //       <Stack.Screen
+  //         style={styles.container}
+  //         name="WelcomeScreen"
+  //         component={WelcomeScreen}
+  //         options={{ headerShown: false }}
+  //       />
+  //       <Stack.Screen
+  //         style={styles.container}
+  //         name="Profile"
+  //         component={Profile}
+  //         options={{ headerShown: false }}
+  //       />
+  //       <Stack.Screen
+  //         style={styles.container}
+  //         name="RegisterScreen"
+  //         component={RegisterScreen}
+  //         options={{ headerShown: true }}
+  //       />
+  //     </Stack.Navigator>
+  //   </NavigationContainer>
+  // );
 }
 const styles = StyleSheet.create({
   container: {

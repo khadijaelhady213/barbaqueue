@@ -24,6 +24,9 @@ const resources = {
       //userProfileScreen
       help:'Need help?',
       updataData:'Update user data',
+
+      //AddParcelScreen
+      
     },
   },
   es: {
@@ -49,6 +52,14 @@ const resources = {
       //userProfileScreen
       help:'Necesitas ayuda?',
       updataData:'Actualizar información del usuario',
+
+      //AddParcelScreen
+      nameInput: "Introduce el nombre del huerto",
+      priceInput:"Introduce el precio por persona",
+      description:"Descripción:",
+      decInput:"Introduce una descripción",
+      location:"Localización:",
+
 
     },
   },

@@ -16,15 +16,16 @@ const HuertoForm = () => {
   
     const validarLocalizacion = async () => {
         try {
-          const response = await fetch(`https://api.geocoding-service.com/geocode?address=${localizacion}&country=YOUR_COUNTRY_CODE`);
-          const data = await response.json();
+          setEsValido(true);
+          // const response = await fetch(`https://api.geocoding-service.com/geocode?address=${localizacion}&country=YOUR_COUNTRY_CODE`);
+          // const data = await response.json();
     
-          if (data.length > 0) {
-            setEsValido(true);
-          } else {
-            setEsValido(false);
-            console.log('La localización ingresada no existe o no se encuentra en el mismo país');
-          }
+          // if (data.length > 0) {
+          //   setEsValido(true);
+          // } else {
+          //   setEsValido(false);
+          //   console.log('La localización ingresada no existe o no se encuentra en el mismo país');
+          //}
         } catch (error) {
           console.error('Error al validar la localización:', error);
         }

@@ -104,6 +104,7 @@ function WelcomeScreen({ navigation }) {
 
               {/** Password input */}
               <TextInput
+                secureTextEntry
                 placeholder={t("Password")}
                 style={styles.input}
                 onChangeText={handleChange("password")}
