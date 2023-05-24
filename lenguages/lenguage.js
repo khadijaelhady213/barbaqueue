@@ -26,6 +26,21 @@ const resources = {
       updataData:'Update user data',
 
       //AddParcelScreen
+      newParcel:"New Parcel",
+      name: "Parcel name:",
+      nameInput: "Enter the parcel name",
+      price: "Price per person:",
+      priceInput: "Enter the price per person",
+      description: "Description:",
+      descInput: "Enter a description",
+      location: "Location:",
+      locationInput: "Enter the location",
+      validateLocationBtn: "Validate location",
+      pictures: "Pictures",
+      pickImage:"Pick  3 Images",
+      loading:"Loading ...",
+      saveBtn: "Save",
+      requiredField:"This field is required"
       
     },
   },
@@ -54,11 +69,21 @@ const resources = {
       updataData:'Actualizar información del usuario',
 
       //AddParcelScreen
+      newParcel:"Parcela Nueva",
+      name:"Nombre del huerto:",
       nameInput: "Introduce el nombre del huerto",
+      price:"Precio por persona:",
       priceInput:"Introduce el precio por persona",
       description:"Descripción:",
       decInput:"Introduce una descripción",
       location:"Localización:",
+      locationInput:"Introduce la localización",
+      validateLocationBtn:"Validar localizació",
+      pictures:"Fotos:",
+      pickImage:"Selecciona 3 Fotos",
+      loading:"Cargando ...",
+      sabeBtn:"Guardar",
+      requiredField:"Este campo es obligatorio"
 
 
     },

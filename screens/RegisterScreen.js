@@ -34,7 +34,7 @@ export default function RegisterScreen({ navigation }) {
   const registerFunction = (values) => {
     // todo -> Login
     console.log(values);
-    fetch("http://192.168.1.40:3000/users", {
+    fetch("http://192.168.0.16:3000/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
