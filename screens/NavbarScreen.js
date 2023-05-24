@@ -2,7 +2,11 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import React, { Component, useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faMessage,  faHome, faSquarePlus,faUser,
+import {
+  faMessage,
+  faHome,
+  faSquarePlus,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import ParcelsAvailableScreen from "./ParcelsAvailableScreen";
 import AddParcelScreenComponent from "./AddParcelScreen";
@@ -30,15 +34,14 @@ const UserScreen = () => {
 };
 
 const Tab = createBottomTabNavigator();
-function App() {
+
+function NavbarScreenNavigator() {
   const route = useRoute();
-  const { user } = route.params;
-  console.log("el user es: " + user.name);
 
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="h"
+        name="homescreen"
         component={HomeScreen}
         options={{
           headerShown: false,
@@ -54,7 +57,7 @@ function App() {
         }}
       />
       <Tab.Screen
-        name="h1"
+        name="addparcelscreen"
         component={AddParcelScreen}
         options={{
           headerShown: false,
@@ -70,7 +73,7 @@ function App() {
         }}
       />
       <Tab.Screen
-        name="h2"
+        name="chatscreen"
         component={ChatScreen}
         options={{
           headerShown: false,
@@ -86,9 +89,9 @@ function App() {
         }}
       />
       <Tab.Screen
-        name="h4"
+        name="userscreen"
         component={UserScreen}
-        initialParams={{ user }} //eviar el objeto con la info del usuario a la constante que llama al persil del usuario actual
+        //        initialParams={{ user }} //eviar el objeto con la info del usuario a la constante que llama al persil del usuario actual
         options={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -110,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default NavbarScreenNavigator;

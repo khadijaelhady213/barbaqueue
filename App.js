@@ -1,37 +1,40 @@
-import React, { useEffect } from 'react';
-import { StyleSheet } from 'react-native';
-import { Provider, useDispatch, useSelector } from 'react-redux';
-import { PersistGate } from 'redux-persist/integration/react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { store, persistor } from './store';
-import WelcomeScreen from './screens/WelcomeScreen';
-import NavBar from './screens/NavBar';
+import React, { useEffect } from "react";
+import { StyleSheet } from "react-native";
+import { Provider, useSelector } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import WelcomeScreen from "./screens/WelcomeScreen";
+import RegisterScreen from "./screens/RegisterScreen";
+import NavbarScreen from "./screens/NavbarScreen";
+import Profile from "./screens/Profile";
 
 const Stack = createStackNavigator();
 
-const App = () => {
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+// Routes of the application
+function StackRoutes() {
+  return (
+    <Stack.Navigator headerMode="none">
+      <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="NavbarScreen" component={NavbarScreen} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+    </Stack.Navigator>
+  );
+}
 
+// Load data from local storage
+function LoadDataFromStorage() {}
+
+// Init application Routes
+const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator headerMode="none">
-        {isLoggedIn ? (
-          <Stack.Screen name="NavBar" component={NavBar} />
-        ) : (
-          <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
-        )}
-      </Stack.Navigator>
+      <StackRoutes />
     </NavigationContainer>
   );
 };
 
+// Init the presistent store of application from redux
 export default () => {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
-    </Provider>
-  );
+  return <App />;
 };
