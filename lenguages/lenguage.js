@@ -42,6 +42,8 @@ const resources = {
       saveBtn: "Save",
       requiredField:"This field is required",
       invalidAddress:"Invalid Adress",
+      capacity:'Capacidad:',
+      capacityInput:'Introduce la capacidad',
 
       //parcelDetailsScreen
       cancel: 'Cancel',
@@ -93,6 +95,8 @@ const resources = {
       sabeBtn:"Guardar",
       requiredField:"Este campo es obligatorio",
       invalidAddress:"Dirección inválida",
+      capacity:'Capacidad:',
+      capacityInput:'Introduce la capacidad',
 
       //parcelDetailsScreen
       cancel: 'Cancelar',

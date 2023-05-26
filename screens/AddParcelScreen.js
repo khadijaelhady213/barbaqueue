@@ -40,11 +40,13 @@ const HuertoForm = () => {
     }
     return true;
   };
+
   //validar los inputs
   const validationSchema = Yup.object().shape({
     nombreHuerto: Yup.string().required(t('requiredField')),
     precioPorPersona: Yup.number().required(t('requiredField')),
     descripcion: Yup.string().required(t('requiredField')),
+    capacity: Yup.string().required(t('requiredField')),
     localizacion: Yup.string()
     .test('isValidAddress', t('invalidAddress'), validateLocalizacion)
     .required(t('requiredField')),
@@ -66,8 +68,19 @@ const HuertoForm = () => {
   
     try {
       await validationSchema.validate(values, { abortEarly: false });
-      console.log('Validación exitosa');
-      // Aquí puedes realizar las acciones correspondientes cuando la validación es exitosa
+
+      // create Parcel request
+      const createParcelRequest = {
+        title: values.nombreHuerto,
+        people_price: values.precioPorPersona,
+        capacity: values.capacity,
+        location: values.localizacion,
+        image1: images[0] ? images[0] : null,
+        image2: images[1] ? images[1] : null,
+        image3: images[2] ? images[2] : null,
+      }
+
+      console.log(createParcelRequest)
     } catch (error) {
       console.log('Errores de validación:', error);
       // Si hay un error de validación en localizacion pero no está vacío, modificar el mensaje de error
@@ -83,50 +96,58 @@ const HuertoForm = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" /> 
-      
+      {/** TOP LOGO */}      
       <View style={[styles.logoContainer,styles.shadowContainer]}>
         <Image source={require("../assets/Fuego.png")} style={styles.logoImg}/>
         <Text style={styles.logoTxt}>{t('newParcel')}</Text>
       </View>
-
+      
+      {/** Parcel FORM */}  
       <Formik
-        initialValues={{nombreHuerto: '',precioPorPersona: '',descripcion: '',localizacion: '',
-        }}
+        initialValues={{nombreHuerto: '',precioPorPersona: '',descripcion: '',localizacion: '', capacity: ''}}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
         validateOnChange={false} //esto y 
         validateOnBlur={false} //esto eviata que los errores de validacion aparezcan antes de pulsar el votón Join Us
       >
         {({ handleChange, handleSubmit, errors, values }) => (
-          <View style={styles.formContainer}>
-          
+          <View style={styles.formContainer}>         
+            
+            {/** Name of Parcel INPUT */}   
             <Text style={styles.label}>{t('name')}</Text>
             <TextInput value={values.nombreHuerto} onChangeText={handleChange('nombreHuerto')} style={[styles.input, errors.nombreHuerto && styles.inputError]}
               placeholder={errors.nombreHuerto ? errors.nombreHuerto : t('nameInput')}
             />
 
+            {/** Price of Parcel INPUT */}   
             <Text style={styles.label}>{t('price')}</Text>
             <TextInput  keyboardType="numeric" value={values.precioPorPersona} onChangeText={handleChange('precioPorPersona')} style={[styles.input, errors.precioPorPersona && styles.inputError]}
               placeholder={errors.precioPorPersona ? errors.precioPorPersona : t('priceInput')}
             />
 
+            {/** Description of Parcel INPUT */}   
             <Text style={styles.label}>{t('description')}</Text>
             <TextInput value={values.descripcion} onChangeText={handleChange('descripcion')} style={[styles.input, errors.descripcion && styles.inputError]}
              placeholder={errors.descripcion ? errors.descripcion : t('decInput')}
             />
 
+            {/** Location of Parcel INPUT */}   
             <Text style={styles.label}>{t('location')}</Text>
             <TextInput value={values.localizacion} onChangeText={handleChange('localizacion')} style={[styles.input, errors.localizacion && styles.inputError]}
              placeholder={errors.localizacion ? errors.localizacion : t('locationInput')}/>
 
+            {/** Capacity of Parcel INPUT */}   
+            <Text style={styles.label}>{t('capacity')}</Text>
+            <TextInput value={values.capacity} onChangeText={handleChange('capacity')} style={[styles.input, errors.capacity && styles.inputError]}
+             placeholder={errors.capacity ? errors.capacity : t('capacityInput')}/>
+
+            {/** Save BUTTON */}   
             <View  style={ styles.saveBtn}>
               <Button title={t('sabeBtn')}  color="white" onPress={handleSubmit} />
             </View>
 
             <Text style={styles.label}>{t('pictures')}</Text>
-
             <FlatList
-              
               style={[styles.imagesContainer, images.length > 0 && styles.imagesContainerWithImages]}
               data={images}
               

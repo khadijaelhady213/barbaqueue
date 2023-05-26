@@ -27,7 +27,7 @@ i18n.use(initReactI18next).init();
 const Stack = createStackNavigator();
 
 export default function App() {
- return <Test/>
+ return <AddParcelScreen/>
   // return (
   //   <NavigationContainer style={styles.container}>
   //     <Stack.Navigator
