@@ -3,6 +3,9 @@ import { endpoint } from "./configEndpoints";
 
 export const createParcelFunction = (createParcelRequest, navigation) => {
 
+  console.log("Hello")
+  console.log(createParcelRequest)
+  
   fetch(endpoint + "/createParcel", {
     method: "POST",
     headers: {
@@ -14,10 +17,12 @@ export const createParcelFunction = (createParcelRequest, navigation) => {
     .then((data) => {
       // Parcel created
       // {"id": 1}
+      
       if (data.id != null) {
+        console.log("ha llegao")
         navigation.navigate("NavbarScreen");
       }
-      
+
     })
     .catch((error) => {
       // Handle the error
