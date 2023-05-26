@@ -1,25 +1,41 @@
+<<<<<<< HEAD
 import { ImageBackground, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
 import React from "react";
+=======
+import {
+  ImageBackground,
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import React, { useEffect } from "react";
+>>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import * as Localization from "expo-localization";
 import { withNavigation } from "@react-navigation/compat";
+<<<<<<< HEAD
 import { StatusBar } from 'expo-status-bar';
 
+=======
+import { StatusBar } from "expo-status-bar";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { login, store } from "../store";
+>>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 
-const loginSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Emaill"),
-  password: Yup.string().required().min(4).label("Password"),
-});
+import { loginSchema } from "../schemas/loginSchema";
+import { loginFunction } from "../interactWithApi/loginFunction";
 
 function WelcomeScreen({ navigation }) {
   const { t } = useTranslation();
-  const login = {
-    email: "",
-    password: "",
-  };
 
+<<<<<<< HEAD
   const loginFunction = (values) => {
     // todo -> Login
     console.log(values);
@@ -61,6 +77,14 @@ function WelcomeScreen({ navigation }) {
   };
 
   console.log(".......Z> ", Localization.locale);
+=======
+  /**
+   * Hacer login i obtener el objeto user de la api, despues
+   * setear el token en la variable sessionToken
+   * setear el objeto user en la variable userData
+   */
+  //  console.log(".......Z> ", Localization.locale);
+>>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 
   return (
     <ImageBackground
@@ -68,7 +92,7 @@ function WelcomeScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/b7.png")}
     >
-      <StatusBar style="auto" /> 
+      <StatusBar style="auto" />
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
@@ -79,7 +103,7 @@ function WelcomeScreen({ navigation }) {
         <Formik
           initialValues={login}
           onSubmit={(values) => {
-            loginFunction(values);
+            loginFunction(values, navigation);
           }}
           validationSchema={loginSchema}
           validateOnChange={false}
@@ -94,7 +118,7 @@ function WelcomeScreen({ navigation }) {
                 style={styles.input}
                 onChangeText={handleChange("email")}
               />
-              <Text style={{color:"red"}}>{errors.email}</Text>
+              <Text style={{ color: "red" }}>{errors.email}</Text>
 
               {/** Password input */}
               <TextInput
@@ -192,6 +216,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: "8%",
   },
- 
 });
 export default WelcomeScreen;
