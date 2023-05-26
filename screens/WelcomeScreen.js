@@ -1,36 +1,66 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
-import React, { useEffect } from "react";
+import { ImageBackground, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
+import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import * as Localization from "expo-localization";
 import { withNavigation } from "@react-navigation/compat";
-import { StatusBar } from "expo-status-bar";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
-import { login, store } from "../store";
+import { StatusBar } from 'expo-status-bar';
 
-import { loginSchema } from "../schemas/loginSchema";
-import { loginFunction } from "../interactWithApi/loginFunction";
+
+const loginSchema = Yup.object().shape({
+  email: Yup.string().required().email().label("Emaill"),
+  password: Yup.string().required().min(4).label("Password"),
+});
 
 function WelcomeScreen({ navigation }) {
   const { t } = useTranslation();
+  const login = {
+    email: "",
+    password: "",
+  };
 
-  /**
-   * Hacer login i obtener el objeto user de la api, despues
-   * setear el token en la variable sessionToken
-   * setear el objeto user en la variable userData
-   */
-  //  console.log(".......Z> ", Localization.locale);
+  const loginFunction = (values) => {
+    // todo -> Login
+    console.log(values);
+    fetch("http://192.168.1.41:3000/userlogin", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Handle the response data
+        if (data.message == "ok") {
+          console.log("EXITO");
+
+          const user = {
+            email: data.email,
+            name: data.name,
+            lastname: data.lastname,
+            id: data.id,
+          }
+
+          navigation.navigate("NavBar", {user});
+          console.log('ok');
+        }else{
+          console.log("La conección a la api ha fallado");
+          console.log(data);
+        }
+       
+      })
+      .catch((error) => {
+        // Handle the error
+        console.error(error);
+      });
+  };
+
+  console.log(".......Z> ", Localization.locale);
 
   return (
     <ImageBackground
@@ -38,7 +68,7 @@ function WelcomeScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/b7.png")}
     >
-      <StatusBar style="auto" />
+      <StatusBar style="auto" /> 
       <View style={styles.logoContainer}>
         <Image
           style={styles.logo}
@@ -49,7 +79,7 @@ function WelcomeScreen({ navigation }) {
         <Formik
           initialValues={login}
           onSubmit={(values) => {
-            loginFunction(values, navigation);
+            loginFunction(values);
           }}
           validationSchema={loginSchema}
           validateOnChange={false}
@@ -64,7 +94,7 @@ function WelcomeScreen({ navigation }) {
                 style={styles.input}
                 onChangeText={handleChange("email")}
               />
-              <Text style={{ color: "red" }}>{errors.email}</Text>
+              <Text style={{color:"red"}}>{errors.email}</Text>
 
               {/** Password input */}
               <TextInput
@@ -162,5 +192,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: "8%",
   },
+ 
 });
 export default WelcomeScreen;
