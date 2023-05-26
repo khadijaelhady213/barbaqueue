@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Button } from 'react-native';
+import { View, Button,StyleSheet } from 'react-native';
 import Communications from 'react-native-communications';
 
 const OpenInGoogleMapsButton = ({ location }) => {
@@ -10,10 +10,18 @@ const OpenInGoogleMapsButton = ({ location }) => {
   };
 
   return (
-    <View>
-      <Button title="Open in Google Maps" onPress={handleOpenInGoogleMaps} />
+    <View style={styles.bt}>
+        
+      <Button title="Open in Google Maps" color="black" onPress={handleOpenInGoogleMaps} />
     </View>
   );
 };
+const styles = StyleSheet.create({
+    bt:{
+        borderWidth: 1,
+        borderColor:"#d6d3d2",
+        borderRadius:5
+    }
+});
 
 export default OpenInGoogleMapsButton;

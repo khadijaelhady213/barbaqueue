@@ -1,14 +1,12 @@
 import { ImageBackground, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
-import React, { useEffect } from 'react';
+import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import * as Localization from "expo-localization";
 import { withNavigation } from "@react-navigation/compat";
 import { StatusBar } from 'expo-status-bar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch } from 'react-redux';
-import { login } from '../store';
+
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Emaill"),
@@ -16,8 +14,6 @@ const loginSchema = Yup.object().shape({
 });
 
 function WelcomeScreen({ navigation }) {
-  const dispatch = useDispatch();
-
   const { t } = useTranslation();
   const login = {
     email: "",
@@ -49,23 +45,12 @@ function WelcomeScreen({ navigation }) {
             lastname: data.lastname,
             id: data.id,
           }
-          AsyncStorage.setItem('sessionToken', data.sessionToken)
-        .then(() => {
-          // Guardar el objeto user en AsyncStorage
-          AsyncStorage.setItem('userData', user)
-            .then(() => {
-              // Iniciar sesión en el store
-              dispatch(login(user));
 
-              navigation.navigate('NavBar');
-            })
-            .catch((error) => {
-              console.error(error);
-            });})
-            .catch((error) => {
-              console.error(error);
-            });
-
+          navigation.navigate("NavBar", {user});
+          console.log('ok');
+        }else{
+          console.log("La conección a la api ha fallado");
+          console.log(data);
         }
        
       })
@@ -74,32 +59,6 @@ function WelcomeScreen({ navigation }) {
         console.error(error);
       });
   };
-
-  useEffect(() => {
-    // Comprobar si hay un token de sesión guardado en AsyncStorage
-    AsyncStorage.getItem('sessionToken')
-      .then((sessionToken) => {
-        if (sessionToken) {
-          // Comprobar si hay un usuario guardado en AsyncStorage
-          AsyncStorage.getItem('user')
-            .then((userString) => {
-              const user = JSON.parse(userString);
-              if (user) {
-                // Iniciar sesión en el store
-                dispatch(login(user));
-                navigation.navigate('NavBar');
-              }
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
 
   console.log(".......Z> ", Localization.locale);
 

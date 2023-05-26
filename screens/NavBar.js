@@ -2,7 +2,11 @@ import { Text, View, StyleSheet, Image } from "react-native";
 import React, { Component, useEffect, useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { faMessage,  faHome, faSquarePlus,faUser,
+import {
+  faMessage,
+  faHome,
+  faSquarePlus,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import ParcelsAvailableScreen from "./ParcelsAvailableScreen";
 import AddParcelScreenComponent from "./AddParcelScreen";
@@ -24,8 +28,7 @@ const ChatScreen = () => {
   );
 };
 
-const UserScreen = () => {
-  const user = useSelector((state) => state.user);
+const UserScreen = ({ user }) => {
   return <Profile user={user} />; //llamar a la pantalla del usuario enviandole el objeto con la info del usuario
 };
 

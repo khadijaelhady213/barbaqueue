@@ -5,14 +5,11 @@ import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { StatusBar } from 'expo-status-bar';
+import axios from 'axios'; 
 
 const HuertoForm = () => {
   const { t } = useTranslation();
-  const [nombreHuerto, setNombreHuerto] = useState('');
-  const [precioPorPersona, setPrecioPorPersona] = useState('');
-  const [descripcion, setDescripcion] = useState('');
-  const [localizacion, setLocalizacion] = useState('');
-  const [fotos, setFotos] = useState([]);
+
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { width } = useWindowDimensions();
@@ -37,67 +34,47 @@ const HuertoForm = () => {
       }
     }
   };
+  const validateLocalizacion = async (value) => {
+    if (value && value.trim().length > 0) {
+      return await validateAddress(value);
+    }
+    return true;
+  };
   //validar los inputs
   const validationSchema = Yup.object().shape({
     nombreHuerto: Yup.string().required(t('requiredField')),
     precioPorPersona: Yup.number().required(t('requiredField')),
     descripcion: Yup.string().required(t('requiredField')),
-    localizacion: Yup.string().required(t('requiredField')),
-  });
+    localizacion: Yup.string()
+    .test('isValidAddress', t('invalidAddress'), validateLocalizacion)
+    .required(t('requiredField')),
+});
 
-  //validar localizacion, no va
-  const validarLocalizacion = async () => {
+
+  const validateAddress = async (address) => {
     try {
-      setEsValido(true);
-      // const response = await fetch(`https://api.geocoding-service.com/geocode?address=${localizacion}&country=YOUR_COUNTRY_CODE`);
-      // const data = await response.json();
-
-      // if (data.length > 0) {
-      //   setEsValido(true);
-      // } else {
-      //   setEsValido(false);
-      //   console.log('La localización ingresada no existe o no se encuentra en el mismo país');
-      //}
+      const response = await axios.get(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+      return response.data.length > 0;
     } catch (error) {
-      console.error('Error al validar la localización:', error);
+      console.error(error);
+      return false;
     }
   };
-  const handleSubmit = (values) => {
+
+  const handleSubmit = async (values) => {
     console.log('Datos del formulario:', values);
-    // const formData = new FormData();
-    //   formData.append('nombreHuerto', values.nombreHuerto);
-    //   formData.append('precioPorPersona', values.precioPorPersona);
-    //   formData.append('descripcion', values.descripcion);
-    //   formData.append('localizacion', values.localizacion);
-      
-    //   // Agregar las imágenes al objeto FormData
-    //   images.forEach((image, index) => {
-    //     formData.append(`image${index + 1}`, {
-    //       uri: image,
-    //       type: 'image/jpeg', // Ajusta el tipo de archivo según corresponda
-    //       name: `image${index + 1}.jpg`, // Ajusta el nombre del archivo según corresponda
-    //     });
-    //   });
-
-    //   try {
-    //     // Realizar la solicitud fetch al servidor
-    //     const response = await fetch('URL_DEL_ENDPOINT_DE_TU_API', {
-    //       method: 'POST',
-    //       body: formData,
-    //       // Asegúrate de ajustar los encabezados de la solicitud según sea necesario
-    //     });
-
-    //     // Manejar la respuesta del servidor
-    //     if (response.ok) {
-    //       console.log('Imágenes guardadas correctamente en la base de datos.');
-    //     } else {
-    //       console.error('Error al guardar las imágenes en la base de datos.');
-    //     }
-    //   } catch (error) {
-    //     console.error('Error de red:', error);
-    //   }
-    // };
-
+  
+    try {
+      await validationSchema.validate(values, { abortEarly: false });
+      console.log('Validación exitosa');
+      // Aquí puedes realizar las acciones correspondientes cuando la validación es exitosa
+    } catch (error) {
+      console.log('Errores de validación:', error);
+      // Si hay un error de validación en localizacion pero no está vacío, modificar el mensaje de error
+      if (error.path === 'localizacion' && values.localizacion.trim() !== '') {
+        error.errors = [t('invalidAddress')];
+      }
+    }
   };
   const registerFunction = (values) => {
     console.log(values)
