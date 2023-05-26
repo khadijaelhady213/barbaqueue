@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import { ImageBackground, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
-import React from "react";
-=======
 import {
   ImageBackground,
   StyleSheet,
@@ -12,22 +8,13 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-import React, { useEffect } from "react";
->>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
+import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
 import * as Localization from "expo-localization";
 import { withNavigation } from "@react-navigation/compat";
-<<<<<<< HEAD
-import { StatusBar } from 'expo-status-bar';
-
-=======
 import { StatusBar } from "expo-status-bar";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useDispatch } from "react-redux";
-import { login, store } from "../store";
->>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 
 import { loginSchema } from "../schemas/loginSchema";
 import { loginFunction } from "../interactWithApi/loginFunction";
@@ -35,7 +22,6 @@ import { loginFunction } from "../interactWithApi/loginFunction";
 function WelcomeScreen({ navigation }) {
   const { t } = useTranslation();
 
-<<<<<<< HEAD
   const loginFunction = (values) => {
     // todo -> Login
     console.log(values);
@@ -60,15 +46,14 @@ function WelcomeScreen({ navigation }) {
             name: data.name,
             lastname: data.lastname,
             id: data.id,
-          }
+          };
 
-          navigation.navigate("NavBar", {user});
-          console.log('ok');
-        }else{
+          navigation.navigate("NavBar", { user });
+          console.log("ok");
+        } else {
           console.log("La conección a la api ha fallado");
           console.log(data);
         }
-       
       })
       .catch((error) => {
         // Handle the error
@@ -77,14 +62,6 @@ function WelcomeScreen({ navigation }) {
   };
 
   console.log(".......Z> ", Localization.locale);
-=======
-  /**
-   * Hacer login i obtener el objeto user de la api, despues
-   * setear el token en la variable sessionToken
-   * setear el objeto user en la variable userData
-   */
-  //  console.log(".......Z> ", Localization.locale);
->>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 
   return (
     <ImageBackground
