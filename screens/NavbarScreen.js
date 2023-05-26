@@ -28,8 +28,7 @@ const ChatScreen = () => {
   );
 };
 
-const UserScreen = () => {
-  const user = useSelector((state) => state.user);
+const UserScreen = ({ user }) => {
   return <Profile user={user} />; //llamar a la pantalla del usuario enviandole el objeto con la info del usuario
 };
 

@@ -40,7 +40,15 @@ const resources = {
       pickImage:"Pick  3 Images",
       loading:"Loading ...",
       saveBtn: "Save",
-      requiredField:"This field is required"
+      requiredField:"This field is required",
+      invalidAddress:"Invalid Adress",
+
+      //parcelDetailsScreen
+      cancel: 'Cancel',
+      save: 'Save',
+      chat:"Chat",
+      bookParcel:"Choose a date:",
+      bookIt:"Book It !"
       
     },
   },
@@ -83,7 +91,16 @@ const resources = {
       pickImage:"Selecciona 3 Fotos",
       loading:"Cargando ...",
       sabeBtn:"Guardar",
-      requiredField:"Este campo es obligatorio"
+      requiredField:"Este campo es obligatorio",
+      invalidAddress:"Dirección inválida",
+
+      //parcelDetailsScreen
+      cancel: 'Cancelar',
+      save: 'Guardar',
+      chat:"Chat",
+      bookParcel:"Eligue una fecha: ",
+      bookIt:"Alquila !"
+
 
 
     },

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+import { createStore } from 'redux';
+
+=======
 import { createStore } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -12,31 +16,35 @@ export const login = (user) => ({ type: LOGIN, payload: user });
 export const logout = () => ({ type: LOGOUT });
 
 // Initial states
+>>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 const initialState = {
   user: null,
-  isLoggedIn: false,
 };
 
+<<<<<<< HEAD
+=======
 // Reducer
+>>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOGIN:
+    case 'SET_USER':
       return {
         ...state,
         user: action.payload,
-        isLoggedIn: true,
-      };
-    case LOGOUT:
-      return {
-        ...state,
-        user: null,
-        isLoggedIn: false,
       };
     default:
       return state;
   }
 };
 
+<<<<<<< HEAD
+export const setUser = user => ({
+  type: 'SET_USER',
+  payload: user,
+});
+
+const store = createStore(rootReducer);
+=======
 // Configuración de persistencia
 const persistConfig = {
   key: "root",
@@ -50,5 +58,6 @@ const store = configureStore({
   reducer: persistedReducer,
 });
 const persistor = persistStore(store);
+>>>>>>> 462b68508ed23b97c6c51d394136ddfb3dd0ea1d
 
-export { store, persistor };
+export default rootReducer;
