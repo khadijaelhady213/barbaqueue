@@ -1,19 +1,30 @@
 import React, { useState } from 'react';
-import { View, Button, Alert, StyleSheet } from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { View, Button, Alert, Modal, TextInput, StyleSheet } from 'react-native';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
 
 export default function ReservationScreen() {
+
+  
   // Fechas reservadas (ejemplo: 28, 29 y 30 de este mes)
-  const reservedDates = [28, 29, 30];
+  const reservedDates = ['2023-05-28', '2023-05-29', '2023-05-30'];
 
   // Fecha seleccionada por el usuario
-  const [selectedDate, setSelectedDate] = useState(null);
+  const currentDate = new Date();
+  const [selectedDate, setSelectedDate] = useState(currentDate.toISOString().split('T')[0]);
 
+
+
+  // Estado del modal
+  const [modalVisible, setModalVisible] = useState(false);
+  const ikhan=""
   // Handler para el cambio de fecha
-  const handleChangeDate = (_, date) => {
-    setSelectedDate(date);
+  const handleChangeDate = (date) => {
+   
+    setSelectedDate(date.dateString);
+   
+               
   };
-
+  
   // Handler para guardar la fecha seleccionada
   const handleSaveDate = () => {
     if (!selectedDate) {
@@ -21,45 +32,80 @@ export default function ReservationScreen() {
       return;
     }
 
-    // Verificar si la fecha seleccionada está reservada
-    const selectedDay = selectedDate.getDate();
-    if (reservedDates.includes(selectedDay)) {
-      Alert.alert('Error', 'La fecha seleccionada está reservada');
-      return;
-    }
-
     // La fecha seleccionada es válida, realizar las acciones correspondientes
     Alert.alert('Éxito', `Fecha seleccionada: ${selectedDate}`);
+    
+    // Cerrar el modal y restablecer el estado
+    setModalVisible(false);
+    setSelectedDate(null);
   };
 
-  // Obtener la fecha actual
-  const currentDate = new Date();
+  // Configurar los textos en español para la biblioteca react-native-calendars
+  LocaleConfig.locales['es'] = {
+    monthNames: [ 'Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre',],
+    monthNamesShort: ['Ene.','Feb.','Mar.','Abr.','May.','Jun.','Jul.','Ago.', 'Sep.', 'Oct.', 'Nov.', 'Dic.',],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mié.', 'Jue.', 'Vie.', 'Sáb.'],
+  };
+  LocaleConfig.defaultLocale = 'es';
 
-  // Estilos para el componente DateTimePicker
-  const dateTimePickerStyles = StyleSheet.create({
-    datePicker: {
-      backgroundColor: '#fff',
-      marginBottom: 10,
-    },
+  // Estilos para el calendario
+  const calendarStyles = StyleSheet.create({
     reservedDate: {
       backgroundColor: '#ccc',
     },
   });
 
   return (
-    <View>
-      <DateTimePicker
-        value={selectedDate || currentDate}
-        mode="date"
-        display="default"
-        onChange={handleChangeDate}
-        style={dateTimePickerStyles.datePicker}
-        disabled={reservedDates.includes(currentDate.getDate())}
-        dayTextStyle={(day) =>
-          reservedDates.includes(day.getDate()) && dateTimePickerStyles.reservedDate
-        }
-      />
-      <Button title="Guardar" onPress={handleSaveDate} />
+    <View style={{marginTop:"15%", padding:16}}>
+      {/* <TextInput
+        style={styles.input}
+        placeholder={"fecha"}
+        value={selectedDate}
+        onFocus={() => setModalVisible(true)}
+      /> */}
+      <TextInput
+      style={styles.input}
+      placeholder={selectedDate}
+      onFocus={() => setModalVisible(true)}
+      
+    />
+
+
+
+      <Modal visible={modalVisible} animationType="slide">
+        <View style={styles.modalContainer}>
+          <Calendar
+            markedDates={{
+              [selectedDate]: { selected: true, marked: true },
+              ...reservedDates.reduce((acc, date) => {
+                acc[date] = { marked: true, dotColor: '#ccc', disabled: true };
+                return acc;
+              }, {}),
+            }}
+            onDayPress={handleChangeDate}
+            markingType="multi-dot"
+            markedDatesStyle={calendarStyles}
+          />
+
+          <Button title="Guardar" onPress={handleSaveDate} />
+        </View>
+      </Modal>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+});
