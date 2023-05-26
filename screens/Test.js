@@ -21,7 +21,7 @@ export default function ReservationScreen() {
   const handleChangeDate = (date) => {
    
     setSelectedDate(date.dateString);
-   
+   //test
                
   };
   
