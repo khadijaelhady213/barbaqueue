@@ -6,8 +6,9 @@ import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios'; 
+import { createParcelFunction } from '../interactWithApi/createParcelFunction';
 
-const HuertoForm = () => {
+const HuertoForm = ({navigation}) => {
   const { t } = useTranslation();
 
   const [images, setImages] = useState([]);
@@ -72,15 +73,17 @@ const HuertoForm = () => {
       // create Parcel request
       const createParcelRequest = {
         title: values.nombreHuerto,
-        people_price: values.precioPorPersona,
-        capacity: values.capacity,
+        people_price: parseFloat(values.precioPorPersona),
+        capacity: parseInt(values.capacity),
         location: values.localizacion,
         image1: images[0] ? images[0] : null,
         image2: images[1] ? images[1] : null,
         image3: images[2] ? images[2] : null,
+        description: values.descripcion,
+        user_id: 1
       }
-
-      console.log(createParcelRequest)
+      console.log("hello"+navigation)
+      createParcelFunction(createParcelRequest, navigation)
     } catch (error) {
       console.log('Errores de validación:', error);
       // Si hay un error de validación en localizacion pero no está vacío, modificar el mensaje de error

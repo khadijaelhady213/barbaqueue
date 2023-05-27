@@ -1,6 +1,6 @@
 import RegisterScreen from "./screens/RegisterScreen";
 import WelcomeScreen from "./screens/WelcomeScreen";
-import NavBar from "./screens/NavbarScreen";
+import NavbarScreen from "./screens/NavbarScreen";
 import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -27,6 +27,7 @@ i18n.use(initReactI18next).init();
 const Stack = createStackNavigator();
 
 export default function App() {
+<<<<<<< HEAD
  return <ParcelDetailsScreen/>
   // return (
   //   <NavigationContainer style={styles.container}>
@@ -61,6 +62,49 @@ export default function App() {
   //     </Stack.Navigator>
   //   </NavigationContainer>
   // );
+=======
+// return <AddParcelScreen/>
+  return (
+    <NavigationContainer style={styles.container}>
+      <Stack.Navigator
+        style={styles.container}
+        initialRouteName="AddParcelScreen"
+      >
+        <Stack.Screen
+          style={styles.container}
+          name="AddParcelScreen"
+          component={AddParcelScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          style={styles.container}
+          name="NavbarScreen"
+          component={NavbarScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          style={styles.container}
+          name="WelcomeScreen"
+          component={WelcomeScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          style={styles.container}
+          name="Profile"
+          component={Profile}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          style={styles.container}
+          name="RegisterScreen"
+          component={RegisterScreen}
+          options={{ headerShown: true }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+>>>>>>> 3eed005f0364f4e78800ab99cfa4c37343d22419
 }
 const styles = StyleSheet.create({
   container: {
