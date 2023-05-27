@@ -1,11 +1,12 @@
-import { Text, View ,StyleSheet,Image, Button, TextInput ,Dimensions,ScrollView} from 'react-native';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import { Text, View ,StyleSheet,Image, Button, TextInput ,Dimensions,ScrollView,  Alert, Modal, } from 'react-native';
 import React, { Component, useState ,useEffect} from 'react'
 import { useTranslation } from 'react-i18next';
 import OpenInGoogleMapsButton from './OpenInGoogleMapsButton';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faLocationDot} from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
+import { Calendar, LocaleConfig } from 'react-native-calendars';
+
 
 const images = [
     require('../assets/test1.jpg'),
@@ -28,43 +29,69 @@ export default function ParcelDetailsScreen() {
       const contentOffset = event.nativeEvent.contentOffset.x;
       const index = Math.round(contentOffset / slideWidth);
       setActiveSlide(index);
-    };
-  
-  
-    // Fechas reservadas (ejemplo: 28, 29 y 30 de este mes)
-  const reservedDates = [28, 29, 30];
-  //fechas seleccionadas por el usuario
-  const [selectedDate, setSelectedDate] = useState('');
-  // Función para comprobar si la fecha seleccionada ha pasado
+  };
+
+  //-------------CALENDARIO-------------------------------
+     // Fechas reservadas (ejemplo: 28, 29 y 30 de este mes)
+  const reservedDates = ['2023-05-28', '2023-05-29', '2023-05-30'];
+
+  // Fecha seleccionada por el usuario
+  const currentDate = new Date();
+  const [selectedDate, setSelectedDate] = useState(currentDate.toISOString().split('T')[0]);
+
+  // Estado del modal
+  const [modalVisible, setModalVisible] = useState(false);
+
+  // Handler para el cambio de fecha
+  const handleChangeDate = (date) => {
+    setSelectedDate(date.dateString);
+  };
+
+  // Handler para guardar la fecha seleccionada
   const handleSaveDate = () => {
     if (!selectedDate) {
-      console.log('Error', 'Por favor, selecciona una fecha');
+      Alert.alert('Error', 'Por favor, selecciona una fecha');
       return;
     }
 
-    // Verificar si la fecha seleccionada está reservada
-    const selectedDay = selectedDate.getDate();
-    if (reservedDates.includes(selectedDay)) {
-     console.log('Error', 'La fecha seleccionada está reservada');
+    // Verificar si la fecha seleccionada es anterior a la fecha actual
+    const selectedDateTime = new Date(selectedDate).getTime();
+    const currentDateTime = new Date().getTime();
+    if (selectedDateTime < currentDateTime) {
+      Alert.alert('Error', 'No puedes seleccionar una fecha anterior a la fecha actual');
       return;
     }
 
     // La fecha seleccionada es válida, realizar las acciones correspondientes
-    console.log('Éxito', `Fecha seleccionada: ${selectedDate}`);
-  };
-  
-  const currentDate = new Date();
-  const selected = new Date(selectedDate);
+    Alert.alert('Éxito', `Fecha seleccionada: ${selectedDate}`);
 
-  if (selected < currentDate) {
-      console.log('Error', 'La fecha seleccionada ya ha pasado');
-  } else {
-      console.log('Éxito', 'La fecha seleccionada es válida data->', selected);
-  }
-  
-  const handleChangeDate = (_, date) => {
-    setSelectedDate(date);
+    // Cerrar el modal y restablecer el estado
+    setModalVisible(false);
   };
+
+  // Configurar los textos en español para la biblioteca react-native-calendars
+  LocaleConfig.locales['es'] = {
+    monthNames: [ 'Enero','Febrero', 'Marzo','Abril','Mayo','Junio', 'Julio', 'Agosto', 'Septiembre','Octubre','Noviembre','Diciembre', ],
+    monthNamesShort: ['Ene.', 'Feb.', 'Mar.', 'Abr.', 'May.', 'Jun.', 'Jul.', 'Ago.', 'Sep.', 'Oct.', 'Nov.', 'Dic.'],
+    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+    dayNamesShort: ['Dom.', 'Lun.', 'Mar.', 'Mié.', 'Jue.', 'Vie.', 'Sáb.'],
+  };
+  LocaleConfig.defaultLocale = 'es';
+ //-------------FIN CALENDARIO--------------------------
+  
+ const handleBooking =() =>{
+  // Comprobar si la fecha ya está validada y realizar  la reserva
+  if (selectedDate) {
+    // Perform booking actions here (e.g., make API request, update database)
+    // Show a success message or navigate to a confirmation screen
+    Alert.alert(t('succes'), t('bookingConfirmed'));
+  } else {
+    // Show an error message or handle the case when the date is not validated
+    Alert.alert('Error', 'Please select a valid date');
+  }
+
+ }
+  
 
   const location = 'Carretera Pont de Vilomara 37, Manresa';
 
@@ -117,7 +144,7 @@ export default function ParcelDetailsScreen() {
         <View style={{paddingRigth:2, paddingLeft:2 }}>
             <View style={styles.pareceInfoContainer}>
                 <Text style={{ fontSize:20, fontWeight: 'bold' }}>Camp xup barbacoa</Text>
-                <Text style={styles.parcelPrice}>4€ por persona</Text>
+                <Text style={styles.parcelPrice}>20€ persona</Text>
             </View>
             <View style={styles.mapContainer}>
                 <View style={{display:'flex', flexDirection:'row',  marginBottom:"5%", alignItems:"center"}}>
@@ -128,24 +155,43 @@ export default function ParcelDetailsScreen() {
             </View>
 
               
-            <View style={{display:'flex', flexDirection:'row',marginTop:0,alignItems:'center', marginTop:"5%",marginBottom:"5%"}}>
-        
-                <Text style={{ fontSize:16, width:"61%"}}>{t('bookParcel')}</Text>
-                <DateTimePicker
-                    value={selectedDate || new Date()}
-                    mode="date"
-                    display="default"
-                    onChange={handleChangeDate}
-                    disabled={reservedDates.includes(currentDate.getDate())} //marcar los dias reservados
-                    locale="es" // Establece el idioma a español
-                    cancelText="Cancelar" // Personaliza el texto del botón de cancelar
-                    confirmText="Guardar" // Personaliza el texto del botón de guardar
-                    style={{ alignSelf: 'end'}}
-                />
+            {/* <View style={{display:'flex', flexDirection:'row',marginTop:0,alignItems:'center', marginTop:"5%",marginBottom:"5%"}}> */}
+            <Text style={{ fontSize:16, marginTop:"5%"}}>{t('chooseDate')}</Text>
+            {/* //calendario */}
             
-            </View>
+              <TextInput
+                style={styles.input}
+                placeholder={selectedDate}
+                onFocus={() => setModalVisible(true)}
+              />
+
+              <Modal visible={modalVisible} animationType="slide">
+                <View style={styles.modalContainer}>
+                  <Calendar
+                    markedDates={{
+                      [selectedDate]: { selected: true, marked: true },
+                      ...reservedDates.reduce((acc, date) => {
+                        acc[date] = { disabled: true, disableTouchEvent: true,
+                          customStyles: {
+                            container: styles.disabledDate, text: styles.disabledDateText,
+                          },
+                        };
+                        return acc;
+                      }, {}),
+                    }}
+                    onDayPress={handleChangeDate}
+                    markingType="custom"
+                  />
+
+                  <Button title="Guardar" onPress={handleSaveDate} />
+                </View>
+              </Modal>
+         
+                
+            
+          
             <View  style={[ styles.chatBtn, {marginTop:"3%"}]}>
-            <Button title={t('bookIt')}  color="white" onPress={handleSaveDate} />
+            <Button title={t('bookIt')}  color="white" onPress={handleBooking} />
             </View>
 
 
@@ -257,9 +303,14 @@ const styles = StyleSheet.create({
         marginTop:"2%",
         height:'20%'
     },
-    input:{
-        padding:10
-    },
+    // input:{
+    //     padding:10,
+    //     marginTop:"5%",
+    //     borderWidth: 1,
+    //     borderColor:"#d6d3d2",
+    //     borderRadius:5,
+    //     color:"black"
+    // },
     
     //--------------------mapa------------------
     mapContainer: {
@@ -272,6 +323,39 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
+    //calendario---------
+    input: {
+      height: 40,
+      borderColor: '#d6d3d2',
+      borderWidth: 1,
+      paddingHorizontal: 10,
+      marginBottom: 10,
+      marginTop:"2%",
+      borderRadius:5,
+     
+    },
+    modalContainer: {
+      flex: 1,
+      justifyContent: 'center',
+      paddingHorizontal: 20,
+    },  // Estilos para el calendario
+    reservedDate: {
+      backgroundColor: 'orange',
+      borderRadius: 20,
+      borderColor: 'white',
+    },
+    reservedDateText: {
+      color: 'white',
+    },
+    disabledDate: {
+      backgroundColor: 'gray',
+      borderRadius: 20,
+      borderColor: 'white',
+    },
+    disabledDateText: {
+      color: 'white',
+    },
+    
 
    
 });

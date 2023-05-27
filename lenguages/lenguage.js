@@ -49,8 +49,10 @@ const resources = {
       cancel: 'Cancel',
       save: 'Save',
       chat:"Chat",
-      bookParcel:"Choose a date:",
-      bookIt:"Book It !"
+      chooseDate:"Choose a date:",
+      bookIt:"Book It !",
+      succes:"Success",
+      bookingConfirmed: "Booking confirmed",
       
     },
   },
@@ -102,8 +104,10 @@ const resources = {
       cancel: 'Cancelar',
       save: 'Guardar',
       chat:"Chat",
-      bookParcel:"Eligue una fecha: ",
-      bookIt:"Alquila !"
+      chooseDate:"Eligue una fecha: ",
+      bookIt:"Alquila !",
+      succes:"Éxito",
+      bookingConfirmed:"Reserva Confirmada"
 
 
 
