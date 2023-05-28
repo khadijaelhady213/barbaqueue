@@ -23,7 +23,7 @@ function WelcomeScreen({ navigation }) {
   const loginFunction = (values) => {
     // todo -> Login
     console.log(values);
-    fetch("http://192.168.1.41:3000/userlogin", {
+    fetch("http://192.168.0.16:3000/userlogin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ function WelcomeScreen({ navigation }) {
             id: data.id,
           }
 
-          navigation.navigate("NavBar", {user});
+          navigation.navigate("NavbarScreen", {user});
           console.log('ok');
         }else{
           console.log("La conección a la api ha fallado");

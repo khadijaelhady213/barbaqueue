@@ -127,6 +127,10 @@ const HuertoForm = ({navigation}) => {
             <TextInput  keyboardType="numeric" value={values.precioPorPersona} onChangeText={handleChange('precioPorPersona')} style={[styles.input, errors.precioPorPersona && styles.inputError]}
               placeholder={errors.precioPorPersona ? errors.precioPorPersona : t('priceInput')}
             />
+            {/** Capacity of Parcel INPUT */}   
+            <Text style={styles.label}>{t('capacity')}</Text>
+            <TextInput value={values.capacity} onChangeText={handleChange('capacity')} style={[styles.input, errors.capacity && styles.inputError]}
+             placeholder={errors.capacity ? errors.capacity : t('capacityInput')}/>
 
             {/** Description of Parcel INPUT */}   
             <Text style={styles.label}>{t('description')}</Text>
@@ -139,10 +143,6 @@ const HuertoForm = ({navigation}) => {
             <TextInput value={values.localizacion} onChangeText={handleChange('localizacion')} style={[styles.input, errors.localizacion && styles.inputError]}
              placeholder={errors.localizacion ? errors.localizacion : t('locationInput')}/>
 
-            {/** Capacity of Parcel INPUT */}   
-            <Text style={styles.label}>{t('capacity')}</Text>
-            <TextInput value={values.capacity} onChangeText={handleChange('capacity')} style={[styles.input, errors.capacity && styles.inputError]}
-             placeholder={errors.capacity ? errors.capacity : t('capacityInput')}/>
 
             {/** Save BUTTON */}   
             <View  style={ styles.saveBtn}>

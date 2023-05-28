@@ -61,7 +61,7 @@ export default function RegisterScreen({ navigation }) {
             email: values.email,
           } 
 
-          navigation.navigate("NavBar", {user});
+          navigation.navigate("NavbarScreen", {user});
         }
         console.log(data);
       })
