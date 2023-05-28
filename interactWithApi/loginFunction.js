@@ -2,8 +2,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { endpoint } from "./configEndpoints";
 
 export const loginFunction = (values, navigation) => {
-  console.log(values);
-  fetch(endpoint + "/userlogin", {
+  // todo -> Login
+  fetch(endpoint+"/userlogin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -15,30 +15,24 @@ export const loginFunction = (values, navigation) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      // User logged in
+      // Handle the response data
       if (data.message == "ok") {
-        // make the user object with data retrieved from the api
+        console.log("EXITO");
+
         const user = {
           email: data.email,
           name: data.name,
           lastname: data.lastname,
           id: data.id,
-        };
+        }
 
-        // print the user data
-        console.log(user);
-
-        // set the user data to userData asyncstorage
-        AsyncStorage.setItem("userData", JSON.stringify(user))
-          .then(() => {
-            // Iniciar sesión en el store
-            navigation.navigate("NavbarScreen");
-            console.log("dispatched");
-          })
-          .catch((error) => {
-            console.error(error);
-          });
+        navigation.navigate("NavbarScreen", {user});
+        console.log('ok');
+      }else{
+        console.log("La conexión a la api ha fallado");
+        console.log(data);
       }
+     
     })
     .catch((error) => {
       // Handle the error

@@ -6,7 +6,8 @@ import { useTranslation } from "react-i18next";
 import * as Localization from "expo-localization";
 import { withNavigation } from "@react-navigation/compat";
 import { StatusBar } from 'expo-status-bar';
-
+import { endpoint } from '../interactWithApi/configEndpoints.js';
+import { loginFunction } from '../interactWithApi/loginFunction.js';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Emaill"),
@@ -18,46 +19,6 @@ function WelcomeScreen({ navigation }) {
   const login = {
     email: "",
     password: "",
-  };
-
-  const loginFunction = (values) => {
-    // todo -> Login
-    console.log(values);
-    fetch("http://192.168.0.16:3000/userlogin", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: values.email,
-        password: values.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // Handle the response data
-        if (data.message == "ok") {
-          console.log("EXITO");
-
-          const user = {
-            email: data.email,
-            name: data.name,
-            lastname: data.lastname,
-            id: data.id,
-          }
-
-          navigation.navigate("NavbarScreen", {user});
-          console.log('ok');
-        }else{
-          console.log("La conección a la api ha fallado");
-          console.log(data);
-        }
-       
-      })
-      .catch((error) => {
-        // Handle the error
-        console.error(error);
-      });
   };
 
   console.log(".......Z> ", Localization.locale);
@@ -79,7 +40,7 @@ function WelcomeScreen({ navigation }) {
         <Formik
           initialValues={login}
           onSubmit={(values) => {
-            loginFunction(values);
+            loginFunction(values, navigation);
           }}
           validationSchema={loginSchema}
           validateOnChange={false}
