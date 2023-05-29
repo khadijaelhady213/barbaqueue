@@ -1,8 +1,3 @@
-/**
- * @format
- * @flow strict-local
- */
-
 import React, { useState, useEffect } from "react";
 import { Image, View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
@@ -20,18 +15,10 @@ import * as Location from "expo-location";
 import { useTranslation } from "react-i18next";
 import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import * as MailComposer from 'expo-mail-composer';
 
 // api interactions
 import { uploadImageFunction } from "../interactWithApi/uploadImageFunction";
-import { TouchableHighlight } from "react-native-gesture-handler";
 
-/**
- * Profile component.
- *
- * @param {object} navigation - Navigation object from React Navigation.
- * @returns {JSX.Element} Profile component JSX.
- */
 export default function Profile({ navigation }) {
   // Array with translations
   const { t } = useTranslation();
@@ -41,9 +28,7 @@ export default function Profile({ navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const user_id = 1;
 
-  /**
-   * Async function to pick an image from the app.
-   */
+  // asyncronous function to load images from app
   const pickImage = async () => {
     // get image
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -106,28 +91,14 @@ export default function Profile({ navigation }) {
       setLocation(location);
     })();
   }, []);
-  //--------------------QUEJAS Y RECLAMACIONES------------------
-  /**
-   * Function to send an email.
-   */
-  const sendMail = () => {
-    MailComposer.composeAsync({
-      recipients: ['barbaqueueCustomerService@gmail.com'],
-      subject: 'Customer Service',
-      body: ''
-    }).then(result => {
-      if (result.status === 'sent') {
-        console.log('Email sent');
-      } else {
-        console.log('Email not sent');
-      }
-    });
-  };
+
+  /*
+  console.log("*********** Location:", location);
+  console.log("ErrorMsg:", errorMsg);*/
 
   if (errorMsg) {
     return <Text>{errorMsg}</Text>;
   }
-
 
   return (
     // Profile view
@@ -176,7 +147,7 @@ export default function Profile({ navigation }) {
             </Text>
           </View>
 
-          <TouchableOpacity style={[styles.info]}  onPress={sendMail}>
+          <View style={[styles.info]}>
             <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
             <View
               style={{
@@ -190,11 +161,11 @@ export default function Profile({ navigation }) {
               >
                 {t("help")}
               </Text>
-              <View style={{ justifyContent: "flex-end" }}>
+              <TouchableOpacity style={{ justifyContent: "flex-end" }}>
                 <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
-              </View>
+              </TouchableOpacity>
             </View>
-          </TouchableOpacity>
+          </View>
           <View style={[styles.info]}>
             <FontAwesomeIcon icon={faPencil} size={20} color="#000" />
             <View

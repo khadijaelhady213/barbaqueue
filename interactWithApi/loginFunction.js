@@ -25,9 +25,25 @@ export const loginFunction = (values, navigation) => {
           lastname: data.lastname,
           id: data.id,
         }
+//        console.log(user)
 
-        navigation.navigate("NavbarScreen", {user});
-        console.log('ok');
+        // Afegir al local storage
+        _storeData = async () => {
+          try {
+            await AsyncStorage.setItem(
+              'user',
+               JSON.stringify(user)
+            );
+            console.log("Fet amb exit")
+          } catch (error) {
+            // Error saving data
+            console.log("No ha anat bé el guardar les dades al local storage")
+          }
+        };
+
+        _storeData()
+        
+        navigation.navigate("NavbarScreen");
       }else{
         console.log("La conexión a la api ha fallado");
         console.log(data);
