@@ -15,9 +15,11 @@ import * as Location from "expo-location";
 import { useTranslation } from "react-i18next";
 import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import * as MailComposer from 'expo-mail-composer';
 
 // api interactions
 import { uploadImageFunction } from "../interactWithApi/uploadImageFunction";
+import { TouchableHighlight } from "react-native-gesture-handler";
 
 export default function Profile({ navigation }) {
   // Array with translations
@@ -65,7 +67,7 @@ export default function Profile({ navigation }) {
 
       try {
         const response = await fetch(
-          "http://192.168.0.4:3000/sasasa",
+          "http://192.168.0.16:3000/sasasa",
           requestOptions
         );
         console.log("am i going");
@@ -91,6 +93,20 @@ export default function Profile({ navigation }) {
       setLocation(location);
     })();
   }, []);
+  //--------------------QUEJAS Y RECLAMACIONES------------------
+  const sendMail = () => {
+    MailComposer.composeAsync({
+      recipients: ['barbaqueueCustomerService@gmail.com'],
+      subject: 'Customer Service',
+      body: ''
+    }).then(result => {
+      if (result.status === 'sent') {
+        console.log('Email sent');
+      } else {
+        console.log('Email not sent');
+      }
+    });
+  };
 
   /*
   console.log("*********** Location:", location);
@@ -99,6 +115,7 @@ export default function Profile({ navigation }) {
   if (errorMsg) {
     return <Text>{errorMsg}</Text>;
   }
+
 
   return (
     // Profile view
@@ -127,7 +144,7 @@ export default function Profile({ navigation }) {
         </TouchableOpacity>
 
         <View>
-          <Text>~ {/*user.name + " " + user.lastname*/} ~</Text>
+          <Text>~ {/*user.name + " " + user.lastname*/}Khadija El Hady ~</Text>
         </View>
         {/* Espacio entre el perfil y el mapa */}
         <View
@@ -142,12 +159,12 @@ export default function Profile({ navigation }) {
         <View style={styles.infoContainer}>
           <View style={styles.info}>
             <FontAwesomeIcon icon={faEnvelope} size={20} color="#000" />
-            <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>
+            <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>khadija@gmail.com
               {/*user.email*/}
             </Text>
           </View>
 
-          <View style={[styles.info]}>
+          <TouchableOpacity style={[styles.info]}  onPress={sendMail}>
             <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
             <View
               style={{
@@ -161,11 +178,11 @@ export default function Profile({ navigation }) {
               >
                 {t("help")}
               </Text>
-              <TouchableOpacity style={{ justifyContent: "flex-end" }}>
+              <View style={{ justifyContent: "flex-end" }}>
                 <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
-              </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </TouchableOpacity>
           <View style={[styles.info]}>
             <FontAwesomeIcon icon={faPencil} size={20} color="#000" />
             <View

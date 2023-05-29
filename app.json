@@ -15,18 +15,29 @@
       "**/*"
     ],
     "ios": {
+
       "supportsTablet": true,
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "Permitir el acceso a la biblioteca de fotos",
+        "NSCameraUsageDescription": "Permitir el acceso a la cámara",
+        "NSContactsUsageDescription": "Permitir el acceso a los contactos",
+        "NSAppleMusicUsageDescription": "Permitir el acceso a la biblioteca de música",
+        "NSBluetoothPeripheralUsageDescription": "Permitir el acceso al Bluetooth"
+      }
+      },
       "bundleIdentifier":"com.barbaqueue"
+      
     },
     "android": {
       "package":"com.barbaqueue",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": ["android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
     }
-  }
+  
 }

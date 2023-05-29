@@ -157,7 +157,7 @@ const HuertoForm = ({navigation}) => {
               renderItem={({ item }) => (
                 <Image
                   source={{ uri: item }}
-                  style={{ width: width / 3.6, height: 150, paddingTop:0,paddingBottom: 0, marginTop:0,marginBottom:0, marginRight:10 ,paddingBottom: 0, borderRadius:5 }}
+                  style={{ width: width / 3.8, height: 110, paddingTop:0,paddingBottom: 0, marginTop:0,marginBottom:0, marginRight:20 ,paddingBottom: 0, borderRadius:5 }}
                 />
               )}
               numColumns={3}
@@ -260,7 +260,7 @@ const styles = StyleSheet.create({
     marginBottom:"5%",
   },
   imagesContainerWithImages:{
-    height:"27%",
+    height:"25%",
     width:"100%",
     // backgroundColor:"green",
     width:"100%",

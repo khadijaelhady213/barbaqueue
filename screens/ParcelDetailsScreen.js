@@ -1,4 +1,4 @@
-import { Text, View ,StyleSheet,Image, Button, TextInput ,Dimensions,ScrollView,  Alert, Modal, } from 'react-native';
+import { Text, View ,StyleSheet,Image, Button, TextInput ,Dimensions,ScrollView,  Alert, Modal,SafeAreaView } from 'react-native';
 import React, { Component, useState ,useEffect} from 'react'
 import { useTranslation } from 'react-i18next';
 import OpenInGoogleMapsButton from './OpenInGoogleMapsButton';
@@ -8,10 +8,11 @@ import { StatusBar } from 'expo-status-bar';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
 
 
+
 const images = [
     require('../assets/test1.jpg'),
-    require('../assets/test1.jpg'),
-    require('../assets/test1.jpg'),
+    require('../assets/test2.jpg'),
+    require('../assets/test3.jpg'),
   ];
 
 export default function ParcelDetailsScreen() {
@@ -92,120 +93,135 @@ export default function ParcelDetailsScreen() {
 
  }
   
-
+ //-------------VARIABLES QUE SE TIENEN QUE OBTENER DESDE LA BASE DE DATOS----------------
   const location = 'Carretera Pont de Vilomara 37, Manresa';
+  const useImageProfile="../assets/user-pic1.jpg";
+  const useName="khadija el hady";
+  const userEmail="khadijaelhady@gmail.com";
+  const parcelTilte="Casa rural barbacoa";
+  const parcelPrice="20";
+  const parcelCapacity=" 5 personas";
+  const parcelDescription=" Espacio preparado completamente"
 
+  return (
+    <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <ScrollView>
+        <View style={styles.container}>
+        <StatusBar backgroundColor="white" style="auto" />
+              <View >
+                  <View style={styles.parcelOwnerContainer}>
+                      <Image source={require(useImageProfile)}  style={styles.ownerImage}/>
+                      
+                      <View style={styles.OwnerContainer}>
+                          <Text style={{ fontSize:20, fontWeight: 'bold' }}>{useName}</Text>
+                          <Text style={styles.parcelPrice}>{userEmail}</Text>
+                      </View>
 
-    return (
-      <View style={styles.container}>
-        <StatusBar style="auto" /> 
-            <View >
-                <View style={styles.parcelOwnerContainer}>
-                    <Image source={require("../assets/user-pic1.jpg")}  style={styles.ownerImage}/>
-                    
-                    <View style={styles.OwnerContainer}>
-                        <Text style={{ fontSize:20, fontWeight: 'bold' }}>khadija el hady</Text>
-                        <Text style={styles.parcelPrice}>khadijaelhady@gmail.com</Text>
-                    </View>
+                  </View>
+                  
+                  <View  style={ styles.chatBtn}>
+                    <Button title={t('chat')}  color="white"  />
+                  </View>
+              </View>
+              <View style={{height: '35%'}} >
+                  <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={styles.carouselContainer}
+                      onScroll={handleScroll} // Handle scroll event
+                      pagingEnabled // Enable snapping to each image
+                  >
+                      {images.map((image, index) => (
+                      <View key={index} style={[styles.carouselItem, { width: deviceWidth - 40 }]}>
+                          <Image source={image} style={styles.image} resizeMode="cover" />
+                      </View>
+                      ))}
+                  </ScrollView>
+                  <View style={styles.paginationContainer}>
+                      {images.map((_, index) => (
+                      <View
+                          key={index}
+                          style={[
+                          styles.paginationDot,
+                          index === activeSlide && styles.activePaginationDot, // Apply active style
+                          ]}
+                      />
+                      ))}
+                  </View>
+              </View>
 
-                </View>
+          <View style={{paddingRigth:2, paddingLeft:2 }}>
+              <View style={styles.pareceInfoContainer}>
+                  <Text style={{ fontSize:20, fontWeight: 'bold' }}>{parcelTilte}</Text>
+                  <Text style={styles.parcelPrice}>{parcelPrice}€</Text>
+                  <Text style={styles.parcelPrice}>Capacidad: {parcelCapacity}</Text>
+                  <Text style={styles.parcelPrice}>Descripción: {parcelDescription}</Text>
+              </View>
+              <View style={styles.mapContainer}>
+                  <View style={{display:'flex', flexDirection:'row',  marginBottom:"5%", alignItems:"center"}}>
+                      <FontAwesomeIcon icon={faLocationDot} size={30} paddingTop='0%' color="#FF8300"/>
+                      <Text style={{marginStart:"2%", fontSize:16, paddingTop:"2%"}}>Carretera pont de vilomara 3 Manresa</Text>
+                  </View>
+                  <OpenInGoogleMapsButton location={location} />
+              </View>
+
                 
-                <View  style={ styles.chatBtn}>
-                  <Button title={t('chat')}  color="white"  />
-                </View>
-            </View>
-            <View style={{height: '35%'}} >
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.carouselContainer}
-                    onScroll={handleScroll} // Handle scroll event
-                    pagingEnabled // Enable snapping to each image
-                >
-                    {images.map((image, index) => (
-                    <View key={index} style={[styles.carouselItem, { width: deviceWidth - 40 }]}>
-                        <Image source={image} style={styles.image} resizeMode="cover" />
-                    </View>
-                    ))}
-                </ScrollView>
-                <View style={styles.paginationContainer}>
-                    {images.map((_, index) => (
-                    <View
-                        key={index}
-                        style={[
-                        styles.paginationDot,
-                        index === activeSlide && styles.activePaginationDot, // Apply active style
-                        ]}
-                    />
-                    ))}
-                </View>
-            </View>
-
-        <View style={{paddingRigth:2, paddingLeft:2 }}>
-            <View style={styles.pareceInfoContainer}>
-                <Text style={{ fontSize:20, fontWeight: 'bold' }}>Camp xup barbacoa</Text>
-                <Text style={styles.parcelPrice}>20€ persona</Text>
-            </View>
-            <View style={styles.mapContainer}>
-                <View style={{display:'flex', flexDirection:'row',  marginBottom:"5%", alignItems:"center"}}>
-                    <FontAwesomeIcon icon={faLocationDot} size={30} paddingTop='0%' color="#FF8300"/>
-                    <Text style={{marginStart:"2%", fontSize:16, paddingTop:"2%"}}>Carretera pont de vilomara 37 Manresa</Text>
-                </View>
-                <OpenInGoogleMapsButton location={location} />
-            </View>
-
+              {/* <View style={{display:'flex', flexDirection:'row',marginTop:0,alignItems:'center', marginTop:"5%",marginBottom:"5%"}}> */}
+              <Text style={{ fontSize:16, marginTop:"5%"}}>{t('chooseDate')}</Text>
+              {/* //calendario */}
               
-            {/* <View style={{display:'flex', flexDirection:'row',marginTop:0,alignItems:'center', marginTop:"5%",marginBottom:"5%"}}> */}
-            <Text style={{ fontSize:16, marginTop:"5%"}}>{t('chooseDate')}</Text>
-            {/* //calendario */}
-            
-              <TextInput
-                style={styles.input}
-                placeholder={selectedDate}
-                onFocus={() => setModalVisible(true)}
-              />
+                <TextInput
+                  style={styles.input}
+                  placeholder={selectedDate}
+                  onFocus={() => setModalVisible(true)}
+                />
 
-              <Modal visible={modalVisible} animationType="slide">
-                <View style={styles.modalContainer}>
-                  <Calendar
-                    markedDates={{
-                      [selectedDate]: { selected: true, marked: true },
-                      ...reservedDates.reduce((acc, date) => {
-                        acc[date] = { disabled: true, disableTouchEvent: true,
-                          customStyles: {
-                            container: styles.disabledDate, text: styles.disabledDateText,
-                          },
-                        };
-                        return acc;
-                      }, {}),
-                    }}
-                    onDayPress={handleChangeDate}
-                    markingType="custom"
-                  />
+                <Modal visible={modalVisible} animationType="slide">
+                  <View style={styles.modalContainer}>
+                    <Calendar
+                      markedDates={{
+                        [selectedDate]: { selected: true, marked: true },
+                        ...reservedDates.reduce((acc, date) => {
+                          acc[date] = { disabled: true, disableTouchEvent: true,
+                            customStyles: {
+                              container: styles.disabledDate, text: styles.disabledDateText,
+                            },
+                          };
+                          return acc;
+                        }, {}),
+                      }}
+                      onDayPress={handleChangeDate}
+                      markingType="custom"
+                    />
 
-                  <Button title="Guardar" onPress={handleSaveDate} />
-                </View>
-              </Modal>
-         
-                
+                    <Button title="Guardar" onPress={handleSaveDate} />
+                  </View>
+                </Modal>
             
+                  
+              
+            
+              <View  style={[ styles.chatBtn, {marginTop:"3%"}]}>
+              <Button title={t('bookIt')}  color="white" onPress={handleBooking} />
+              </View>
+
+
+          </View>
           
-            <View  style={[ styles.chatBtn, {marginTop:"3%"}]}>
-            <Button title={t('bookIt')}  color="white" onPress={handleBooking} />
-            </View>
-
-
         </View>
-        
-      </View>
-    )
+      </ScrollView>
+      </SafeAreaView>
+    </View>
+  )
   
 }
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop:"5%",
+     
       padding:"5%",
+      paddingTop:"0%"
      
     },
     carouselContainer: {
@@ -257,6 +273,7 @@ const styles = StyleSheet.create({
       parcelPrice: {
         paddingTop: '1%',
         fontSize: 17,
+        // backgroundColor:"blue"
       },
     //fin carrusel 
     pareceInfoContainer:{
@@ -267,13 +284,9 @@ const styles = StyleSheet.create({
         // fontWidth:'bold'
 
     },
-    parcelPrice:{
-        paddingTop:"1%",
-        fontSize:17,
 
-    },
     parcelOwnerContainer:{
-        marginTop:'5%',
+       
         display:'flex',
         flexDirection:'row',
         heigth:"10%",

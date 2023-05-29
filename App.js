@@ -13,7 +13,7 @@ import UserScreen from "./screens/UserScreen";
 import Profile from "./screens/Profile";
 import AddParcelScreen from "./screens/AddParcelScreen";
 import ParcelDetailsScreen from "./screens/ParcelDetailsScreen";
-
+import HelpScreen from "./screens/HelpScreen";
 //esconder los errores que devuelve el carrusel a pesar de que funcione a la perfección
 import { LogBox } from 'react-native';
 import Test from "./screens/Test";
@@ -27,14 +27,14 @@ i18n.use(initReactI18next).init();
 const Stack = createStackNavigator();
 
 export default function App() {
-//  return <AddParcelScreen/>
+  // return <Profile/>
   return (
     <NavigationContainer style={styles.container}>
       <Stack.Navigator
         style={styles.container}
-        initialRouteName="WelcomeScreen"
+        initialRouteName="Profile"
       >
-        <Stack.Screen
+        {/* <Stack.Screen
           style={styles.container}
           name="NavbarScreen"
           component={NavbarScreen}
@@ -45,19 +45,32 @@ export default function App() {
           name="WelcomeScreen"
           component={WelcomeScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           style={styles.container}
           name="Profile"
           component={Profile}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+         <Stack.Screen
+          style={styles.container}
+          name="HelpScreen"
+          component={HelpScreen}
+          options={{ headerShown: false }}
+        />
+
+        {/* <Stack.Screen
           style={styles.container}
           name="RegisterScreen"
           component={RegisterScreen}
           options={{ headerShown: true }}
-        />
+        /> */}
+         {/* <Stack.Screen
+          style={styles.container}
+          name="ParcelDetailsScreen"
+          component={RegisterScreen}
+          options={{ headerShown: true }}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
