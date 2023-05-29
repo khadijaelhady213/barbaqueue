@@ -15,7 +15,9 @@ import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 
 const HomeScreen = () => {
+  console.log("Hello, its me ")
   return <ParcelsAvailableScreen />;
+//  return UserScreen()
 };
 const AddParcelScreen = () => {
   return <AddParcelScreenComponent />;
@@ -34,7 +36,8 @@ const UserScreen = ({ user }) => {
 
 const Tab = createBottomTabNavigator();
 
-function NavbarScreenNavigator() {
+function NavbarScreenNavigator(userData) {
+  user = userData
   const route = useRoute();
 
   return (

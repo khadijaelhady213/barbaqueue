@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Image, View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faStar,
@@ -22,7 +23,7 @@ import { uploadImageFunction } from "../interactWithApi/uploadImageFunction";
 export default function Profile({ navigation }) {
   // Array with translations
   const { t } = useTranslation();
-
+  const [user, setUser] = useState(null);
   const [image, setImage] = useState(null);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -82,13 +83,36 @@ export default function Profile({ navigation }) {
   // useEffect -> Once component is loaded, execute this
   useEffect(() => {
     (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
+      try {
+        // get user variables
+        const value = await AsyncStorage.getItem('user');
+
+        if (value !== null) {
+          // We have data!!
+          console.log(value)
+          setUser(JSON.parse(value))        
+        }
+
+      } catch (error) {
+        console.log("This is the error of getting user data", error)
       }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+
+      try {
+          // To load the map in user screen
+          let { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== "granted") {
+            setErrorMsg("Permission to access location was denied");
+            return;
+          }
+          let location = await Location.getCurrentPositionAsync({});
+          setLocation(location);
+
+        } catch (error) {
+          // Error retrieving data
+          console.log(" data retrieved is not ok ", error)
+        }
+
+
     })();
   }, []);
 
@@ -99,118 +123,122 @@ export default function Profile({ navigation }) {
   if (errorMsg) {
     return <Text>{errorMsg}</Text>;
   }
-
-  return (
-    // Profile view
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <View style={[styles.logoContainer, styles.shadowContainer]}>
-        <Image source={require("../assets/Fuego.png")} style={styles.logoImg} />
-        <Text style={styles.logoTxt}>Profile</Text>
-      </View>
-      <View style={styles.imgContainer}>
-        {image ? (
-          <Image source={{ uri: image }} style={styles.profilPic} />
-        ) : (
-          <Image source={imgPlaceHolder} style={styles.profilPic} />
-        )}
-        <TouchableOpacity
-          onPress={pickImage}
-          style={styles.pencilIconContainer}
-        >
-          <FontAwesomeIcon
-            icon={faPencil}
-            size={30}
-            paddingTop="0%"
-            color="#FF8300"
-          />
-        </TouchableOpacity>
-
-        <View>
-          <Text>~ {/*user.name + " " + user.lastname*/} ~</Text>
+  
+  if(user) {
+    return (
+      // Profile view
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <View style={[styles.logoContainer, styles.shadowContainer]}>
+          <Image source={require("../assets/Fuego.png")} style={styles.logoImg} />
+          <Text style={styles.logoTxt}>Profile</Text>
         </View>
-        {/* Espacio entre el perfil y el mapa */}
-        <View
-          style={{ display: "flex", flexDirection: "row", paddingTop: "1%" }}
-        >
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.info}>
-            <FontAwesomeIcon icon={faEnvelope} size={20} color="#000" />
-            <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>
-              {/*user.email*/}
-            </Text>
-          </View>
-
-          <View style={[styles.info]}>
-            <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                flex: 1,
-              }}
-            >
-              <Text
-                style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
-              >
-                {t("help")}
-              </Text>
-              <TouchableOpacity style={{ justifyContent: "flex-end" }}>
-                <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <View style={[styles.info]}>
-            <FontAwesomeIcon icon={faPencil} size={20} color="#000" />
-            <View
-              style={{
-                flexDirection: "row",
-                justifyContent: "space-between",
-                flex: 1,
-              }}
-            >
-              <Text
-                style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
-              >
-                {t("updataData")}
-              </Text>
-              <TouchableOpacity style={{ justifyContent: "flex-end" }}>
-                <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.mapContainer}>
-        {location && (
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
+        <View style={styles.imgContainer}>
+          {image ? (
+            <Image source={{ uri: image }} style={styles.profilPic} />
+          ) : (
+            <Image source={imgPlaceHolder} style={styles.profilPic} />
+          )}
+          <TouchableOpacity
+            onPress={pickImage}
+            style={styles.pencilIconContainer}
           >
-            <Marker
-              coordinate={{
+            <FontAwesomeIcon
+              icon={faPencil}
+              size={30}
+              paddingTop="0%"
+              color="#FF8300"
+            />
+          </TouchableOpacity>
+
+          <View>
+            <Text>~ {user.name + " " + user.lastname} ~</Text>
+          </View>
+
+          {/* Espacio entre el perfil y el mapa */}
+          <View
+            style={{ display: "flex", flexDirection: "row", paddingTop: "1%" }}
+          >
+            <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+            <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+            <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+            <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+            <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+          </View>
+          <View style={styles.infoContainer}>
+            <View style={styles.info}>
+              <FontAwesomeIcon icon={faEnvelope} size={20} color="#000" />
+              <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>
+                {user.email}
+              </Text>
+            </View>
+
+            <View style={[styles.info]}>
+              <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  flex: 1,
+                }}
+              >
+                <Text
+                  style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
+                >
+                  {t("help")}
+                </Text>
+                <TouchableOpacity style={{ justifyContent: "flex-end" }}>
+                  <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={[styles.info]}>
+              <FontAwesomeIcon icon={faPencil} size={20} color="#000" />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  flex: 1,
+                }}
+              >
+                <Text
+                  style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
+                >
+                  {t("updataData")}
+                </Text>
+                <TouchableOpacity style={{ justifyContent: "flex-end" }}>
+                  <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        <View style={styles.mapContainer}>
+          {location && (
+            <MapView
+              style={styles.map}
+              initialRegion={{
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
               }}
-              title="Your Location"
-            />
-          </MapView>
-        )}
+            >
+              <Marker
+                coordinate={{
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
+                }}
+                title="Your Location"
+              />
+            </MapView>
+          )}
+        </View>
       </View>
-    </View>
-  );
+    );
+  }
+
 }
 
 const styles = StyleSheet.create({
