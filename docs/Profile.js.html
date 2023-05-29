@@ -1,9 +1,51 @@
-/**
- * @format
- * @flow strict-local
- */
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Profile.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
 
-import React, { useState, useEffect } from "react";
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#sum">sum</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Profile.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect } from "react";
 import { Image, View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -25,13 +67,15 @@ import * as MailComposer from 'expo-mail-composer';
 // api interactions
 import { uploadImageFunction } from "../interactWithApi/uploadImageFunction";
 import { TouchableHighlight } from "react-native-gesture-handler";
-
 /**
- * Profile component.
- *
- * @param {object} navigation - Navigation object from React Navigation.
- * @returns {JSX.Element} Profile component JSX.
+ * Suma dos números.
+ * @param {number} a - El primer número.
+ * @param {number} b - El segundo número.
+ * @returns {number} La suma de los dos números.
  */
+function sum(a, b) {
+  return a + b;
+}
 export default function Profile({ navigation }) {
   // Array with translations
   const { t } = useTranslation();
@@ -41,9 +85,7 @@ export default function Profile({ navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const user_id = 1;
 
-  /**
-   * Async function to pick an image from the app.
-   */
+  // asyncronous function to load images from app
   const pickImage = async () => {
     // get image
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -107,9 +149,6 @@ export default function Profile({ navigation }) {
     })();
   }, []);
   //--------------------QUEJAS Y RECLAMACIONES------------------
-  /**
-   * Function to send an email.
-   */
   const sendMail = () => {
     MailComposer.composeAsync({
       recipients: ['barbaqueueCustomerService@gmail.com'],
@@ -124,102 +163,106 @@ export default function Profile({ navigation }) {
     });
   };
 
+  /*
+  console.log("*********** Location:", location);
+  console.log("ErrorMsg:", errorMsg);*/
+
   if (errorMsg) {
-    return <Text>{errorMsg}</Text>;
+    return &lt;Text>{errorMsg}&lt;/Text>;
   }
 
 
   return (
     // Profile view
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      <View style={[styles.logoContainer, styles.shadowContainer]}>
-        <Image source={require("../assets/Fuego.png")} style={styles.logoImg} />
-        <Text style={styles.logoTxt}>Profile</Text>
-      </View>
-      <View style={styles.imgContainer}>
+    &lt;View style={styles.container}>
+      &lt;StatusBar style="auto" />
+      &lt;View style={[styles.logoContainer, styles.shadowContainer]}>
+        &lt;Image source={require("../assets/Fuego.png")} style={styles.logoImg} />
+        &lt;Text style={styles.logoTxt}>Profile&lt;/Text>
+      &lt;/View>
+      &lt;View style={styles.imgContainer}>
         {image ? (
-          <Image source={{ uri: image }} style={styles.profilPic} />
+          &lt;Image source={{ uri: image }} style={styles.profilPic} />
         ) : (
-          <Image source={imgPlaceHolder} style={styles.profilPic} />
+          &lt;Image source={imgPlaceHolder} style={styles.profilPic} />
         )}
-        <TouchableOpacity
+        &lt;TouchableOpacity
           onPress={pickImage}
           style={styles.pencilIconContainer}
         >
-          <FontAwesomeIcon
+          &lt;FontAwesomeIcon
             icon={faPencil}
             size={30}
             paddingTop="0%"
             color="#FF8300"
           />
-        </TouchableOpacity>
+        &lt;/TouchableOpacity>
 
-        <View>
-          <Text>~ {/*user.name + " " + user.lastname*/}Khadija El Hady ~</Text>
-        </View>
+        &lt;View>
+          &lt;Text>~ {/*user.name + " " + user.lastname*/}Khadija El Hady ~&lt;/Text>
+        &lt;/View>
         {/* Espacio entre el perfil y el mapa */}
-        <View
+        &lt;View
           style={{ display: "flex", flexDirection: "row", paddingTop: "1%" }}
         >
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-          <FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.info}>
-            <FontAwesomeIcon icon={faEnvelope} size={20} color="#000" />
-            <Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>khadija@gmail.com
+          &lt;FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+          &lt;FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+          &lt;FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+          &lt;FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+          &lt;FontAwesomeIcon icon={faStar} size={20} color="#FFD700" />
+        &lt;/View>
+        &lt;View style={styles.infoContainer}>
+          &lt;View style={styles.info}>
+            &lt;FontAwesomeIcon icon={faEnvelope} size={20} color="#000" />
+            &lt;Text style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}>khadija@gmail.com
               {/*user.email*/}
-            </Text>
-          </View>
+            &lt;/Text>
+          &lt;/View>
 
-          <TouchableOpacity style={[styles.info]}  onPress={sendMail}>
-            <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
-            <View
+          &lt;TouchableOpacity style={[styles.info]}  onPress={sendMail}>
+            &lt;FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
+            &lt;View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
                 flex: 1,
               }}
             >
-              <Text
+              &lt;Text
                 style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
               >
                 {t("help")}
-              </Text>
-              <View style={{ justifyContent: "flex-end" }}>
-                <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
-              </View>
-            </View>
-          </TouchableOpacity>
-          <View style={[styles.info]}>
-            <FontAwesomeIcon icon={faPencil} size={20} color="#000" />
-            <View
+              &lt;/Text>
+              &lt;View style={{ justifyContent: "flex-end" }}>
+                &lt;FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
+              &lt;/View>
+            &lt;/View>
+          &lt;/TouchableOpacity>
+          &lt;View style={[styles.info]}>
+            &lt;FontAwesomeIcon icon={faPencil} size={20} color="#000" />
+            &lt;View
               style={{
                 flexDirection: "row",
                 justifyContent: "space-between",
                 flex: 1,
               }}
             >
-              <Text
+              &lt;Text
                 style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
               >
                 {t("updataData")}
-              </Text>
-              <TouchableOpacity style={{ justifyContent: "flex-end" }}>
-                <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
-              </TouchableOpacity>
-            </View>
-          </View>
-        </View>
-      </View>
+              &lt;/Text>
+              &lt;TouchableOpacity style={{ justifyContent: "flex-end" }}>
+                &lt;FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
+              &lt;/TouchableOpacity>
+            &lt;/View>
+          &lt;/View>
+        &lt;/View>
+      &lt;/View>
 
-      <View style={styles.mapContainer}>
-        {location && (
-          <MapView
+      &lt;View style={styles.mapContainer}>
+        {location &amp;&amp; (
+          &lt;MapView
             style={styles.map}
             initialRegion={{
               latitude: location.coords.latitude,
@@ -228,17 +271,17 @@ export default function Profile({ navigation }) {
               longitudeDelta: 0.0421,
             }}
           >
-            <Marker
+            &lt;Marker
               coordinate={{
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
               }}
               title="Your Location"
             />
-          </MapView>
+          &lt;/MapView>
         )}
-      </View>
-    </View>
+      &lt;/View>
+    &lt;/View>
   );
 }
 
@@ -335,3 +378,28 @@ const styles = StyleSheet.create({
     height: "50%",
   },
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a> on Mon May 29 2023 15:34:59 GMT+0200 (hora de verano de Europa central) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>

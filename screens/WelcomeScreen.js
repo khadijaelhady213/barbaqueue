@@ -9,19 +9,34 @@ import { StatusBar } from 'expo-status-bar';
 import { endpoint } from '../interactWithApi/configEndpoints.js';
 import { loginFunction } from '../interactWithApi/loginFunction.js';
 
+/**
+ * Defines the validation schema for the login form.
+ * @constant
+ */
 const loginSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Emaill"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
+/**
+ * Welcome screen component.
+ * @param {Object} navigation - The navigation object.
+ * @returns {JSX.Element} - The rendered component.
+ */
 function WelcomeScreen({ navigation }) {
+   /**
+   * All the text that the user sees either in english or spanish.
+   * @constant
+   */
   const { t } = useTranslation();
+   /**
+   * users mail and password to validate session
+   * @constant
+   */
   const login = {
     email: "",
     password: "",
   };
-
-  console.log(".......Z> ", Localization.locale);
 
   return (
     <ImageBackground

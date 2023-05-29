@@ -14,9 +14,16 @@ const images = [
     require('../assets/test2.jpg'),
     require('../assets/test3.jpg'),
   ];
-
+/**
+ * Parcel details screen component.
+ * @returns {JSX.Element} - The rendered component.
+ */
 export default function ParcelDetailsScreen() {
-  //obtener variable traductor
+  
+  /**
+   * All the text that the user sees either in english or spanish.
+   * @constant
+   */
   const { t } = useTranslation();
 
   
@@ -24,7 +31,10 @@ export default function ParcelDetailsScreen() {
   const deviceWidth = Dimensions.get('window').width;
   const [activeSlide, setActiveSlide] = useState(0);
 
-  //permite el movimiento de los puntos del carrusel
+/**
+   * Handles the scroll event of the carousel.
+   * @param {Object} event - The scroll event.
+   */
   const handleScroll = (event) => {
       const slideWidth = deviceWidth - 40;
       const contentOffset = event.nativeEvent.contentOffset.x;
@@ -43,12 +53,17 @@ export default function ParcelDetailsScreen() {
   // Estado del modal
   const [modalVisible, setModalVisible] = useState(false);
 
-  // Handler para el cambio de fecha
+  /**
+   * Handles the date change.
+   * @param {Object} date - The selected date.
+   */
   const handleChangeDate = (date) => {
     setSelectedDate(date.dateString);
   };
 
-  // Handler para guardar la fecha seleccionada
+ /**
+   * Handles saving the selected date.
+   */
   const handleSaveDate = () => {
     if (!selectedDate) {
       Alert.alert('Error', 'Por favor, selecciona una fecha');
@@ -79,7 +94,10 @@ export default function ParcelDetailsScreen() {
   };
   LocaleConfig.defaultLocale = 'es';
  //-------------FIN CALENDARIO--------------------------
-  
+ 
+ /**
+   * Handles the booking action.
+   */
  const handleBooking =() =>{
   // Comprobar si la fecha ya está validada y realizar  la reserva
   if (selectedDate) {
@@ -199,14 +217,9 @@ export default function ParcelDetailsScreen() {
                   </View>
                 </Modal>
             
-                  
-              
-            
               <View  style={[ styles.chatBtn, {marginTop:"3%"}]}>
               <Button title={t('bookIt')}  color="white" onPress={handleBooking} />
               </View>
-
-
           </View>
           
         </View>
@@ -217,157 +230,157 @@ export default function ParcelDetailsScreen() {
   
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-     
-      padding:"5%",
-      paddingTop:"0%"
-     
-    },
-    carouselContainer: {
-       
-        flexDirection: 'row',
-        alignItems: 'center',
-       
-      },
-      carouselItem: {
-        height: 250,
-        borderRadius: 10,
-        paddingRight: 2, // Space between images
-        paddingLeft: 2, // Space between images
-        marginBottom:0,
-        margintTop:0,
-        padding:0
-      },
-      image: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 10,
-      },
-      paginationContainer: {
-        marginTop: 5,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      paginationDot: {
-        width: 10,
-        height: 10,
-        borderRadius: 7,
-        marginHorizontal: 8,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-      },
-      activePaginationDot: {
-        backgroundColor: '#F63809',
-        width: 12, // Increase the width for the active dot
-        height: 12, // Increase the height for the active dot
-      },
-      
-      pareceInfoContainer: {
-        marginTop: '2%',
-      },
-      parcelName: {
-        fontSize: 20,
-        fontWeight:'bold'
-      },
-      parcelPrice: {
-        paddingTop: '1%',
-        fontSize: 17,
-        // backgroundColor:"blue"
-      },
-    //fin carrusel 
-    pareceInfoContainer:{
-        marginTop:"2%",
-    },
-    parcelName:{
-        fontSize:20,
-        // fontWidth:'bold'
-
-    },
-
-    parcelOwnerContainer:{
-       
-        display:'flex',
-        flexDirection:'row',
-        heigth:"10%",
-        overflow:'hidden'
-
-    },
-    ownerImage:{
-        width: 70,
-        height: 70,
-        borderRadius: 40,
-    },
-    OwnerContainer:{
-        marginStart:"3%",
-        // backgroundColor:"red",
-        justifyContent:"center"
-        
-        
-    },
-    chatBtn:{
-        
-    backgroundColor: '#F63809',
-    borderRadius: 10,
-    marginTop:"2%",
-    marginBottom:"2%"
-    },
-    dateInputcontainer:{
-        marginTop:"2%",
-        height:'20%'
-    },
-    // input:{
-    //     padding:10,
-    //     marginTop:"5%",
-    //     borderWidth: 1,
-    //     borderColor:"#d6d3d2",
-    //     borderRadius:5,
-    //     color:"black"
-    // },
+  container: {
+    flex: 1,
     
-    //--------------------mapa------------------
-    mapContainer: {
-       
-        marginTop: '5%',
-        overflow:'hidden'
-    },
-    map: {
+    padding:"5%",
+    paddingTop:"0%"
+    
+  },
+  carouselContainer: {
       
-        width: '100%',
-        height: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      
     },
-    //calendario---------
-    input: {
-      height: 40,
-      borderColor: '#d6d3d2',
-      borderWidth: 1,
-      paddingHorizontal: 10,
-      marginBottom: 10,
-      marginTop:"2%",
-      borderRadius:5,
-     
+    carouselItem: {
+      height: 250,
+      borderRadius: 10,
+      paddingRight: 2, // Space between images
+      paddingLeft: 2, // Space between images
+      marginBottom:0,
+      margintTop:0,
+      padding:0
     },
-    modalContainer: {
-      flex: 1,
+    image: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 10,
+    },
+    paginationContainer: {
+      marginTop: 5,
+      flexDirection: 'row',
       justifyContent: 'center',
-      paddingHorizontal: 20,
-    },  // Estilos para el calendario
-    reservedDate: {
-      backgroundColor: 'orange',
-      borderRadius: 20,
-      borderColor: 'white',
+      alignItems: 'center',
     },
-    reservedDateText: {
-      color: 'white',
+    paginationDot: {
+      width: 10,
+      height: 10,
+      borderRadius: 7,
+      marginHorizontal: 8,
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
-    disabledDate: {
-      backgroundColor: 'gray',
-      borderRadius: 20,
-      borderColor: 'white',
+    activePaginationDot: {
+      backgroundColor: '#F63809',
+      width: 12, // Increase the width for the active dot
+      height: 12, // Increase the height for the active dot
     },
-    disabledDateText: {
-      color: 'white',
+    
+    pareceInfoContainer: {
+      marginTop: '2%',
     },
+    parcelName: {
+      fontSize: 20,
+      fontWeight:'bold'
+    },
+    parcelPrice: {
+      paddingTop: '1%',
+      fontSize: 17,
+      // backgroundColor:"blue"
+    },
+  //fin carrusel 
+  pareceInfoContainer:{
+      marginTop:"2%",
+  },
+  parcelName:{
+      fontSize:20,
+      // fontWidth:'bold'
+
+  },
+
+  parcelOwnerContainer:{
+      
+      display:'flex',
+      flexDirection:'row',
+      heigth:"10%",
+      overflow:'hidden'
+
+  },
+  ownerImage:{
+      width: 70,
+      height: 70,
+      borderRadius: 40,
+  },
+  OwnerContainer:{
+      marginStart:"3%",
+      // backgroundColor:"red",
+      justifyContent:"center"
+      
+      
+  },
+  chatBtn:{
+      
+  backgroundColor: '#F63809',
+  borderRadius: 10,
+  marginTop:"2%",
+  marginBottom:"2%"
+  },
+  dateInputcontainer:{
+      marginTop:"2%",
+      height:'20%'
+  },
+  // input:{
+  //     padding:10,
+  //     marginTop:"5%",
+  //     borderWidth: 1,
+  //     borderColor:"#d6d3d2",
+  //     borderRadius:5,
+  //     color:"black"
+  // },
+  
+  //--------------------mapa------------------
+  mapContainer: {
+      
+      marginTop: '5%',
+      overflow:'hidden'
+  },
+  map: {
+    
+      width: '100%',
+      height: '100%',
+  },
+  //calendario---------
+  input: {
+    height: 40,
+    borderColor: '#d6d3d2',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    marginTop:"2%",
+    borderRadius:5,
+    
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },  // Estilos para el calendario
+  reservedDate: {
+    backgroundColor: 'orange',
+    borderRadius: 20,
+    borderColor: 'white',
+  },
+  reservedDateText: {
+    color: 'white',
+  },
+  disabledDate: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    borderColor: 'white',
+  },
+  disabledDateText: {
+    color: 'white',
+  },
     
 
    

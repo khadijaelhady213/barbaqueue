@@ -6,14 +6,23 @@ import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'expo-status-bar';
 
-
-
-
+/**
+ * Register screen component.
+ * @param {Object} navigation - The navigation object.
+ * @returns {JSX.Element} - The rendered component.
+ */
 
 export default function RegisterScreen({ navigation }) {
+     /**
+   * All the text that the user sees either in english or spanish.
+   * @constant
+   */
     const { t } = useTranslation();
 
-  
+    /**
+   * Validation schema for the registration form.
+   * @constant
+   */
     const validationSchema = yup.object().shape({
     email: yup.string().required().email().label("Email"),
     password: yup.string().min(6, 'Password must have at least 6 characters').required('Password is required'),
@@ -25,12 +34,17 @@ export default function RegisterScreen({ navigation }) {
     });
    
     const [toggleCheckBox, setToggleCheckBox] = useState(false);
-
+    /**
+    * Handles the checkbox toggle.
+    */
     const handleCheckbox = () => {
             setToggleCheckBox(!toggleCheckBox)
     }
 
-    
+     /**
+   * Function to handle the registration process.
+   * @param {Object} values - The form values.
+   */
   const registerFunction = (values) => {
     // todo -> Login
     console.log(values);

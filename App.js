@@ -26,6 +26,7 @@ i18n.use(initReactI18next).init();
 
 const Stack = createStackNavigator();
 
+
 export default function App() {
 //  return <AddParcelScreen/>
   return (
