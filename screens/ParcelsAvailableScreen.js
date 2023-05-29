@@ -11,6 +11,10 @@ import { SearchBar } from "react-native-elements";
 import ListItem from "./ListItem";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Card from "./Card";
+import { listAllParcelsFunction } from "../interactWithApi/listAllParcels";
+import { useState, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 const listings = [
   {
@@ -27,32 +31,48 @@ const listings = [
   },
 ];
 export default function ParcelsAvailableScreen(props) {
-  return (
-    <View style={styles.container}>
-      <SearchBar
-        placeholder="Search"
-        onChangeText={(searchText) => console.log(searchText)}
-        onCancel={() => console.log("Search cancelled")}
-        containerStyle={styles.searchBar}
-      />
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Place your content here */}
-        <Card title="hola" price="10 euros" image={listings[0].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-        <Card title="hola" price="10 euros" image={listings[1].image}></Card>
-      </ScrollView>
-    </View>
-  );
 
-  //  ;
+  const [parcels, setParcels] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        // get parcels variables
+        const value = await AsyncStorage.getItem('parcels');
+
+        if (value !== null) {
+          // We have data!!
+          console.log("Parcels working", JSON.parse(value).length)
+          setParcels(JSON.parse(value))        
+        }
+
+      } catch (error) {
+        console.log("This is the error of getting parcels data", error)
+      }
+    })();
+  }, []);
+
+  if(parcels) {
+    return (
+      <View style={styles.container}>
+        <SearchBar
+          placeholder="Search"
+          onChangeText={(searchText) => console.log(searchText)}
+          onCancel={() => console.log("Search cancelled")}
+          containerStyle={styles.searchBar}
+        />
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+
+          {parcels.map((parcel, index) => (
+            <Card title={parcel.title} price={parcel.people_price} image={{uri: parcel.image}}></Card>
+          ))}
+          
+        </ScrollView>
+      </View>
+    );  
+  }
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

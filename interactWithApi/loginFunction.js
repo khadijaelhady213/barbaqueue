@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { endpoint } from "./configEndpoints";
+import { listAllParcelsFunction } from "./listAllParcels";
 
 export const loginFunction = (values, navigation) => {
   // todo -> Login
@@ -42,7 +43,7 @@ export const loginFunction = (values, navigation) => {
         };
 
         _storeData()
-        
+        listAllParcelsFunction()
         navigation.navigate("NavbarScreen");
       }else{
         console.log("La conexión a la api ha fallado");
