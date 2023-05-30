@@ -1,31 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 import { endpoint } from "./configEndpoints";
 
-export const createParcelFunction = (createParcelRequest, navigation) => {
+export const createParcelFunction = async (createParcelRequest, navigation) => {
+  console.log("Hello");
+  console.log(createParcelRequest);
 
-  console.log("Hello")
-  console.log(createParcelRequest)
-  
-  fetch(endpoint + "/createParcel", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(createParcelRequest),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // Parcel created
-      // {"id": 1}
-      
-      if (data.id != null) {
-        console.log("ha llegao")
-        navigation.navigate("NavbarScreen");
-      }
-
-    })
-    .catch((error) => {
-      // Handle the error
-      console.error(error);
+  try {
+    const response = await fetch(endpoint + "/createParcel", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(createParcelRequest),
     });
+
+    const data = await response.json();
+    if (data.id != null) {
+      return true; // Parcel created
+    } else {
+      return false; // Parcel not created
+    }
+  } catch (error) {
+    console.error(error);
+    return false; // Error occurred during the fetch request
+  }
 };

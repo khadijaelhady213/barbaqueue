@@ -36,6 +36,8 @@ export default function ParcelsAvailableScreen(props) {
 
   useEffect(() => {
     (async () => {
+      await listAllParcelsFunction()
+    
       try {
         // get parcels variables
         const value = await AsyncStorage.getItem('parcels');
@@ -61,12 +63,13 @@ export default function ParcelsAvailableScreen(props) {
           onCancel={() => console.log("Search cancelled")}
           containerStyle={styles.searchBar}
         />
+        
         <ScrollView contentContainerStyle={styles.contentContainer}>
 
           {parcels.map((parcel, index) => (
             <Card title={parcel.title} price={parcel.people_price} image={{uri: parcel.image}}></Card>
           ))}
-          
+
         </ScrollView>
       </View>
     );  

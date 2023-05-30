@@ -14,6 +14,7 @@ const loginSchema = Yup.object().shape({
   password: Yup.string().required().min(4).label("Password"),
 });
 
+// First screen loaded
 function WelcomeScreen({ navigation }) {
   const { t } = useTranslation();
   const login = {
@@ -40,6 +41,7 @@ function WelcomeScreen({ navigation }) {
         <Formik
           initialValues={login}
           onSubmit={(values) => {
+            // This function change the screen
             loginFunction(values, navigation);
           }}
           validationSchema={loginSchema}

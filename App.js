@@ -17,6 +17,7 @@ import ParcelDetailsScreen from "./screens/ParcelDetailsScreen";
 //esconder los errores que devuelve el carrusel a pesar de que funcione a la perfección
 import { LogBox } from 'react-native';
 import Test from "./screens/Test";
+import ParcelsAvailableScreen from "./screens/ParcelsAvailableScreen";
 LogBox.ignoreLogs([
   'ViewPropTypes will be removed from React Native',
 ]);
@@ -58,6 +59,13 @@ export default function App() {
           component={RegisterScreen}
           options={{ headerShown: true }}
         />
+        <Stack.Screen
+          style={styles.container}
+          name="ParcelsAvailableScreen"
+          component={ParcelsAvailableScreen}
+          options={{ headerShown: true }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

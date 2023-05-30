@@ -7,14 +7,20 @@ import * as ImagePicker from 'expo-image-picker';
 import { StatusBar } from 'expo-status-bar';
 import axios from 'axios'; 
 import { createParcelFunction } from '../interactWithApi/createParcelFunction';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
+import { useNavigation } from '@react-navigation/native';
 
-const HuertoForm = ({navigation}) => {
+const AddParcelScreen = () => {
   const { t } = useTranslation();
-
+  const [user, setUser] = useState([]);
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { width } = useWindowDimensions();
+  const navigation = useNavigation();
 
+  console.log("aqui esta el valor de navigation: ", navigation)
+  navigation.navigate("parcel")
   //la parte que se encarga de poder seleccionar 3 imagenes de la galeria del dispositivo 
   const pickImages = async () => {
     setIsLoading(true);
@@ -65,7 +71,8 @@ const HuertoForm = ({navigation}) => {
   };
 
   const handleSubmit = async (values) => {
-    console.log('Datos del formulario:', values);
+
+    console.log('Dades del formulari:', values);
   
     try {
       await validationSchema.validate(values, { abortEarly: false });
@@ -80,10 +87,18 @@ const HuertoForm = ({navigation}) => {
         image2: images[1] ? images[1] : null,
         image3: images[2] ? images[2] : null,
         description: values.descripcion,
-        user_id: 1
+        user_id: user.id
       }
-      console.log("hello"+navigation)
-      createParcelFunction(createParcelRequest, navigation)
+      
+
+      const created = await createParcelFunction(createParcelRequest, navigation)
+
+      if (created) {
+        // Call the navigation.navigate method with the desired screen name
+        navigation.navigate("ParcelsAvailableScreen");
+      }
+
+
     } catch (error) {
       console.log('Errores de validación:', error);
       // Si hay un error de validación en localizacion pero no está vacío, modificar el mensaje de error
@@ -95,6 +110,24 @@ const HuertoForm = ({navigation}) => {
   const registerFunction = (values) => {
     console.log(values)
   }
+
+  useEffect(() => {
+    (async () => {
+      try {
+        // get parcels variables
+        const value = await AsyncStorage.getItem('user');
+
+        if (value !== null) {
+          // We have data!!
+          console.log("user from createparcel working", JSON.parse(value).length)
+          setUser(JSON.parse(value))        
+        }
+
+      } catch (error) {
+        console.log("This is the error of getting USERS data", error)
+      }
+    })();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -311,4 +344,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HuertoForm;
+export default AddParcelScreen;

@@ -27,7 +27,6 @@ export default function Profile({ navigation }) {
   const [image, setImage] = useState(null);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const user_id = 1;
 
   // asyncronous function to load images from app
   const pickImage = async () => {

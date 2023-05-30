@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faLocationDot} from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
+import { listAllParcelsFunction } from '../interactWithApi/listAllParcels';
 
 
 const images = [
@@ -94,7 +95,6 @@ export default function ParcelDetailsScreen() {
   
 
   const location = 'Carretera Pont de Vilomara 37, Manresa';
-
 
     return (
       <View style={styles.container}>
