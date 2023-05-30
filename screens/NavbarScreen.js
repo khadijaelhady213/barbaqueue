@@ -17,7 +17,6 @@ import { StatusBar } from "expo-status-bar";
 const HomeScreen = () => {
   console.log("Hello, its me ")
   return <ParcelsAvailableScreen />;
-//  return UserScreen()
 };
 const AddParcelScreen = () => {
   return <AddParcelScreenComponent />;

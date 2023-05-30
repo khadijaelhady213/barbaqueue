@@ -31,45 +31,62 @@ const listings = [
   },
 ];
 export default function ParcelsAvailableScreen(props) {
-
   const [parcels, setParcels] = useState(null);
+  const [searchParcel, setSearchParcel] = useState('');
+  const [filteredParcels, setFilteredParcels] = useState([]);
+
+  const handleSearch = (searchText) => {
+    if (parcels) {
+      setFilteredParcels(parcels.filter(parcel => parcel.title.toLowerCase().includes(searchText.toLowerCase())));    
+    }
+  }
 
   useEffect(() => {
     (async () => {
-      await listAllParcelsFunction()
-    
+      await listAllParcelsFunction();
+
       try {
         // get parcels variables
         const value = await AsyncStorage.getItem('parcels');
 
         if (value !== null) {
           // We have data!!
-          console.log("Parcels working", JSON.parse(value).length)
-          setParcels(JSON.parse(value))        
+          console.log("Parcels working", JSON.parse(value).length);
+          const parsedParcels = JSON.parse(value);
+          setParcels(parsedParcels);
+          setFilteredParcels(parsedParcels);
         }
 
       } catch (error) {
-        console.log("This is the error of getting parcels data", error)
+        console.log("This is the error of getting parcels data", error);
       }
     })();
   }, []);
 
-  if(parcels) {
+  if (parcels) {
     return (
       <View style={styles.container}>
         <SearchBar
           placeholder="Search"
-          onChangeText={(searchText) => console.log(searchText)}
+          onChangeText={(searchText) => {
+            setSearchParcel(searchText);
+            handleSearch(searchText);
+          }}
           onCancel={() => console.log("Search cancelled")}
           containerStyle={styles.searchBar}
+          inputContainerStyle={{
+            backgroundColor: 'orange',
+          }}
+          inputStyle={{
+            color: 'white',
+          }}
+          value={searchParcel}
         />
         
         <ScrollView contentContainerStyle={styles.contentContainer}>
-
-          {parcels.map((parcel, index) => (
-            <Card title={parcel.title} price={parcel.people_price} image={{uri: parcel.image}}></Card>
+          {filteredParcels.map((parcel, index) => (
+            <Card key={index} title={parcel.title} price={parcel.people_price} image={{uri: parcel.image}}></Card>
           ))}
-
         </ScrollView>
       </View>
     );  
