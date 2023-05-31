@@ -85,7 +85,7 @@ export default function ParcelsAvailableScreen(props) {
         
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {filteredParcels.map((parcel, index) => (
-            <Card key={index} title={parcel.title} price={parcel.people_price} image={{uri: parcel.image}}></Card>
+            <Card key={index} title={parcel.title} price={parcel.people_price + " €"} image={{uri: "https://img001.prntscr.com/file/img001/pcWhdCFlRX-gGalmHEyz_g.png"}}></Card>
           ))}
         </ScrollView>
       </View>

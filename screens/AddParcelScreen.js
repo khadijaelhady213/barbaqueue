@@ -20,7 +20,6 @@ const AddParcelScreen = () => {
   const navigation = useNavigation();
 
   console.log("aqui esta el valor de navigation: ", navigation)
-  navigation.navigate("parcel")
   //la parte que se encarga de poder seleccionar 3 imagenes de la galeria del dispositivo 
   const pickImages = async () => {
     setIsLoading(true);
@@ -95,7 +94,8 @@ const AddParcelScreen = () => {
 
       if (created) {
         // Call the navigation.navigate method with the desired screen name
-        navigation.navigate("ParcelsAvailableScreen");
+        console.log("Dime que entras please")
+        navigation.replace("NavbarScreen");
       }
 
 

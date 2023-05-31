@@ -8,11 +8,13 @@ import {
   faSquarePlus,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useFocusEffect } from '@react-navigation/native';
 import ParcelsAvailableScreen from "./ParcelsAvailableScreen";
 import AddParcelScreenComponent from "./AddParcelScreen";
 import Profile from "./Profile";
 import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import { listAllParcelsFunction } from "../interactWithApi/listAllParcels";
 
 const HomeScreen = () => {
   console.log("Hello, its me ")

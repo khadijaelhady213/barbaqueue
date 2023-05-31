@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "testApp",
-    "slug": "testApp",
+    "name": "barbaqueueApp",
+    "slug": "barbaqueueApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -16,10 +16,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier":"com.barbaqueue"
+      "bundleIdentifier": "com.barbaqueue"
     },
     "android": {
-      "package":"com.barbaqueue",
+      "package": "com.barbaqueue",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -27,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3d483c23-2506-4aa4-a14f-164022670427"
+      }
     }
   }
 }
