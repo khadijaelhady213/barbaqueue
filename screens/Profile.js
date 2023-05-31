@@ -16,6 +16,7 @@ import * as Location from "expo-location";
 import { useTranslation } from "react-i18next";
 import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
+import * as MailComposer from 'expo-mail-composer';
 
 // api interactions
 import { uploadImageFunction } from "../interactWithApi/uploadImageFunction";
@@ -115,9 +116,21 @@ export default function Profile({ navigation }) {
     })();
   }, []);
 
-  /*
-  console.log("*********** Location:", location);
-  console.log("ErrorMsg:", errorMsg);*/
+   //--------------------QUEJAS Y RECLAMACIONES------------------
+   const sendMail = () => {
+    MailComposer.composeAsync({
+      recipients: ['barbaqueueCustomerService@gmail.com'],
+      subject: 'Customer Service',
+      body: ''
+    }).then(result => {
+      if (result.status === 'sent') {
+        console.log('Email sent');
+      } else {
+        console.log('Email not sent');
+      }
+    });
+  };
+
 
   if (errorMsg) {
     return <Text>{errorMsg}</Text>;
@@ -172,25 +185,25 @@ export default function Profile({ navigation }) {
               </Text>
             </View>
 
-            <View style={[styles.info]}>
-              <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  flex: 1,
-                }}
+            <TouchableOpacity style={[styles.info]}  onPress={sendMail}>
+            <FontAwesomeIcon icon={faCircleInfo} size={20} color="#000" />
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "space-between",
+                flex: 1,
+              }}
+            >
+              <Text
+                style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
               >
-                <Text
-                  style={{ marginStart: "5%", paddingTop: "0%", fontSize: 15 }}
-                >
-                  {t("help")}
-                </Text>
-                <TouchableOpacity style={{ justifyContent: "flex-end" }}>
-                  <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
-                </TouchableOpacity>
+                {t("help")}
+              </Text>
+              <View style={{ justifyContent: "flex-end" }}>
+                <FontAwesomeIcon icon={faArrowRight} size={20} color="#000" />
               </View>
             </View>
+          </TouchableOpacity>
             <View style={[styles.info]}>
               <FontAwesomeIcon icon={faPencil} size={20} color="#000" />
               <View
