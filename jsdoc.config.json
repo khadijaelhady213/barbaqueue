@@ -1,0 +1,16 @@
+{
+    "source": {
+      "include": ["./screens"],
+      "exclude": ["./node_modules"]
+    },
+    "plugins": ["plugins/markdown"],
+    "templates": {
+      "cleverLinks": false,
+      "monospaceLinks": false
+    },
+    "opts": {
+      "recurse": true,
+      "template": "node_modules/docdash",
+      "destination": "./docs"
+    }
+  }

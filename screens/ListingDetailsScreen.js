@@ -4,7 +4,19 @@ import React, { Component } from "react";
 import ListItem from "./ListItem";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import Card from "./Card";
+/**
 
+Array of listings containing information about each listing.
+@typedef {Object} Listing
+@property {number} id - The unique identifier of the listing.
+@property {string} title - The title of the listing.
+@property {number} price - The price of the listing.
+@property {ImageSource} image - The source of the image for the listing.
+*/
+/**
+An array of listings.
+@type {Listing[]}
+*/
 const listings = [
   {
     id: 1,
@@ -19,6 +31,12 @@ const listings = [
     image: require("../assets/splash.png"),
   },
 ];
+/**
+
+Component for displaying the details of a listing.
+@param {object} props - The props passed to the ListingDetailsScreen component.
+@returns {JSX.Element} - The rendered ListingDetailsScreen component.
+*/
 export default function ListingDetailsScreen(props) {
   return (
     <View>

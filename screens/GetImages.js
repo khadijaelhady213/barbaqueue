@@ -15,7 +15,13 @@ export default function App() {
   const [images, setImages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { width } = useWindowDimensions();
+/**
 
+Function to pick images from the device's image library.
+@async
+@function pickImages
+@returns {Promise<void>} - A promise that resolves once the image picking process is completed.
+*/
   const pickImages = async () => {
     setIsLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({

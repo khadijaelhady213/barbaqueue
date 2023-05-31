@@ -16,13 +16,31 @@ import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { listAllParcelsFunction } from "../interactWithApi/listAllParcels";
 
+/**
+Home screen component.
+@returns {JSX.Element} JSX element representing the Home screen.
+*/
+
 const HomeScreen = () => {
   console.log("Hello, its me ")
   return <ParcelsAvailableScreen />;
 };
+
+/**
+Add Parcel screen component.
+@returns {JSX.Element} JSX element representing the Add Parcel screen.
+*/
+
 const AddParcelScreen = () => {
   return <AddParcelScreenComponent />;
 };
+
+/**
+
+Chat screen component.
+@returns {JSX.Element} JSX element representing the Chat screen.
+*/
+
 const ChatScreen = () => {
   return (
     <View style={styles.container}>
@@ -31,11 +49,25 @@ const ChatScreen = () => {
   );
 };
 
+/**
+
+User screen component.
+@param {object} user - User information object.
+@returns {JSX.Element} JSX element representing the User screen.
+*/
+
 const UserScreen = ({ user }) => {
   return <Profile user={user} />; //llamar a la pantalla del usuario enviandole el objeto con la info del usuario
 };
 
 const Tab = createBottomTabNavigator();
+
+/**
+
+Component for navigation between screens.
+@param {object} userData - User data.
+@returns {JSX.Element} JSX element representing the navigation screen.
+*/
 
 function NavbarScreenNavigator(userData) {
   user = userData

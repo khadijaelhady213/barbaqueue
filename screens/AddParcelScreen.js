@@ -21,6 +21,9 @@ const AddParcelScreen = () => {
 
   console.log("aqui esta el valor de navigation: ", navigation)
   //la parte que se encarga de poder seleccionar 3 imagenes de la galeria del dispositivo 
+    /**
+   * Handler for picking images from the device's gallery.
+   */
   const pickImages = async () => {
     setIsLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -40,6 +43,7 @@ const AddParcelScreen = () => {
       }
     }
   };
+  
   const validateLocalizacion = async (value) => {
     if (value && value.trim().length > 0) {
       return await validateAddress(value);
@@ -47,7 +51,9 @@ const AddParcelScreen = () => {
     return true;
   };
 
-  //validar los inputs
+  /**
+ * Component for adding a new parcel.
+ */
   const validationSchema = Yup.object().shape({
     nombreHuerto: Yup.string().required(t('requiredField')),
     precioPorPersona: Yup.number().required(t('requiredField')),
@@ -58,6 +64,11 @@ const AddParcelScreen = () => {
     .required(t('requiredField')),
 });
 
+    /**
+   * Validates the address using the Nominatim API.
+   * @param {string} address - The address to validate.
+   * @returns {Promise<boolean>} - A promise that resolves to true if the address is valid, false otherwise.
+   */
 
   const validateAddress = async (address) => {
     try {
@@ -68,7 +79,10 @@ const AddParcelScreen = () => {
       return false;
     }
   };
-
+    /**
+   * Handles the form submission.
+   * @param {object} values - The form values.
+   */
   const handleSubmit = async (values) => {
 
     console.log('Dades del formulari:', values);

@@ -13,6 +13,14 @@ function Card({ title, price, image }) {
   );
 }
 
+/**
+
+Card component to display information in a card format.
+@param {string} title - The title of the card.
+@param {string} price - The price displayed in the card.
+@param {ImageSource} image - The source of the image displayed in the card.
+@returns {JSX.Element} - The rendered Card component.
+*/
 const styles = StyleSheet.create({
   card: {
     width: 180,

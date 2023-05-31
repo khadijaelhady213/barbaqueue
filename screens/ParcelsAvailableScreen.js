@@ -18,7 +18,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import ParcelDetailsScreen from "./ParcelDetailsScreen";
 import { useNavigation } from "@react-navigation/native";
 
+/**
 
+Array of listings.
+@type {Array}
+*/
 const listings = [
   {
     id: 1,
@@ -33,12 +37,23 @@ const listings = [
     image: require("../assets/splash.png"),
   },
 ];
+
+/**
+Parcels Available screen component.
+@param {object} props - Component props.
+@returns {JSX.Element} JSX element representing the Parcels Available screen.
+*/
 export default function ParcelsAvailableScreen(props) {
   const [parcels, setParcels] = useState(null);
   const [searchParcel, setSearchParcel] = useState('');
   const [filteredParcels, setFilteredParcels] = useState([]);
   const navigation = useNavigation();
+/**
 
+Handles the search functionality.
+@param {string} searchText - The text to search.
+@returns {void}
+*/
   const handleSearch = (searchText) => {
     if (parcels) {
       setFilteredParcels(parcels.filter(parcel => parcel.location.toLowerCase().includes(searchText.toLowerCase())));    
@@ -67,7 +82,12 @@ export default function ParcelsAvailableScreen(props) {
     })();
   }, []);
 
+/**
 
+Handles the card click action.
+@param {object} parcel - The selected parcel object.
+@returns {void}
+*/
   const handleCard = (parcel) => {
     navigation.navigate("ParcelDetailsScreen", {parcel})
     

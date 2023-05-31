@@ -22,14 +22,21 @@ import * as MailComposer from 'expo-mail-composer';
 import { uploadImageFunction } from "../interactWithApi/uploadImageFunction";
 
 export default function Profile({ navigation }) {
-  // Array with translations
+  /*
+Array with translations.
+*/
+  
   const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const [image, setImage] = useState(null);
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
 
-  // asyncronous function to load images from app
+
+  /**
+Asyncronous function to load images from the app.
+@returns {void}
+*/
   const pickImage = async () => {
     // get image
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -117,6 +124,11 @@ export default function Profile({ navigation }) {
   }, []);
 
    //--------------------QUEJAS Y RECLAMACIONES------------------
+   /**
+
+Sends an email.
+@returns {void}
+*/
    const sendMail = () => {
     MailComposer.composeAsync({
       recipients: ['barbaqueueCustomerService@gmail.com'],

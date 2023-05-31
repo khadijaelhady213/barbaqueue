@@ -1,6 +1,15 @@
+/**
+MessagesScreen component to display a list of messages.
+@param {object} props - The props passed to the MessagesScreen component.
+@returns {JSX.Element} - The rendered MessagesScreen component.
+*/
+
 import {  Text, View ,ListItem, SafeAreaView, StyleSheet, FlatList} from 'react-native'
 import React, { Component } from 'react'
-
+/**
+Array of messages.
+@type {Array<object>}
+*/
 
 const messages=[
     {
@@ -22,6 +31,7 @@ const messages=[
         image: require("../assets/test1.jpg")   
     },
 ]
+
 function MessagesScreen(props) {
   
     return (

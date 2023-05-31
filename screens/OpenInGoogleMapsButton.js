@@ -1,6 +1,16 @@
 import React from 'react';
 import { View, Button,StyleSheet } from 'react-native';
 import Communications from 'react-native-communications';
+/**
+
+OpenInGoogleMapsButton component.
+@param {object} location - Location object containing address information.
+@returns {JSX.Element} JSX element representing the OpenInGoogleMapsButton component.
+/
+const OpenInGoogleMapsButton = ({ location }) => {
+/*
+Handle opening the location in Google Maps.
+*/
 
 const OpenInGoogleMapsButton = ({ location }) => {
   const handleOpenInGoogleMaps = () => {

@@ -1,6 +1,14 @@
 import { Image, Text, View ,StyleSheet} from 'react-native'
 import React, { Component } from 'react'
 
+/**
+
+ListItem component to display a list item with title, subtitle, and image.
+@param {string} title - The title of the list item.
+@param {string} subTitle - The subtitle displayed in the list item.
+@param {ImageSource} image - The source of the image displayed in the list item.
+@returns {JSX.Element} - The rendered ListItem component.
+*/
 function ListItem({title, subTitle, image}) {
  
     return (
