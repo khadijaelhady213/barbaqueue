@@ -89,7 +89,6 @@ const AddParcelScreen = () => {
         user_id: user.id
       }
       
-
       const created = await createParcelFunction(createParcelRequest, navigation)
 
       if (created) {

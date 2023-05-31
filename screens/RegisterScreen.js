@@ -5,15 +5,18 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { StatusBar } from 'expo-status-bar';
+import { endpoint } from '../interactWithApi/configEndpoints';
+import { useNavigation } from '@react-navigation/native';
 
 
 
 
 
-export default function RegisterScreen({ navigation }) {
+export default function RegisterScreen() {
     const { t } = useTranslation();
 
-  
+    const navigation = useNavigation();
+
     const validationSchema = yup.object().shape({
     email: yup.string().required().email().label("Email"),
     password: yup.string().min(6, 'Password must have at least 6 characters').required('Password is required'),
@@ -34,7 +37,7 @@ export default function RegisterScreen({ navigation }) {
   const registerFunction = (values) => {
     // todo -> Login
     console.log(values);
-    fetch("http://192.168.0.16:3000/users", {
+    fetch( endpoint  +"/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

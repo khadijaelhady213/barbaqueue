@@ -44,6 +44,12 @@ export default function App() {
         />
         <Stack.Screen
           style={styles.container}
+          name="ParcelDetailsScreen"
+          component={ParcelDetailsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          style={styles.container}
           name="ListingDetailsScreen"
           component={ListingDetailsScreen}
           options={{ headerShown: false }}

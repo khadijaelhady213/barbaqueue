@@ -1,4 +1,4 @@
-import { Text, View ,StyleSheet,Image, Button, TextInput ,Dimensions,ScrollView,  Alert, Modal, } from 'react-native';
+import { Text, View ,StyleSheet,Image, Button, TextInput ,Dimensions,ScrollView,  Alert, Modal,SafeAreaView } from 'react-native';
 import React, { Component, useState ,useEffect} from 'react'
 import { useTranslation } from 'react-i18next';
 import OpenInGoogleMapsButton from './OpenInGoogleMapsButton';
@@ -6,25 +6,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faLocationDot} from '@fortawesome/free-solid-svg-icons';
 import { StatusBar } from 'expo-status-bar';
 import { Calendar, LocaleConfig } from 'react-native-calendars';
-import { listAllParcelsFunction } from '../interactWithApi/listAllParcels';
+import { createBillingFunction } from '../interactWithApi/createBillingFunction';
 
 
-const images = [
-    require('../assets/test1.jpg'),
-    require('../assets/test1.jpg'),
-    require('../assets/test1.jpg'),
+/**
+ * Parcel details screen component.
+ * @returns {JSX.Element} - The rendered component.
+ */
+export default function ParcelDetailsScreen({route}) {
+  
+  /**
+   * All the text that the user sees either in english or spanish.
+   * @constant
+   */
+   const [user, setUser] = useState([]);
+   const { parcel } = route.params;
+  const { t } = useTranslation();
+  const images = [
+    parcel.image1,
+    parcel.image2,
+    parcel.image3
   ];
 
-export default function ParcelDetailsScreen() {
-  //obtener variable traductor
-  const { t } = useTranslation();
-
-  
   //variables para el carrusel de imagenes de la parcela
   const deviceWidth = Dimensions.get('window').width;
   const [activeSlide, setActiveSlide] = useState(0);
 
-  //permite el movimiento de los puntos del carrusel
+/**
+   * Handles the scroll event of the carousel.
+   * @param {Object} event - The scroll event.
+   */
   const handleScroll = (event) => {
       const slideWidth = deviceWidth - 40;
       const contentOffset = event.nativeEvent.contentOffset.x;
@@ -43,12 +54,17 @@ export default function ParcelDetailsScreen() {
   // Estado del modal
   const [modalVisible, setModalVisible] = useState(false);
 
-  // Handler para el cambio de fecha
+  /**
+   * Handles the date change.
+   * @param {Object} date - The selected date.
+   */
   const handleChangeDate = (date) => {
     setSelectedDate(date.dateString);
   };
 
-  // Handler para guardar la fecha seleccionada
+ /**
+   * Handles saving the selected date.
+   */
   const handleSaveDate = () => {
     if (!selectedDate) {
       Alert.alert('Error', 'Por favor, selecciona una fecha');
@@ -79,284 +95,297 @@ export default function ParcelDetailsScreen() {
   };
   LocaleConfig.defaultLocale = 'es';
  //-------------FIN CALENDARIO--------------------------
-  
- const handleBooking =() =>{
-  // Comprobar si la fecha ya está validada y realizar  la reserva
-  if (selectedDate) {
-    // Perform booking actions here (e.g., make API request, update database)
-    // Show a success message or navigate to a confirmation screen
-    Alert.alert(t('succes'), t('bookingConfirmed'));
-  } else {
-    // Show an error message or handle the case when the date is not validated
-    Alert.alert('Error', 'Please select a valid date');
-  }
+ 
+ /**
+   * Handles the booking action.
+   */
+  const handleBooking = async () => {
+    if (selectedDate) {
 
- }
+      const created = await createBillingFunction();
   
-
+      if (created) {
+        console.log("Dime que entras please");
+        navigation.replace("NavbarScreen");
+      }
+  
+      Alert.alert(t('success'), t('bookingConfirmed'));
+    } else {
+      Alert.alert('Error', 'Please select a valid date');
+    }
+  };
+    
+ //-------------VARIABLES QUE SE TIENEN QUE OBTENER DESDE LA BASE DE DATOS----------------
   const location = 'Carretera Pont de Vilomara 37, Manresa';
+  const useImageProfile="../assets/user-pic1.jpg";
+  const useName="khadija el hady";
+  const userEmail="khadijaelhady@gmail.com";
+  const parcelTilte="Casa rural barbacoa";
+  const parcelPrice="20";
+  const parcelCapacity=" 5 personas";
+  const parcelDescription=" Espacio preparado completamente"
 
-    return (
-      <View style={styles.container}>
-        <StatusBar style="auto" /> 
-            <View >
-                <View style={styles.parcelOwnerContainer}>
-                    <Image source={require("../assets/user-pic1.jpg")}  style={styles.ownerImage}/>
-                    
-                    <View style={styles.OwnerContainer}>
-                        <Text style={{ fontSize:20, fontWeight: 'bold' }}>khadija el hady</Text>
-                        <Text style={styles.parcelPrice}>khadijaelhady@gmail.com</Text>
-                    </View>
+  return (
+    <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <ScrollView>
+        <View style={styles.container}>
+        <StatusBar backgroundColor="white" style="auto" />
+              <View >
+                  <View style={styles.parcelOwnerContainer}>
+                      <Image source={require(useImageProfile)}  style={styles.ownerImage}/>
+                      
+                      <View style={styles.OwnerContainer}>
+                          <Text style={{ fontSize:20, fontWeight: 'bold' }}>{parcel.username + " " + parcel.userlastname}</Text>
+                          <Text style={styles.parcelPrice}>{parcel.useremail}</Text>
+                      </View>
 
-                </View>
+                  </View>
+                  
+                  <View  style={ styles.chatBtn}>
+                    <Button title={t('chat')}  color="white"  />
+                  </View>
+              </View>
+              <View style={{height: '35%'}} >
+                  <ScrollView
+                      horizontal
+                      showsHorizontalScrollIndicator={false}
+                      contentContainerStyle={styles.carouselContainer}
+                      onScroll={handleScroll} // Handle scroll event
+                      pagingEnabled // Enable snapping to each image
+                  >
+                      {images.map((image, index) => (
+                      <View key={index} style={[styles.carouselItem, { width: deviceWidth - 40 }]}>
+                          <Image source={{uri: image}} style={styles.image} resizeMode="cover" />
+                      </View>
+                      ))}
+                  </ScrollView>
+                  <View style={styles.paginationContainer}>
+                      {images.map((_, index) => (
+                      <View
+                          key={index}
+                          style={[
+                          styles.paginationDot,
+                          index === activeSlide && styles.activePaginationDot, // Apply active style
+                          ]}
+                      />
+                      ))}
+                  </View>
+              </View>
+
+          <View style={{paddingRigth:2, paddingLeft:2 }}>
+              <View style={styles.pareceInfoContainer}>
+                  <Text style={{ fontSize:20, fontWeight: 'bold' }}>{parcel.title}</Text>
+                  <Text style={styles.parcelPrice}>{parcelPrice}€</Text>
+                  <Text style={styles.parcelPrice}>Capacidad: {parcel.capacity}</Text>
+                  <Text style={styles.parcelPrice}>Descripción: {parcel.description}</Text>
+              </View>
+              <View style={styles.mapContainer}>
+                  <View style={{display:'flex', flexDirection:'row',  marginBottom:"5%", alignItems:"center"}}>
+                      <FontAwesomeIcon icon={faLocationDot} size={30} paddingTop='0%' color="#FF8300"/>
+                      <Text style={{marginStart:"2%", fontSize:16, paddingTop:"2%"}}>{parcel.location}</Text>
+                  </View>
+                  <OpenInGoogleMapsButton location={parcel.location} />
+              </View>
+
                 
-                <View  style={ styles.chatBtn}>
-                  <Button title={t('chat')}  color="white"  />
-                </View>
-            </View>
-            <View style={{height: '35%'}} >
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.carouselContainer}
-                    onScroll={handleScroll} // Handle scroll event
-                    pagingEnabled // Enable snapping to each image
-                >
-                    {images.map((image, index) => (
-                    <View key={index} style={[styles.carouselItem, { width: deviceWidth - 40 }]}>
-                        <Image source={image} style={styles.image} resizeMode="cover" />
-                    </View>
-                    ))}
-                </ScrollView>
-                <View style={styles.paginationContainer}>
-                    {images.map((_, index) => (
-                    <View
-                        key={index}
-                        style={[
-                        styles.paginationDot,
-                        index === activeSlide && styles.activePaginationDot, // Apply active style
-                        ]}
-                    />
-                    ))}
-                </View>
-            </View>
-
-        <View style={{paddingRigth:2, paddingLeft:2 }}>
-            <View style={styles.pareceInfoContainer}>
-                <Text style={{ fontSize:20, fontWeight: 'bold' }}>Camp xup barbacoa</Text>
-                <Text style={styles.parcelPrice}>20€ persona</Text>
-            </View>
-            <View style={styles.mapContainer}>
-                <View style={{display:'flex', flexDirection:'row',  marginBottom:"5%", alignItems:"center"}}>
-                    <FontAwesomeIcon icon={faLocationDot} size={30} paddingTop='0%' color="#FF8300"/>
-                    <Text style={{marginStart:"2%", fontSize:16, paddingTop:"2%"}}>Carretera pont de vilomara 37 Manresa</Text>
-                </View>
-                <OpenInGoogleMapsButton location={location} />
-            </View>
-
+              {/* <View style={{display:'flex', flexDirection:'row',marginTop:0,alignItems:'center', marginTop:"5%",marginBottom:"5%"}}> */}
+              <Text style={{ fontSize:16, marginTop:"5%"}}>{t('chooseDate')}</Text>
+              {/* //calendario */}
               
-            {/* <View style={{display:'flex', flexDirection:'row',marginTop:0,alignItems:'center', marginTop:"5%",marginBottom:"5%"}}> */}
-            <Text style={{ fontSize:16, marginTop:"5%"}}>{t('chooseDate')}</Text>
-            {/* //calendario */}
-            
-              <TextInput
-                style={styles.input}
-                placeholder={selectedDate}
-                onFocus={() => setModalVisible(true)}
-              />
+                <TextInput
+                  style={styles.input}
+                  placeholder={selectedDate}
+                  onFocus={() => setModalVisible(true)}
+                />
 
-              <Modal visible={modalVisible} animationType="slide">
-                <View style={styles.modalContainer}>
-                  <Calendar
-                    markedDates={{
-                      [selectedDate]: { selected: true, marked: true },
-                      ...reservedDates.reduce((acc, date) => {
-                        acc[date] = { disabled: true, disableTouchEvent: true,
-                          customStyles: {
-                            container: styles.disabledDate, text: styles.disabledDateText,
-                          },
-                        };
-                        return acc;
-                      }, {}),
-                    }}
-                    onDayPress={handleChangeDate}
-                    markingType="custom"
-                  />
+                <Modal visible={modalVisible} animationType="slide">
+                  <View style={styles.modalContainer}>
+                    <Calendar
+                      markedDates={{
+                        [selectedDate]: { selected: true, marked: true },
+                        ...reservedDates.reduce((acc, date) => {
+                          acc[date] = { disabled: true, disableTouchEvent: true,
+                            customStyles: {
+                              container: styles.disabledDate, text: styles.disabledDateText,
+                            },
+                          };
+                          return acc;
+                        }, {}),
+                      }}
+                      onDayPress={handleChangeDate}
+                      markingType="custom"
+                    />
 
-                  <Button title="Guardar" onPress={handleSaveDate} />
-                </View>
-              </Modal>
-         
-                
+                    <Button title="Guardar" onPress={handleSaveDate} />
+                  </View>
+                </Modal>
             
+              <View  style={[ styles.chatBtn, {marginTop:"3%"}]}>
+              <Button title={t('bookIt')}  color="white" onPress={handleBooking} />
+              </View>
+          </View>
           
-            <View  style={[ styles.chatBtn, {marginTop:"3%"}]}>
-            <Button title={t('bookIt')}  color="white" onPress={handleBooking} />
-            </View>
-
-
         </View>
-        
-      </View>
-    )
+      </ScrollView>
+      </SafeAreaView>
+    </View>
+  )
   
 }
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      marginTop:"5%",
-      padding:"5%",
-     
-    },
-    carouselContainer: {
-       
-        flexDirection: 'row',
-        alignItems: 'center',
-       
-      },
-      carouselItem: {
-        height: 250,
-        borderRadius: 10,
-        paddingRight: 2, // Space between images
-        paddingLeft: 2, // Space between images
-        marginBottom:0,
-        margintTop:0,
-        padding:0
-      },
-      image: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 10,
-      },
-      paginationContainer: {
-        marginTop: 5,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-      },
-      paginationDot: {
-        width: 10,
-        height: 10,
-        borderRadius: 7,
-        marginHorizontal: 8,
-        backgroundColor: 'rgba(0, 0, 0, 0.4)',
-      },
-      activePaginationDot: {
-        backgroundColor: '#F63809',
-        width: 12, // Increase the width for the active dot
-        height: 12, // Increase the height for the active dot
-      },
-      
-      pareceInfoContainer: {
-        marginTop: '2%',
-      },
-      parcelName: {
-        fontSize: 20,
-        fontWeight:'bold'
-      },
-      parcelPrice: {
-        paddingTop: '1%',
-        fontSize: 17,
-      },
-    //fin carrusel 
-    pareceInfoContainer:{
-        marginTop:"2%",
-    },
-    parcelName:{
-        fontSize:20,
-        // fontWidth:'bold'
-
-    },
-    parcelPrice:{
-        paddingTop:"1%",
-        fontSize:17,
-
-    },
-    parcelOwnerContainer:{
-        marginTop:'5%',
-        display:'flex',
-        flexDirection:'row',
-        heigth:"10%",
-        overflow:'hidden'
-
-    },
-    ownerImage:{
-        width: 70,
-        height: 70,
-        borderRadius: 40,
-    },
-    OwnerContainer:{
-        marginStart:"3%",
-        // backgroundColor:"red",
-        justifyContent:"center"
-        
-        
-    },
-    chatBtn:{
-        
-    backgroundColor: '#F63809',
-    borderRadius: 10,
-    marginTop:"2%",
-    marginBottom:"2%"
-    },
-    dateInputcontainer:{
-        marginTop:"2%",
-        height:'20%'
-    },
-    // input:{
-    //     padding:10,
-    //     marginTop:"5%",
-    //     borderWidth: 1,
-    //     borderColor:"#d6d3d2",
-    //     borderRadius:5,
-    //     color:"black"
-    // },
+  container: {
+    flex: 1,
     
-    //--------------------mapa------------------
-    mapContainer: {
-       
-        marginTop: '5%',
-        overflow:'hidden'
-    },
-    map: {
+    padding:"5%",
+    paddingTop:"0%"
+    
+  },
+  carouselContainer: {
       
-        width: '100%',
-        height: '100%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      
     },
-    //calendario---------
-    input: {
-      height: 40,
-      borderColor: '#d6d3d2',
-      borderWidth: 1,
-      paddingHorizontal: 10,
-      marginBottom: 10,
-      marginTop:"2%",
-      borderRadius:5,
-     
+    carouselItem: {
+      height: 250,
+      borderRadius: 10,
+      paddingRight: 2, // Space between images
+      paddingLeft: 2, // Space between images
+      marginBottom:0,
+      margintTop:0,
+      padding:0
     },
-    modalContainer: {
-      flex: 1,
+    image: {
+      width: '100%',
+      height: '100%',
+      borderRadius: 10,
+    },
+    paginationContainer: {
+      marginTop: 5,
+      flexDirection: 'row',
       justifyContent: 'center',
-      paddingHorizontal: 20,
-    },  // Estilos para el calendario
-    reservedDate: {
-      backgroundColor: 'orange',
-      borderRadius: 20,
-      borderColor: 'white',
+      alignItems: 'center',
     },
-    reservedDateText: {
-      color: 'white',
+    paginationDot: {
+      width: 10,
+      height: 10,
+      borderRadius: 7,
+      marginHorizontal: 8,
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
     },
-    disabledDate: {
-      backgroundColor: 'gray',
-      borderRadius: 20,
-      borderColor: 'white',
+    activePaginationDot: {
+      backgroundColor: '#F63809',
+      width: 12, // Increase the width for the active dot
+      height: 12, // Increase the height for the active dot
     },
-    disabledDateText: {
-      color: 'white',
+    
+    pareceInfoContainer: {
+      marginTop: '2%',
     },
+    parcelName: {
+      fontSize: 20,
+      fontWeight:'bold'
+    },
+    parcelPrice: {
+      paddingTop: '1%',
+      fontSize: 17,
+      // backgroundColor:"blue"
+    },
+  //fin carrusel 
+  pareceInfoContainer:{
+      marginTop:"2%",
+  },
+  parcelName:{
+      fontSize:20,
+      // fontWidth:'bold'
+
+  },
+
+  parcelOwnerContainer:{
+      
+      display:'flex',
+      flexDirection:'row',
+      heigth:"10%",
+      overflow:'hidden'
+
+  },
+  ownerImage:{
+      width: 70,
+      height: 70,
+      borderRadius: 40,
+  },
+  OwnerContainer:{
+      marginStart:"3%",
+      // backgroundColor:"red",
+      justifyContent:"center"
+      
+      
+  },
+  chatBtn:{
+      
+  backgroundColor: '#F63809',
+  borderRadius: 10,
+  marginTop:"2%",
+  marginBottom:"2%"
+  },
+  dateInputcontainer:{
+      marginTop:"2%",
+      height:'20%'
+  },
+  // input:{
+  //     padding:10,
+  //     marginTop:"5%",
+  //     borderWidth: 1,
+  //     borderColor:"#d6d3d2",
+  //     borderRadius:5,
+  //     color:"black"
+  // },
+  
+  //--------------------mapa------------------
+  mapContainer: {
+      
+      marginTop: '5%',
+      overflow:'hidden'
+  },
+  map: {
+    
+      width: '100%',
+      height: '100%',
+  },
+  //calendario---------
+  input: {
+    height: 40,
+    borderColor: '#d6d3d2',
+    borderWidth: 1,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+    marginTop:"2%",
+    borderRadius:5,
+    
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },  // Estilos para el calendario
+  reservedDate: {
+    backgroundColor: 'orange',
+    borderRadius: 20,
+    borderColor: 'white',
+  },
+  reservedDateText: {
+    color: 'white',
+  },
+  disabledDate: {
+    backgroundColor: 'gray',
+    borderRadius: 20,
+    borderColor: 'white',
+  },
+  disabledDateText: {
+    color: 'white',
+  },
     
 
    
 });
-

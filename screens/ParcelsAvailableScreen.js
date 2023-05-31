@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ScrollView,
   Platform,
+  TouchableHighlight,
 } from "react-native";
 import React, { Component } from "react";
 import { SearchBar } from "react-native-elements";
@@ -14,6 +15,8 @@ import Card from "./Card";
 import { listAllParcelsFunction } from "../interactWithApi/listAllParcels";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import ParcelDetailsScreen from "./ParcelDetailsScreen";
+import { useNavigation } from "@react-navigation/native";
 
 
 const listings = [
@@ -34,10 +37,11 @@ export default function ParcelsAvailableScreen(props) {
   const [parcels, setParcels] = useState(null);
   const [searchParcel, setSearchParcel] = useState('');
   const [filteredParcels, setFilteredParcels] = useState([]);
+  const navigation = useNavigation();
 
   const handleSearch = (searchText) => {
     if (parcels) {
-      setFilteredParcels(parcels.filter(parcel => parcel.title.toLowerCase().includes(searchText.toLowerCase())));    
+      setFilteredParcels(parcels.filter(parcel => parcel.location.toLowerCase().includes(searchText.toLowerCase())));    
     }
   }
 
@@ -63,6 +67,12 @@ export default function ParcelsAvailableScreen(props) {
     })();
   }, []);
 
+
+  const handleCard = (parcel) => {
+    navigation.navigate("ParcelDetailsScreen", {parcel})
+    
+  }
+
   if (parcels) {
     return (
       <View style={styles.container}>
@@ -85,7 +95,9 @@ export default function ParcelsAvailableScreen(props) {
         
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {filteredParcels.map((parcel, index) => (
-            <Card key={index} title={parcel.title} price={parcel.people_price + " €"} image={{uri: "https://img001.prntscr.com/file/img001/pcWhdCFlRX-gGalmHEyz_g.png"}}></Card>
+            <TouchableHighlight onPress={() => handleCard(parcel)}>
+              <Card key={index} title={parcel.title} price={parcel.people_price + " €"}  image={{uri: parcel.image1}}></Card>
+            </TouchableHighlight>
           ))}
         </ScrollView>
       </View>
