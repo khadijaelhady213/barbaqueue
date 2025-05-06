@@ -5,19 +5,14 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { AppRegistry } from "react-native";
 import { initReactI18next } from "react-i18next";
 import i18n from "./lenguages/lenguage";
-import MapScreen from "./screens/Profile";
-import UserScreen from "./screens/UserScreen";
 import 'react-native-gesture-handler';
 import Profile from "./screens/Profile";
-import AddParcelScreen from "./screens/AddParcelScreen";
 import ParcelDetailsScreen from "./screens/ParcelDetailsScreen";
 
 //esconder los errores que devuelve el carrusel a pesar de que funcione a la perfección
 import { LogBox } from 'react-native';
-import Test from "./screens/Test";
 import ParcelsAvailableScreen from "./screens/ParcelsAvailableScreen";
 import ListingDetailsScreen from "./screens/ListingDetailsScreen";
 LogBox.ignoreLogs([
