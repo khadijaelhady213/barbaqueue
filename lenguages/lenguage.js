@@ -8,25 +8,25 @@ const resources = {
     translation: {
       //LoginScreen  
       Email: 'Email',
-      Password:'Password',
-      PassworForgotten:'Password forgotten?',
-      Login:'Login',
-      Register:'Register',
-      
+      Password: 'Password',
+      PassworForgotten: 'Password forgotten?',
+      Login: 'Login',
+      Register: 'Register',
+
       //RegisterScreen
-      firtName:'First Name',
-      lastName:'Last Name',
-      bithDate:'Birthdate:',
-      agreementContitions:'I accept Barbaqueue use of my data for purposes that improves the App and I accept Privacy Policy and Data Processing Agreement',
-      JoinUsBt:'Join Us!',
+      firtName: 'First Name',
+      lastName: 'Last Name',
+      bithDate: 'Birthdate:',
+      agreementContitions: 'I accept Barbaqueue use of my data for purposes that improves the App and I accept Privacy Policy and Data Processing Agreement',
+      JoinUsBt: 'Join Us!',
       //Control de errores
-      requiredMsg:'is a required field',
+      requiredMsg: 'is a required field',
       //userProfileScreen
-      help:'Need help?',
-      updataData:'Update user data',
+      help: 'Need help?',
+      updataData: 'Update user data',
 
       //AddParcelScreen
-      newParcel:"New Parcel",
+      newParcel: "New Parcel",
       name: "Parcel name:",
       nameInput: "Enter the parcel name",
       price: "Price per person:",
@@ -37,77 +37,77 @@ const resources = {
       locationInput: "Enter the location",
       validateLocationBtn: "Validate location",
       pictures: "Pictures",
-      pickImage:"Pick  3 Images",
-      loading:"Loading ...",
+      pickImage: "Pick  3 Images",
+      loading: "Loading ...",
       saveBtn: "Save",
-      requiredField:"This field is required",
-      invalidAddress:"Invalid Adress",
-      capacity:'Capacidad:',
-      capacityInput:'Introduce la capacidad',
+      requiredField: "This field is required",
+      invalidAddress: "Invalid Adress",
+      capacity: 'Capacidad:',
+      capacityInput: 'Introduce la capacidad',
 
       //parcelDetailsScreen
       cancel: 'Cancel',
       save: 'Save',
-      chat:"Chat",
-      chooseDate:"Choose a date:",
-      bookIt:"Book It !",
-      succes:"Success",
+      chat: "Chat",
+      chooseDate: "Choose a date:",
+      bookIt: "Book It !",
+      succes: "Success",
       bookingConfirmed: "Booking confirmed",
-      
+
     },
   },
   es: {
     translation: {
       //LoginScreen  
       Email: 'Email',
-      Password:'Contraseña',
-      PassworForgotten:'Contraseña olvidada?',
-      Login:'Iniciar sessión',
-      Register:'Registrarse',
+      Password: 'Contraseña',
+      PassworForgotten: 'Contraseña olvidada?',
+      Login: 'Iniciar sessión',
+      Register: 'Registrarse',
 
       //RegisterScreen
-      firtName:'Nombre',
-      lastName:'Apellidos',
-      bithDate:'Fecha Nacimineto:',
-      agreementContitions:'Acepto el uso de mis datos por parte de Barbaqueue para mejorar la aplicación y acepto la Política de privacidad y el Acuerdo de procesamiento de datos.',
-      JoinUsBt:'Registrarse!',
+      firtName: 'Nombre',
+      lastName: 'Apellidos',
+      bithDate: 'Fecha Nacimineto:',
+      agreementContitions: 'Al hacer el registro, aceptas el uso de tus datos por parte de Barbaqueue para mejorar la aplicación, política de privacidad y el acuerdo de procesamiento de datos.',
+      JoinUsBt: 'Registrame',
 
       //Control de errores
-      requiredMsg:' es un campo obligatorio',
-      ValidEmail:'correo no valido',
+      requiredMsg: ' es un campo obligatorio',
+      ValidEmail: 'correo no valido',
 
       //userProfileScreen
-      help:'Necesitas ayuda?',
-      updataData:'Actualizar información del usuario',
+      help: 'Necesitas ayuda?',
+      updataData: 'Actualizar información del usuario',
 
       //AddParcelScreen
-      newParcel:"Parcela Nueva",
-      name:"Nombre del huerto:",
+      newParcel: "Parcela Nueva",
+      name: "Nombre del huerto:",
       nameInput: "Introduce el nombre del huerto",
-      price:"Precio de alquiler:",
-      priceInput:"Introduce el precio de alquiler",
-      description:"Descripción:",
-      decInput:"Introduce una descripción",
-      location:"Localización:",
-      locationInput:"Introduce la localización",
-      validateLocationBtn:"Validar localizació",
-      pictures:"Fotos:",
-      pickImage:"Selecciona 3 Fotos",
-      loading:"Cargando ...",
-      sabeBtn:"Guardar",
-      requiredField:"Este campo es obligatorio",
-      invalidAddress:"Dirección inválida",
-      capacity:'Capacidad:',
-      capacityInput:'Introduce la capacidad',
+      price: "Precio de alquiler:",
+      priceInput: "Introduce el precio de alquiler",
+      description: "Descripción:",
+      decInput: "Introduce una descripción",
+      location: "Localización:",
+      locationInput: "Introduce la localización",
+      validateLocationBtn: "Validar localizació",
+      pictures: "Fotos:",
+      pickImage: "Selecciona 3 Fotos",
+      loading: "Cargando ...",
+      sabeBtn: "Guardar",
+      requiredField: "Este campo es obligatorio",
+      invalidAddress: "Dirección inválida",
+      capacity: 'Capacidad:',
+      capacityInput: 'Introduce la capacidad',
 
       //parcelDetailsScreen
       cancel: 'Cancelar',
       save: 'Guardar',
-      chat:"Chat",
-      chooseDate:"Eligue una fecha: ",
-      bookIt:"Alquila !",
-      succes:"Éxito",
-      bookingConfirmed:"Reserva Confirmada"
+      chat: "Chat",
+      chooseDate: "Eligue una fecha: ",
+      bookIt: "Alquila !",
+      succes: "Éxito",
+      bookingConfirmed: "Reserva Confirmada"
 
 
 
