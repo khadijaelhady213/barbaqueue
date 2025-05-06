@@ -12,59 +12,53 @@ function WelcomeScreen({ navigation }) {
   const { t } = useTranslation();
 
   return (
-    <ImageBackground
-      resizeMode="contain"
-      style={styles.background}
-      source={require("../assets/mainScreenBackground.png")}
-    >
-      <View style={[
-        styles.mainGrid,
-      ]}>
-        <View style={{ flex: 1 }}>
-          <Image
-            style={styles.logo}
-            source={require("../assets/BARBACUEUE.png")}
-          />
-        </View>
-        <View style={{ flex: 1 }}>
-          <Formik
-            onSubmit={(values) => {
-
-            }}
-            validateOnChange={false}
-            validateOnBlur={false}
-          >
-            {({ handleChange, handleSubmit, errors }) => (
-              <>
-
-                {/** TODO: Al hacer click, mandar a la pantalla del login */}
-                <View style={[
-                  styles.Button, styles.LoginButton
-                ]}>
-                  <Button
-                    title={t("Login")}
-                    color="white"
-                    onPress={handleSubmit}
-                  />
-                </View>
-
-                {/** TODO: Al hacer click, mandar a la pantalla de registro */}
-                <View style={[
-                  styles.Button, styles.RegisterButton
-                ]}>
-                  <Button
-                    onPress={() => navigation.navigate("RegisterScreen")}
-                    title={t("Register")}
-                    color="white"
-                    accessibilityLabel="Learn more about this purple button"
-                  />
-                </View>
-              </>
-            )}
-          </Formik>
-        </View>
+    <View style={[
+      styles.mainGrid,
+    ]}>
+      <View style={{ flex: 1 }}>
+        <Image
+          style={styles.logo}
+          source={require("../assets/BARBACUEUE.png")}
+        />
       </View>
-    </ImageBackground>
+      <View style={{ flex: 1 }}>
+        <Formik
+          onSubmit={(values) => {
+
+          }}
+          validateOnChange={false}
+          validateOnBlur={false}
+        >
+          {({ handleChange, handleSubmit, errors }) => (
+            <>
+
+              {/** TODO: Al hacer click, mandar a la pantalla del login */}
+              <View style={[
+                styles.Button, styles.LoginButton
+              ]}>
+                <Button
+                  title={t("Login")}
+                  color="white"
+                  onPress={handleSubmit}
+                />
+              </View>
+
+              {/** TODO: Al hacer click, mandar a la pantalla de registro */}
+              <View style={[
+                styles.Button, styles.RegisterButton
+              ]}>
+                <Button
+                  onPress={() => navigation.navigate("RegisterScreen")}
+                  title={t("Register")}
+                  color="white"
+                  accessibilityLabel="Learn more about this purple button"
+                />
+              </View>
+            </>
+          )}
+        </Formik>
+      </View>
+    </View>
   );
 }
 
@@ -74,26 +68,18 @@ const styles = StyleSheet.create({
   mainGrid: {
     flex: 1,
     flexDirection: 'column',
-    paddingTop: 80
-
-  },
-  background: {
-    flex: 1,
-    alignItems: "center",
+    paddingTop: 80,
+    backgroundColor: "#ffffff",
+    alignItems: "center"
   },
   logo: {
-    height: 153,
-    width: 200,
+    width: 260,
+    height: 200,
     marginTop: "20%",
   },
-  logoContainer: {
-    position: "absolute",
-    top: "10%",
-    alignItems: "center",
-  },
   Button: {
-    width: "100%",
     height: 60,
+    width: 300,
     justifyContent: "center",
     marginBottom: "8%",
   },
