@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
+import { ImageBackground, StyleSheet, View, Button, Image } from 'react-native';
 import React from "react";
 import { Formik } from "formik";
 import { useTranslation } from "react-i18next";
@@ -19,9 +19,6 @@ function WelcomeScreen({ navigation }) {
     >
       <View style={[
         styles.mainGrid,
-        {
-          flexDirection: 'column'
-        }
       ]}>
         <View style={{ flex: 1 }}>
           <Image
@@ -42,12 +39,8 @@ function WelcomeScreen({ navigation }) {
 
                 {/** TODO: Al hacer click, mandar a la pantalla del login */}
                 <View style={[
-                  styles.Button,
-                  {
-                    backgroundColor: "#000000"
-                  }
-                ]
-                }>
+                  styles.Button, styles.LoginButton
+                ]}>
                   <Button
                     title={t("Login")}
                     color="white"
@@ -57,12 +50,7 @@ function WelcomeScreen({ navigation }) {
 
                 {/** TODO: Al hacer click, mandar a la pantalla de registro */}
                 <View style={[
-                  styles.Button,
-                  {
-                    backgroundColor: "#F63809",
-                    borderColor: "white",
-                    borderWidth: 2
-                  }
+                  styles.Button, styles.RegisterButton
                 ]}>
                   <Button
                     onPress={() => navigation.navigate("RegisterScreen")}
@@ -84,7 +72,9 @@ function WelcomeScreen({ navigation }) {
 // No externalizar a un archivo, por simplicidad
 const styles = StyleSheet.create({
   mainGrid: {
-    flex: 1
+    flex: 1,
+    flexDirection: 'column'
+
   },
   background: {
     flex: 1,
@@ -100,31 +90,20 @@ const styles = StyleSheet.create({
     top: "10%",
     alignItems: "center",
   },
-  inputsButtonsContainer: {
-    top: "30%",
-    width: "100%",
-    alignItems: "center",
-  },
-  input: {
-    width: "70%",
-    margin: 12,
-    padding: 10,
-    borderBottomWidth: 1,
-  },
-  txt: {
-    width: "70%",
-    marginBottom: "45%",
-    justifyContent: "end",
-    paddingStart: "30%",
-  },
   Button: {
-    width: "70%",
+    width: "100%",
     height: 60,
-    borderRadius: 10,
-    alignItems: "center",
     justifyContent: "center",
     marginBottom: "8%",
   },
+  LoginButton: {
+    backgroundColor: "#000000"
+  },
+  RegisterButton: {
+    backgroundColor: "#F63809",
+    borderColor: "white",
+    borderWidth: 2
+  }
 
 });
 export default WelcomeScreen;
