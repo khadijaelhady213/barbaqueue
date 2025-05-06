@@ -17,13 +17,12 @@ function WelcomeScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/mainScreenBackground.png")}
     >
-      <View
-        style={[
-          styles.mainGrid,
-          {
-            flexDirection: 'column'
-          }
-        ]}>
+      <View style={[
+        styles.mainGrid,
+        {
+          flexDirection: 'column'
+        }
+      ]}>
         <View style={{ flex: 1 }}>
           <Image
             style={styles.logo}
@@ -42,7 +41,13 @@ function WelcomeScreen({ navigation }) {
               <>
 
                 {/** TODO: Al hacer click, mandar a la pantalla del login */}
-                <View style={[styles.Button, { backgroundColor: "#000000" }]}>
+                <View style={[
+                  styles.Button,
+                  {
+                    backgroundColor: "#000000"
+                  }
+                ]
+                }>
                   <Button
                     title={t("Login")}
                     color="white"
@@ -51,7 +56,14 @@ function WelcomeScreen({ navigation }) {
                 </View>
 
                 {/** TODO: Al hacer click, mandar a la pantalla de registro */}
-                <View style={[styles.Button, { backgroundColor: "#F63809", borderColor: "white", borderWidth: 2 }]}>
+                <View style={[
+                  styles.Button,
+                  {
+                    backgroundColor: "#F63809",
+                    borderColor: "white",
+                    borderWidth: 2
+                  }
+                ]}>
                   <Button
                     onPress={() => navigation.navigate("RegisterScreen")}
                     title={t("Register")}
