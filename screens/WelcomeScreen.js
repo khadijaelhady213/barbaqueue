@@ -39,7 +39,7 @@ function WelcomeScreen({ navigation }) {
                 <Button
                   title={t("Login")}
                   color="white"
-                  onPress={handleSubmit}
+                  onPress={() => { navigation.navigate("ViewLoginScreen") }}
                 />
               </View>
 
