@@ -1,25 +1,13 @@
 import { ImageBackground, StyleSheet, Text, View, Button, Image, TextInput, TouchableOpacity } from 'react-native';
 import React from "react";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
-import { loginFunction } from '../interactWithApi/loginFunction.js';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Navegador del Stack
 const Stack = createStackNavigator();
 
-// Esquema de validacion para el login
-const loginSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Email"),
-  password: Yup.string().required().min(4).label("Password"),
-});
-
-// TODO: Para hacer el 6 de Mayo del 25.
-// TODO: Revisar los imports
-// TODO: Estructurar el css de la pantalla inicial
 // Componente de la pagina principal
-
 function WelcomeScreen({ navigation }) {
   const { t } = useTranslation();
 
@@ -34,11 +22,9 @@ function WelcomeScreen({ navigation }) {
         source={require("../assets/BARBACUEUE.png")}
       />
       <Formik
-        initialValues={login}
         onSubmit={(values) => {
-          loginFunction(values, navigation);
+
         }}
-        validationSchema={loginSchema}
         validateOnChange={false}
         validateOnBlur={false}
       >
@@ -71,7 +57,7 @@ function WelcomeScreen({ navigation }) {
 }
 
 // Estilos en css de la pantalla principal
-// TODO: Externalizar a un archivo
+// No externalizar a un archivo, por simplicidad
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -92,22 +78,18 @@ const styles = StyleSheet.create({
   },
   inputsButtonsContainer: {
     top: "30%",
-    // backgroundColor:"blue",
     width: "100%",
     alignItems: "center",
   },
   input: {
     width: "70%",
     margin: 12,
-    // borderWidth: 1,
     padding: 10,
     borderBottomWidth: 1,
   },
   txt: {
-    // backgroundColor:"red",
     width: "70%",
     marginBottom: "45%",
-    // alignSelf:'flex-end',
     justifyContent: "end",
     paddingStart: "30%",
   },
