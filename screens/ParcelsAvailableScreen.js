@@ -28,7 +28,7 @@ const listings = [
     id: 1,
     title: "Red jacket for sale",
     price: 100,
-    image: require("../assets/b7.png"),
+    image: require("../assets/mainScreenBackground.png"),
   },
   {
     id: 2,
@@ -48,15 +48,15 @@ export default function ParcelsAvailableScreen(props) {
   const [searchParcel, setSearchParcel] = useState('');
   const [filteredParcels, setFilteredParcels] = useState([]);
   const navigation = useNavigation();
-/**
-
-Handles the search functionality.
-@param {string} searchText - The text to search.
-@returns {void}
-*/
+  /**
+  
+  Handles the search functionality.
+  @param {string} searchText - The text to search.
+  @returns {void}
+  */
   const handleSearch = (searchText) => {
     if (parcels) {
-      setFilteredParcels(parcels.filter(parcel => parcel.location.toLowerCase().includes(searchText.toLowerCase())));    
+      setFilteredParcels(parcels.filter(parcel => parcel.location.toLowerCase().includes(searchText.toLowerCase())));
     }
   }
 
@@ -82,15 +82,15 @@ Handles the search functionality.
     })();
   }, []);
 
-/**
-
-Handles the card click action.
-@param {object} parcel - The selected parcel object.
-@returns {void}
-*/
+  /**
+  
+  Handles the card click action.
+  @param {object} parcel - The selected parcel object.
+  @returns {void}
+  */
   const handleCard = (parcel) => {
-    navigation.navigate("ParcelDetailsScreen", {parcel})
-    
+    navigation.navigate("ParcelDetailsScreen", { parcel })
+
   }
 
   if (parcels) {
@@ -112,16 +112,16 @@ Handles the card click action.
           }}
           value={searchParcel}
         />
-        
+
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {filteredParcels.map((parcel, index) => (
             <TouchableHighlight onPress={() => handleCard(parcel)}>
-              <Card key={index} title={parcel.title} price={parcel.people_price + " €"}  image={{uri: parcel.image1}}></Card>
+              <Card key={index} title={parcel.title} price={parcel.people_price + " €"} image={{ uri: parcel.image1 }}></Card>
             </TouchableHighlight>
           ))}
         </ScrollView>
       </View>
-    );  
+    );
   }
 }
 

@@ -22,7 +22,7 @@ const listings = [
     id: 1,
     title: "Red jacket for sale",
     price: 100,
-    image: require("../assets/b7.png"),
+    image: require("../assets/mainScreenBackground.png"),
   },
   {
     id: 2,
