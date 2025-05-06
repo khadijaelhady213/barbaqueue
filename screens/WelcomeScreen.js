@@ -73,7 +73,8 @@ function WelcomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   mainGrid: {
     flex: 1,
-    flexDirection: 'column'
+    flexDirection: 'column',
+    paddingTop: 80
 
   },
   background: {
