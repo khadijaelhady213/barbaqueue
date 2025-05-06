@@ -10,6 +10,7 @@ import { initReactI18next } from "react-i18next";
 import i18n from "./lenguages/lenguage";
 import MapScreen from "./screens/Profile";
 import UserScreen from "./screens/UserScreen";
+import 'react-native-gesture-handler';
 import Profile from "./screens/Profile";
 import AddParcelScreen from "./screens/AddParcelScreen";
 import ParcelDetailsScreen from "./screens/ParcelDetailsScreen";
@@ -29,7 +30,6 @@ i18n.use(initReactI18next).init();
 const Stack = createStackNavigator();
 
 export default function App() {
-//  return <AddParcelScreen/>
   return (
     <NavigationContainer style={styles.container}>
       <Stack.Navigator
@@ -53,9 +53,8 @@ export default function App() {
           name="ListingDetailsScreen"
           component={ListingDetailsScreen}
           options={{ headerShown: false }}
-        />        
+        />
         <Stack.Screen
-
           style={styles.container}
           name="WelcomeScreen"
           component={WelcomeScreen}

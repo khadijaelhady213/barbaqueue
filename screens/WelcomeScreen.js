@@ -3,26 +3,25 @@ import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useTranslation } from "react-i18next";
-import * as Localization from "expo-localization";
-import { withNavigation } from "@react-navigation/compat";
-import { StatusBar } from 'expo-status-bar';
-import { endpoint } from '../interactWithApi/configEndpoints.js';
 import { loginFunction } from '../interactWithApi/loginFunction.js';
+import { createStackNavigator } from '@react-navigation/stack';
 
+// Navegador del Stack
+const Stack = createStackNavigator();
+
+// Esquema de validacion para el login
 const loginSchema = Yup.object().shape({
-  email: Yup.string().required().email().label("Emaill"),
+  email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(4).label("Password"),
 });
 
-// First screen loaded
+// TODO: Para hacer el 6 de Mayo del 25.
+// TODO: Revisar los imports
+// TODO: Estructurar el css de la pantalla inicial
+// Componente de la pagina principal
+
 function WelcomeScreen({ navigation }) {
   const { t } = useTranslation();
-  const login = {
-    email: "",
-    password: "",
-  };
-
-  console.log(".......Z> ", Localization.locale);
 
   return (
     <ImageBackground
@@ -30,84 +29,49 @@ function WelcomeScreen({ navigation }) {
       style={styles.background}
       source={require("../assets/b7.png")}
     >
-      <StatusBar style="auto" /> 
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          source={require("../assets/BARBACUEUE.png")}
-        />
-      </View>
-      <View style={styles.inputsButtonsContainer}>
-        <Formik
-          initialValues={login}
-          onSubmit={(values) => {
-            // This function change the screen
-            loginFunction(values, navigation);
-          }}
-          validationSchema={loginSchema}
-          validateOnChange={false}
-          validateOnBlur={false}
-        >
-          {({ handleChange, handleSubmit, errors }) => (
-            <>
-              {/** Email input */}
-              <TextInput
-                keyboardType="email-address"
-                placeholder={t("Email")}
-                style={styles.input}
-                onChangeText={handleChange("email")}
+      <Image
+        style={styles.logo}
+        source={require("../assets/BARBACUEUE.png")}
+      />
+      <Formik
+        initialValues={login}
+        onSubmit={(values) => {
+          loginFunction(values, navigation);
+        }}
+        validationSchema={loginSchema}
+        validateOnChange={false}
+        validateOnBlur={false}
+      >
+        {({ handleChange, handleSubmit, errors }) => (
+          <>
+
+            {/** TODO: Al hacer click, mandar a la pantalla del login */}
+            <View style={[styles.Button, { backgroundColor: "#000000" }]}>
+              <Button
+                title={t("Login")}
+                color="white"
+                onPress={handleSubmit}
               />
-              <Text style={{color:"red"}}>{errors.email}</Text>
+            </View>
 
-              {/** Password input */}
-              <TextInput
-                secureTextEntry
-                placeholder={t("Password")}
-                style={styles.input}
-                onChangeText={handleChange("password")}
+            {/** TODO: Al hacer click, mandar a la pantalla de registro */}
+            <View style={[styles.Button, { backgroundColor: "#F63809", borderColor: "white", borderWidth: 2 }]}>
+              <Button
+                onPress={() => navigation.navigate("RegisterScreen")}
+                title={t("Register")}
+                color="white"
+                accessibilityLabel="Learn more about this purple button"
               />
-              <Text style={{ color: "red" }}>{errors.password}</Text>
-
-              {/** Password forgotten button */}
-              <TouchableOpacity style={styles.txt}>
-                <Text>{t("PassworForgotten")}</Text>
-              </TouchableOpacity>
-
-              {/** Login button */}
-              <View style={[styles.Button, { backgroundColor: "white" }]}>
-                <Button
-                  title={t("Login")}
-                  color="black"
-                  onPress={handleSubmit}
-                  // accessibilityLabel="Learn more about this purple button"
-                />
-              </View>
-              <View
-                style={[
-                  styles.Button,
-                  {
-                    backgroundColor: "#F63809",
-                    borderColor: "white",
-                    borderWidth: 2,
-                  },
-                ]}
-              >
-                {/** Register button */}
-                <Button
-                  onPress={() => navigation.navigate("RegisterScreen")}
-                  title={t("Register")}
-                  color="white"
-                  accessibilityLabel="Learn more about this purple button"
-                />
-              </View>
-            </>
-          )}
-        </Formik>
-      </View>
+            </View>
+          </>
+        )}
+      </Formik>
     </ImageBackground>
   );
 }
 
+// Estilos en css de la pantalla principal
+// TODO: Externalizar a un archivo
 const styles = StyleSheet.create({
   background: {
     flex: 1,
@@ -119,7 +83,7 @@ const styles = StyleSheet.create({
   logo: {
     height: 153,
     width: 200,
-    marginBottom: "8%",
+    marginTop: "20%",
   },
   logoContainer: {
     position: "absolute",
@@ -155,6 +119,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: "8%",
   },
- 
+
 });
 export default WelcomeScreen;
