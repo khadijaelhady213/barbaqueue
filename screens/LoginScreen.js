@@ -78,7 +78,7 @@ const ViewLoginScreen = () => {
                             styles.gridItem, styles.blue
                         ]
                         }>
-                            <Button styles={[styles.Button]} color='black' onPress={handleSubmit} title={'Registrarse'} accessibilityLabel="" />
+                            <Button styles={[styles.Button]} color='blue' onPress={handleSubmit} title={'Registrarse'} accessibilityLabel="" />
                             <Text>Copyright @DanielNager 2025</Text>
 
                         </View>
