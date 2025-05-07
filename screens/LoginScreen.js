@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Image, TextInput, Button } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
-
+import { useFonts } from 'expo-font';
 
 // Componente de la pagina de Login
 const ViewLoginScreen = () => {
     const { t } = useTranslation();
-
+    const [fontsLoaded] = useFonts({
+        'firecode': require('../assets/fonts/firecode.ttf'),
+    });
+    if (!fontsLoaded) {
+        return null; // No cargar la pagina hasta que esten todas las fuentes cargadas
+    }
     return (
         <View style={[
             styles.mainGrid
@@ -21,8 +26,12 @@ const ViewLoginScreen = () => {
                     style={styles.logo}
                     source={require("../assets/BARBACUEUE.png")}
                 />
-                <Text>Welcome to Barbaqueue!</Text>
-                <Text>A Social App</Text>
+                <View style={[
+                    styles.sloganContainer
+                ]}>
+                    <Text style={{ fontWeight: 900, fontFamily: 'firecode', fontSize: 20, textAlign: 'center' }} >Welcome to Barbaqueue!</Text>
+                    <Text style={{ fontWeight: 900, fontFamily: 'firecode', fontSize: 18, textAlign: 'center' }}>A Social App</Text>
+                </View>
             </View>
             {/* Formik Form */}
             <Formik
@@ -47,8 +56,19 @@ const ViewLoginScreen = () => {
                             <TextInput keyboardType='email-address' placeholder={t('Email')} style={styles.input} onChangeText={handleChange("email")} value={values.email} />
                             <Text style={{ color: "red" }}>{errors.email}</Text>
 
-                            <TextInput secureTextEntry placeholder={t('Password')} style={styles.input} onChangeText={handleChange("password")} value={values.password} />
+                            <TextInput secureTextEntry placeholder={'Password'} style={styles.input} onChangeText={handleChange("password")} value={values.password} />
                             <Text style={{ color: "red" }}>{errors.password}</Text>
+
+
+                            <View style={[
+                                styles.Button, styles.loginButton
+                            ]}>
+                                <Button
+                                    title={t("Login")}
+                                    color="white"
+                                    onPress={() => { navigation.navigate("ViewLoginScreen") }}
+                                />
+                            </View>
 
                             <Button styles={[styles.Button]} color='white' onPress={handleSubmit} title={'forgot password?'} accessibilityLabel="" />
                         </View>
@@ -58,14 +78,14 @@ const ViewLoginScreen = () => {
                             styles.gridItem, styles.blue
                         ]
                         }>
-                            <Button styles={[styles.Button]} color='white' onPress={handleSubmit} title={'Register'} accessibilityLabel="" />
+                            <Button styles={[styles.Button]} color='black' onPress={handleSubmit} title={'Registrarse'} accessibilityLabel="" />
                             <Text>Copyright @DanielNager 2025</Text>
 
                         </View>
                     </>
                 )}
             </Formik>
-        </View>
+        </View >
     )
 }
 
@@ -82,21 +102,49 @@ const styles = StyleSheet.create({
     },
     red: {
         flex: 3,
-        backgroundColor: "red",
+        backgroundColor: "white",
     },
     green: {
         flex: 3,
-        backgroundColor: "green",
+        backgroundColor: "white",
     },
     blue: {
         flex: 1,
-        backgroundColor: "blue",
+        backgroundColor: "white",
     },
     logo: {
+        marginTop: 50,
         width: 260,
         height: 200,
     },
-
+    Button: {
+        height: 60,
+        width: 300,
+        justifyContent: "center",
+        marginBottom: "8%",
+        borderRadius: "50%"
+    },
+    loginButton: {
+        backgroundColor: "black",
+        borderColor: "grey",
+        borderWidth: 2,
+        color: "grey"
+    },
+    input: {
+        width: 300,
+        height: 50,
+        // borderWidth: 1,
+        paddingLeft: 30,
+        borderWidth: 1,
+        borderColor: "grey",
+        color: "#cccccc",
+        fontSize: 16,
+        borderRadius: 25
+    },
+    sloganContainer: {
+        paddingTop: 50,
+        fontSize: 40
+    },
 
 })
 
