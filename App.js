@@ -16,6 +16,7 @@ import { LogBox } from 'react-native';
 import ParcelsAvailableScreen from "./screens/ParcelsAvailableScreen";
 import ListingDetailsScreen from "./screens/ListingDetailsScreen";
 import ViewLoginScreen from "./screens/LoginScreen";
+import ListingDetailsScreenRefactored from "./screens/ListingDetailsScreenRefactored";
 LogBox.ignoreLogs([
   'ViewPropTypes will be removed from React Native',
 ]);
@@ -30,7 +31,7 @@ export default function App() {
     <NavigationContainer style={styles.container}>
       <Stack.Navigator
         style={styles.container}
-        initialRouteName="WelcomeScreen"
+        initialRouteName="ListingDetailsScreenRefactored"
       >
         <Stack.Screen
           style={styles.container}
@@ -56,6 +57,13 @@ export default function App() {
           component={ListingDetailsScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          style={styles.container}
+          name="ListingDetailsScreenRefactored"
+          component={ListingDetailsScreenRefactored}
+          options={{ headerShown: false }}
+        />
+
         <Stack.Screen
           style={styles.container}
           name="WelcomeScreen"
