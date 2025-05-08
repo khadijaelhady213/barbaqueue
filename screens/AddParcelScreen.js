@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, Button, Image, FlatList, StyleSheet ,useWindowDimensions,ActivityIndicator} from 'react-native';
+import { View, TextInput, Text, Button, Image, FlatList, StyleSheet, useWindowDimensions, ActivityIndicator } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import * as ImagePicker from 'expo-image-picker';
 import { StatusBar } from 'expo-status-bar';
-import axios from 'axios'; 
+import axios from 'axios';
 import { createParcelFunction } from '../interactWithApi/createParcelFunction';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { useNavigation } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const AddParcelScreen = () => {
   const { t } = useTranslation();
@@ -21,9 +22,9 @@ const AddParcelScreen = () => {
 
   console.log("aqui esta el valor de navigation: ", navigation)
   //la parte que se encarga de poder seleccionar 3 imagenes de la galeria del dispositivo 
-    /**
-   * Handler for picking images from the device's gallery.
-   */
+  /**
+ * Handler for picking images from the device's gallery.
+ */
   const pickImages = async () => {
     setIsLoading(true);
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -43,7 +44,7 @@ const AddParcelScreen = () => {
       }
     }
   };
-  
+
   const validateLocalizacion = async (value) => {
     if (value && value.trim().length > 0) {
       return await validateAddress(value);
@@ -60,15 +61,15 @@ const AddParcelScreen = () => {
     descripcion: Yup.string().required(t('requiredField')),
     capacity: Yup.string().required(t('requiredField')),
     localizacion: Yup.string()
-    .test('isValidAddress', t('invalidAddress'), validateLocalizacion)
-    .required(t('requiredField')),
-});
+      .test('isValidAddress', t('invalidAddress'), validateLocalizacion)
+      .required(t('requiredField')),
+  });
 
-    /**
-   * Validates the address using the Nominatim API.
-   * @param {string} address - The address to validate.
-   * @returns {Promise<boolean>} - A promise that resolves to true if the address is valid, false otherwise.
-   */
+  /**
+ * Validates the address using the Nominatim API.
+ * @param {string} address - The address to validate.
+ * @returns {Promise<boolean>} - A promise that resolves to true if the address is valid, false otherwise.
+ */
 
   const validateAddress = async (address) => {
     try {
@@ -79,14 +80,14 @@ const AddParcelScreen = () => {
       return false;
     }
   };
-    /**
-   * Handles the form submission.
-   * @param {object} values - The form values.
-   */
+  /**
+ * Handles the form submission.
+ * @param {object} values - The form values.
+ */
   const handleSubmit = async (values) => {
 
     console.log('Dades del formulari:', values);
-  
+
     try {
       await validationSchema.validate(values, { abortEarly: false });
 
@@ -102,7 +103,7 @@ const AddParcelScreen = () => {
         description: values.descripcion,
         user_id: user.id
       }
-      
+
       const created = await createParcelFunction(createParcelRequest, navigation)
 
       if (created) {
@@ -133,7 +134,7 @@ const AddParcelScreen = () => {
         if (value !== null) {
           // We have data!!
           console.log("user from createparcel working", JSON.parse(value).length)
-          setUser(JSON.parse(value))        
+          setUser(JSON.parse(value))
         }
 
       } catch (error) {
@@ -144,71 +145,71 @@ const AddParcelScreen = () => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" /> 
-      {/** TOP LOGO */}      
-      <View style={[styles.logoContainer,styles.shadowContainer]}>
-        <Image source={require("../assets/Fuego.png")} style={styles.logoImg}/>
+      <StatusBar style="auto" />
+      {/** TOP LOGO */}
+      <View style={[styles.logoContainer, styles.shadowContainer]}>
+        <Image source={require("../assets/Fuego.png")} style={styles.logoImg} />
         <Text style={styles.logoTxt}>{t('newParcel')}</Text>
       </View>
-      
-      {/** Parcel FORM */}  
+
+      {/** Parcel FORM */}
       <Formik
-        initialValues={{nombreHuerto: '',precioPorPersona: '',descripcion: '',localizacion: '', capacity: ''}}
+        initialValues={{ nombreHuerto: '', precioPorPersona: '', descripcion: '', localizacion: '', capacity: '' }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
         validateOnChange={false} //esto y 
         validateOnBlur={false} //esto eviata que los errores de validacion aparezcan antes de pulsar el votón Join Us
       >
         {({ handleChange, handleSubmit, errors, values }) => (
-          <View style={styles.formContainer}>         
-            
-            {/** Name of Parcel INPUT */}   
-            <Text style={styles.label}>{t('name')}</Text>
+          <View style={styles.formContainer}>
+
+            {/** Name of Parcel INPUT */}
             <TextInput value={values.nombreHuerto} onChangeText={handleChange('nombreHuerto')} style={[styles.input, errors.nombreHuerto && styles.inputError]}
-              placeholder={errors.nombreHuerto ? errors.nombreHuerto : t('nameInput')}
+              placeholder={errors.nombreHuerto ? errors.nombreHuerto : 'Huerto'}
             />
 
-            {/** Price of Parcel INPUT */}   
-            <Text style={styles.label}>{t('price')}</Text>
-            <TextInput  keyboardType="numeric" value={values.precioPorPersona} onChangeText={handleChange('precioPorPersona')} style={[styles.input, errors.precioPorPersona && styles.inputError]}
-              placeholder={errors.precioPorPersona ? errors.precioPorPersona : t('priceInput')}
+            {/** Price of Parcel INPUT */}
+            <TextInput keyboardType="numeric" value={values.precioPorPersona} onChangeText={handleChange('precioPorPersona')} style={[styles.input, errors.precioPorPersona && styles.inputError]}
+              placeholder={errors.precioPorPersona ? errors.precioPorPersona : 'Precio'}
             />
-            {/** Capacity of Parcel INPUT */}   
-            <Text style={styles.label}>{t('capacity')}</Text>
+            {/** Capacity of Parcel INPUT */}
             <TextInput value={values.capacity} onChangeText={handleChange('capacity')} style={[styles.input, errors.capacity && styles.inputError]}
-             placeholder={errors.capacity ? errors.capacity : t('capacityInput')}/>
+              placeholder={errors.capacity ? errors.capacity : 'Capacidad'} />
 
-            {/** Description of Parcel INPUT */}   
-            <Text style={styles.label}>{t('description')}</Text>
+            {/** Description of Parcel INPUT */}
             <TextInput value={values.descripcion} onChangeText={handleChange('descripcion')} style={[styles.input, errors.descripcion && styles.inputError]}
-             placeholder={errors.descripcion ? errors.descripcion : t('decInput')}
+              placeholder={errors.descripcion ? errors.descripcion : 'Descripción'}
             />
 
-            {/** Location of Parcel INPUT */}   
-            <Text style={styles.label}>{t('location')}</Text>
+            {/** Location of Parcel INPUT */}
             <TextInput value={values.localizacion} onChangeText={handleChange('localizacion')} style={[styles.input, errors.localizacion && styles.inputError]}
-             placeholder={errors.localizacion ? errors.localizacion : t('locationInput')}/>
+              placeholder={errors.localizacion ? errors.localizacion : 'Localización'} />
 
 
-            {/** Save BUTTON */}   
-            <View  style={ styles.saveBtn}>
-              <Button title={t('sabeBtn')}  color="white" onPress={handleSubmit} />
-            </View>
+            {/** Save BUTTON */}
+            <LinearGradient
+              colors={['#7615DE', '#9E15DE', '#B915DE']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.gradient}
+            >
 
-            <Text style={styles.label}>{t('pictures')}</Text>
+              <Button title={t('sabeBtn')} color="white" onPress={handleSubmit} />
+            </LinearGradient>
+
             <FlatList
               style={[styles.imagesContainer, images.length > 0 && styles.imagesContainerWithImages]}
               data={images}
-              
+
               renderItem={({ item }) => (
                 <Image
                   source={{ uri: item }}
-                  style={{ width: width / 3.6, height: 150, paddingTop:0,paddingBottom: 0, marginTop:0,marginBottom:0, marginRight:10 ,paddingBottom: 0, borderRadius:5 }}
+                  style={{ width: width / 3.6, height: 150, paddingTop: 0, paddingBottom: 0, marginTop: 0, marginBottom: 0, marginRight: 10, paddingBottom: 0, borderRadius: 5 }}
                 />
               )}
               numColumns={3}
               keyExtractor={(item) => item}
-              contentContainerStyle={{ marginVertical: 0, paddingTop:0,paddingBottom: 0, marginTop:0,marginBottom:0,}}
+              contentContainerStyle={{ marginVertical: 0, paddingTop: 0, paddingBottom: 0, marginTop: 0, marginBottom: 0, }}
               ListHeaderComponent={
                 isLoading ? (
                   <View>
@@ -220,16 +221,20 @@ const AddParcelScreen = () => {
                     <ActivityIndicator size={"large"} />
                   </View>
                 ) : (
-                  
-                  <View style={[styles.buttonContainer, images.length > 0 && styles.buttonContainerWithImages]}>
-                    <Button title={t('pickImage')}  color="white" onPress={pickImages} />
-                  </View>
+                  <LinearGradient
+                    colors={['#7615DE', '#9E15DE', '#B915DE']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}
+                    style={styles.gradient}
+                  >
+                    <Button title={'Seleccionar Imagen'} color="white" onPress={pickImages} />
+                  </LinearGradient>
                 )
-                
+
               }
-              
+
             />
-             
+
           </View>
         )}
       </Formik>
@@ -240,43 +245,45 @@ const AddParcelScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop:"5%"
+    marginTop: "5%",
+    backgroundColor: "white"
 
   },
   shadowContainer: {
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity:  0.2,
+    shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 5,
     borderTopWidth: 0,
-  
+
   },
-  logoContainer:{
-    backgroundColor:"white",
-    marginBottom:"2%",
+  logoContainer: {
+    backgroundColor: "white",
+    marginBottom: "2%",
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
 
   },
-  logoImg:{
-    marginTop:"5%",
-    marginBottom:"2%",
-    height:30,
-    width:30,
+  logoImg: {
+    marginTop: "5%",
+    marginBottom: "2%",
+    height: 30,
+    width: 30,
     resizeMode: 'contain', //esto evita que la imagen se corte
   },
-  logoTxt:{
-    marginTop:"5%",
-    fontSize:25,
-    fontWeight:600,
-    marginStart:"2%",
-    color: "#F63809",
+  logoTxt: {
+    marginTop: "5%",
+    fontSize: 25,
+    fontWeight: 600,
+    marginStart: "2%",
+    color: "#7615DE",
   },
-  formContainer:{
-   padding:20
+  formContainer: {
+    padding: 20,
+    paddingTop: 120
 
   },
   label: {
@@ -285,12 +292,13 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   input: {
-    height: 40,
+    height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 4,
     paddingHorizontal: 8,
     marginBottom: 16,
+    color: "black"
   },
   error: {
     color: 'red',
@@ -301,30 +309,35 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     textAlignVertical: 'top',
   },
-  
+
   imagesContainer: {
-    marginBottom:"5%",
+    marginBottom: "5%",
   },
-  imagesContainerWithImages:{
-    height:"27%",
-    width:"100%",
+  gradient: {
+    borderRadius: 12,
+    height: 50,
+    marginBottom: 10,
+  },
+  imagesContainerWithImages: {
+    height: "27%",
+    width: "100%",
     // backgroundColor:"green",
-    width:"100%",
-    display:'flex',
-    flexDirection:'row',
-    marginBottom:"5%",
-    overflow:'hide'
+    width: "100%",
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: "5%",
+    overflow: 'hide'
   },
-  
-  button:{
+
+  button: {
     width: "70%",
     height: 40,
     borderRadius: 10,
     alignItems: "center",
     justifyContent: "center",
     marginBottom: "8%",
-    marginBottom:"5%",
-    
+    marginBottom: "5%",
+
   },
   saveBtn: {
     position: 'absolute',
@@ -341,15 +354,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     borderRadius: 10,
     alignSelf: 'start',
-    
+
   },
   buttonContainerWithImages: {
     width: '98%',
-    marginStart:0,
-    paddingStart:0,
-    marginStart:0,
+    marginStart: 0,
+    paddingStart: 0,
+    marginStart: 0,
     backgroundColor: '#F63809',
-    
+
   },
   inputError: {
     borderColor: 'red',
