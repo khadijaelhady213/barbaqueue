@@ -122,6 +122,9 @@ export default function RegisterScreen() {
                             <View style={styles.inline}>
                                 <Text style={styles.agreement}>{t('agreementContitions')}</Text>
                             </View>
+                            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                                <Text style={styles.backButtonText}>Volver al menu anterior</Text>
+                            </TouchableOpacity>
 
                         </>
                     )}
@@ -165,9 +168,15 @@ const styles = StyleSheet.create({
         alignItems: 'start',
 
     },
+    backButton: {
+        paddingTop: 30,
+    },
+    backButtonText: {
+        color: "blue"
+    },
     BigContainer: {
         backgroundColor: "white",
-        marginTop: "0%"
+        paddingTop: 100
     },
     container: {
         marginTop: '0%',
