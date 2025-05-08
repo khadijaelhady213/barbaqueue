@@ -3,9 +3,12 @@ import { View, Text, StyleSheet, Image, TextInput, Button } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Formik } from 'formik';
 import { useFonts } from 'expo-font';
+import { StatusBar } from 'expo-status-bar';
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 // Componente de la pagina de Login
-const ViewLoginScreen = () => {
+const ViewLoginScreen = ({ navigation }) => {
     const { t } = useTranslation();
     const [fontsLoaded] = useFonts({
         'firecode': require('../assets/fonts/firecode.ttf'),
@@ -17,6 +20,7 @@ const ViewLoginScreen = () => {
         <View style={[
             styles.mainGrid
         ]}>
+
             {/* logo + Welcome + Slogan */}
             <View style={[
                 styles.gridItem, styles.red
@@ -69,6 +73,9 @@ const ViewLoginScreen = () => {
                                     onPress={() => { navigation.navigate("ViewLoginScreen") }}
                                 />
                             </View>
+                            <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+                                <Text style={styles.backButtonText}>Volver al menu principal</Text>
+                            </TouchableOpacity>
 
                             <Button styles={[styles.Button]} color='white' onPress={handleSubmit} title={'forgot password?'} accessibilityLabel="" />
                         </View>
@@ -78,7 +85,7 @@ const ViewLoginScreen = () => {
                             styles.gridItem, styles.blue
                         ]
                         }>
-                            <Button styles={[styles.Button]} color='blue' onPress={handleSubmit} title={'Registrarse'} accessibilityLabel="" />
+                            <Button styles={[styles.Button]} color='blue' onPress={() => { navigation.navigate("RegisterScreen") }} title={'Registrarse'} accessibilityLabel="" />
                             <Text>Copyright @DanielNager 2025</Text>
 
                         </View>
@@ -93,8 +100,9 @@ const ViewLoginScreen = () => {
 const styles = StyleSheet.create({
     mainGrid: {
         flex: 1,
+        paddingTop: 50,
         height: "70%",
-        backgroundColor: "blue"
+        backgroundColor: "white"
     },
     gridItem: {
         justifyContent: "center",
@@ -143,6 +151,7 @@ const styles = StyleSheet.create({
     },
     sloganContainer: {
         paddingTop: 50,
+        paddingBottom: 50,
         fontSize: 40
     },
 

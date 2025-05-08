@@ -108,7 +108,6 @@ const AddParcelScreen = () => {
 
       if (created) {
         // Call the navigation.navigate method with the desired screen name
-        console.log("Dime que entras please")
         navigation.replace("NavbarScreen");
       }
 
@@ -147,10 +146,7 @@ const AddParcelScreen = () => {
     <View style={styles.container}>
       <StatusBar style="auto" />
       {/** TOP LOGO */}
-      <View style={[styles.logoContainer, styles.shadowContainer]}>
-        <Image source={require("../assets/Fuego.png")} style={styles.logoImg} />
-        <Text style={styles.logoTxt}>{t('newParcel')}</Text>
-      </View>
+      <Text style={styles.logoTxt}>Crear parcela</Text>
 
       {/** Parcel FORM */}
       <Formik
@@ -165,7 +161,7 @@ const AddParcelScreen = () => {
 
             {/** Name of Parcel INPUT */}
             <TextInput value={values.nombreHuerto} onChangeText={handleChange('nombreHuerto')} style={[styles.input, errors.nombreHuerto && styles.inputError]}
-              placeholder={errors.nombreHuerto ? errors.nombreHuerto : 'Huerto'}
+              placeholder={errors.nombreHuerto ? errors.nombreHuerto : 'Nombre parcela'}
             />
 
             {/** Price of Parcel INPUT */}
@@ -275,15 +271,16 @@ const styles = StyleSheet.create({
     resizeMode: 'contain', //esto evita que la imagen se corte
   },
   logoTxt: {
-    marginTop: "5%",
+    paddingTop: 70,
+    paddingBottom: 0,
     fontSize: 25,
     fontWeight: 600,
-    marginStart: "2%",
-    color: "#7615DE",
+    marginStart: 20,
+    color: "black",
   },
   formContainer: {
     padding: 20,
-    paddingTop: 120
+    paddingTop: 20
 
   },
   label: {

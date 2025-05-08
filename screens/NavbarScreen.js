@@ -15,6 +15,7 @@ import Profile from "./Profile";
 import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { listAllParcelsFunction } from "../interactWithApi/listAllParcels";
+import ViewLoginScreen from "./LoginScreen";
 
 /**
 Home screen component.
@@ -77,7 +78,7 @@ function NavbarScreenNavigator(userData) {
     <Tab.Navigator>
       <Tab.Screen
         name="homescreen"
-        component={HomeScreen}
+        component={ViewLoginScreen}
         options={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -86,7 +87,7 @@ function NavbarScreenNavigator(userData) {
               icon={faHome}
               size={30}
               paddingTop="2%"
-              color="#FF8300"
+              color="black"
             />
           ),
         }}
@@ -102,7 +103,7 @@ function NavbarScreenNavigator(userData) {
               icon={faSquarePlus}
               size={30}
               paddingTop="2%"
-              color="#FF8300"
+              color="black"
             />
           ),
         }}
@@ -118,7 +119,7 @@ function NavbarScreenNavigator(userData) {
               icon={faMessage}
               size={30}
               paddingTop="2%"
-              color="#FF8300"
+              color="black"
             />
           ),
         }}
@@ -131,7 +132,7 @@ function NavbarScreenNavigator(userData) {
           headerShown: false,
           tabBarShowLabel: false,
           tabBarIcon: ({ color, size }) => (
-            <FontAwesomeIcon icon={faUser} size={30} color="#FF8300" />
+            <FontAwesomeIcon icon={faUser} size={30} color="black" />
           ),
         }}
       />

@@ -31,7 +31,7 @@ export default function App() {
     <NavigationContainer style={styles.container}>
       <Stack.Navigator
         style={styles.container}
-        initialRouteName="WelcomeScreen"
+        initialRouteName="NavbarScreen"
       >
         <Stack.Screen
           style={styles.container}
@@ -59,13 +59,6 @@ export default function App() {
         />
         <Stack.Screen
           style={styles.container}
-          name="ListingDetailsScreenRefactored"
-          component={ListingDetailsScreenRefactored}
-          options={{ headerShown: false }}
-        />
-
-        <Stack.Screen
-          style={styles.container}
           name="WelcomeScreen"
           component={WelcomeScreen}
           options={{ headerShown: false }}
@@ -80,7 +73,7 @@ export default function App() {
           style={styles.container}
           name="RegisterScreen"
           component={RegisterScreen}
-          options={{ headerShown: true }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           style={styles.container}
