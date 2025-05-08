@@ -31,7 +31,7 @@ export default function App() {
     <NavigationContainer style={styles.container}>
       <Stack.Navigator
         style={styles.container}
-        initialRouteName="ListingDetailsScreen"
+        initialRouteName="WelcomeScreen"
       >
         <Stack.Screen
           style={styles.container}
