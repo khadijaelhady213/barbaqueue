@@ -31,50 +31,64 @@ export default function App() {
     <NavigationContainer style={styles.container}>
       <Stack.Navigator
         style={styles.container}
-        initialRouteName="NavbarScreen"
+        initialRouteName="ParcelsAvailableScreen"
       >
+        {/* DONE */}
         <Stack.Screen
           style={styles.container}
           name="NavbarScreen"
           component={NavbarScreen}
           options={{ headerShown: false }}
         />
+        {/* DONE */}
         <Stack.Screen
           style={styles.container}
           name="ViewLoginScreen"
           component={ViewLoginScreen}
           options={{ headerShown: false }}
         />
+
+        {/* FIX IT */}
         <Stack.Screen
           style={styles.container}
           name="ParcelDetailsScreen"
           component={ParcelDetailsScreen}
           options={{ headerShown: false }}
         />
+
+        {/* DONE */}
         <Stack.Screen
           style={styles.container}
           name="ListingDetailsScreen"
           component={ListingDetailsScreen}
           options={{ headerShown: false }}
         />
+
+        {/* DONE */}
         <Stack.Screen
           style={styles.container}
           name="WelcomeScreen"
           component={WelcomeScreen}
           options={{ headerShown: false }}
         />
+
+        {/* FIX IT */}
         <Stack.Screen
           style={styles.container}
           name="Profile"
           component={Profile}
           options={{ headerShown: false }}
         />
+
+        {/* DONE */}
         <Stack.Screen
           style={styles.container}
           name="RegisterScreen"
           component={RegisterScreen}
           options={{ headerShown: false }}
         />
+
+        {/* FIX IT */}
         <Stack.Screen
           style={styles.container}
           name="ParcelsAvailableScreen"
