@@ -47,6 +47,12 @@ export default function App() {
           component={ViewLoginScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          style={styles.container}
+          name="ParcelsAvailableScreen"
+          component={ParcelsAvailableScreen}
+          options={{ headerShown: false }}
+        />
 
         {/* FIX IT */}
         <Stack.Screen
@@ -86,14 +92,6 @@ export default function App() {
           name="RegisterScreen"
           component={RegisterScreen}
           options={{ headerShown: false }}
-        />
-
-        {/* FIX IT */}
-        <Stack.Screen
-          style={styles.container}
-          name="ParcelsAvailableScreen"
-          component={ParcelsAvailableScreen}
-          options={{ headerShown: true }}
         />
 
       </Stack.Navigator>

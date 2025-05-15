@@ -23,37 +23,40 @@ import { useNavigation } from "@react-navigation/native";
 Array of listings.
 @type {Array}
 */
+
+// Ejemplos de entradas para el listing
 const listings = [
   {
     id: 1,
     title: "Red jacket for sale",
     price: 100,
     image: require("../assets/mainScreenBackground.png"),
+    location: 'manlleu'
   },
   {
     id: 2,
     title: "Couch in great condition",
     price: 1000,
     image: require("../assets/splash.png"),
+    location: 'Manresa'
   },
 ];
 
-/**
-Parcels Available screen component.
-@param {object} props - Component props.
-@returns {JSX.Element} JSX element representing the Parcels Available screen.
-*/
+/** Parcels Available screen component.
+    @param {object} props - Component props.
+    @returns {JSX.Element} JSX element representing the Parcels Available screen. */
+
 export default function ParcelsAvailableScreen(props) {
   const [parcels, setParcels] = useState(null);
   const [searchParcel, setSearchParcel] = useState('');
   const [filteredParcels, setFilteredParcels] = useState([]);
   const navigation = useNavigation();
-  /**
-  
-  Handles the search functionality.
-  @param {string} searchText - The text to search.
-  @returns {void}
-  */
+  const [cargando, setCargando] = useState(false);
+
+  /**   Handles the search functionality.
+        @param {string} searchText - The text to search.
+        @returns {void} */
+
   const handleSearch = (searchText) => {
     if (parcels) {
       setFilteredParcels(parcels.filter(parcel => parcel.location.toLowerCase().includes(searchText.toLowerCase())));
@@ -61,25 +64,37 @@ export default function ParcelsAvailableScreen(props) {
   }
 
   useEffect(() => {
-    (async () => {
-      await listAllParcelsFunction();
+    const cargarDatos = async () => {
 
-      try {
-        // get parcels variables
-        const value = await AsyncStorage.getItem('parcels');
+      //  await listAllParcelsFunction(); // GET a JSON and save it into AsyncStorage
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
-        if (value !== null) {
-          // We have data!!
-          console.log("Parcels working", JSON.parse(value).length);
-          const parsedParcels = JSON.parse(value);
-          setParcels(parsedParcels);
-          setFilteredParcels(parsedParcels);
-        }
+      setParcels(listings);
+      setCargando(true);
 
-      } catch (error) {
-        console.log("This is the error of getting parcels data", error);
-      }
-    })();
+      /*      try {
+              // Get parcels variables from async Storage (used by react and different from sessionstorage or localStorage)
+              const value = await AsyncStorage.getItem('parcels');
+      
+              if (value !== null) { // We have data from server!!
+                console.log("Parcels working", JSON.parse(value).length);
+                const parsedParcels = JSON.parse(value);
+                setParcels(parsedParcels);
+                setFilteredParcels(parsedParcels);
+      
+              } else { // Demo data
+                const parsedParcels = JSON.parse(listings);
+                setParcels(parsedParcels);
+                setFilteredParcels(parsedParcels);
+              }
+      
+      
+            } catch (error) {
+              console.log("This is the error of getting parcels data", error);
+            }*/
+    }
+
+    cargarDatos();
   }, []);
 
   /**
@@ -93,30 +108,38 @@ export default function ParcelsAvailableScreen(props) {
 
   }
 
-  if (parcels) {
+  if (cargando) {
     return (
       <View style={styles.container}>
         <SearchBar
+          platform="default"
           placeholder="Search"
-          onChangeText={(searchText) => {
-            setSearchParcel(searchText);
-            handleSearch(searchText);
+          onChangeText={(text) => {
+            setSearchParcel(text);
+            handleSearch(text);
           }}
-          onCancel={() => console.log("Search cancelled")}
-          containerStyle={styles.searchBar}
+          containerStyle={{
+            marginTop: 50,
+            marginLeft: 50,
+            marginright: 80,
+            backgroundColor: 'transparent',
+            borderWidth: 1,
+            borderColor: 'black',
+            borderRadius: 12,
+            padding: 0,
+          }}
           inputContainerStyle={{
-            backgroundColor: 'orange',
+            backgroundColor: 'white',
           }}
           inputStyle={{
-            color: 'white',
+            color: 'black',
           }}
           value={searchParcel}
         />
-
         <ScrollView contentContainerStyle={styles.contentContainer}>
           {filteredParcels.map((parcel, index) => (
             <TouchableHighlight onPress={() => handleCard(parcel)}>
-              <Card key={index} title={parcel.title} price={parcel.people_price + " €"} image={{ uri: parcel.image1 }}></Card>
+              <Card key={index} title={parcel.title} price={parcel.people_price + " €"} image={parcel.image}></Card>
             </TouchableHighlight>
           ))}
         </ScrollView>
@@ -129,6 +152,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
+    overflow: 'hidden',
   },
   searchBar: {
     backgroundColor: "#ffffff",
@@ -143,6 +167,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   contentContainer: {
+    marginTop: 30,
     top: Platform.select({
       ios: 120, // Adjust this value based on the status bar height on iOS
       android: 0,
